@@ -182,10 +182,14 @@ def butlleti(request,curs_id):
 		for i in kkk:
 			data.append(i)
 	
+		ts = [
+			#('ALIGN', (1,1), (-1,-1), 'CENTER'),
+			('GRID', (0,0), (-1,-1), 1, colors.black),
+		]
 		
 		# Create the table with the necessary style, and add it to the
 		# elements list.
-		table = Table(data)
+		table = Table(data,style=ts)
 		elements.append(table)
 		
 		comentaris = Comentari.objects.filter(alumne=al)
