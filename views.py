@@ -157,6 +157,8 @@ def butlleti(request,curs_id):
 	doc = SimpleDocTemplate(response)
 	doc.pagesize = landscape(A4)
 	
+	styles['Normal'].fontsize=8
+	
 	for al in als:
 		# Create two 'Paragraph' Flowables and add them to our 'elements'
 		elements.append(Paragraph("Es Liceu.<br/>Carrer Cabana, 31.<br/> 07141, Pont d'Inca, Marratxí<br/>E-MAIL: escola@esliceu.com<br/>Telèfon: 971 60 09 86<br/><br/><br/>",
@@ -178,7 +180,8 @@ def butlleti(request,curs_id):
 					nts.append("BLANK")
 			kkk.append(nts)
 
-		tits = ["<b>" + t.nom + "</b>" for t in tipnotes ]
+		
+		tits = [Paragraph(t.nom,styles['Normal']) for t in tipnotes ]
 		tits.insert(0,'')
 				
 		data = []
