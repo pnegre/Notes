@@ -1,0 +1,27 @@
+<html>
+
+<head>
+<script type="text/javascript" src="/static/notes/jquery.js"></script>
+
+<script type="text/javascript">
+
+
+</script>
+
+
+
+
+</head>
+
+
+<body>
+
+<h1> Cursos </h1>
+<ul>
+{% for c in cursos %}
+	
+	<li> <a href="curs/{{ c.id }}">{{ c.nom }}</a> </li>
+	
+{% endfor %}
+</ul>
+</body>

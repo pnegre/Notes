@@ -1,0 +1,152 @@
+<html>
+
+<head>
+<script type="text/javascript" src="/static/notes/jquery.js"></script>
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+		
+// 		$(".nts").each(function() {
+// 			t = $(this);
+// 			var nota = t.val();
+// 			var alumne = t.attr('id_al');
+// 			var assignatura = t.attr('id_as');
+// 			var tnota = t.attr('id_tn');
+// 			var stri="/notes/getnota/" + alumne + "/" + assignatura + "/" + tnota;
+// 			
+// 			$.ajax({
+// 				type: 'GET',
+// 				url: stri,
+// 				dataType: 'json',
+// 				success: function(data) { t.val(data.nota) },
+// 				data: {},
+// 				async: false
+// 			});
+// 
+// 		});
+
+		$.getJSON("/notes/getnotes/{{ curs.id }}", function(data) {
+			for (i in data) {
+				var alumne = i;
+				for (k in data[i]) {
+					var assignatura = k;
+					for (j in data[i][k]) {
+						var tn = j;
+						$("[id_al="+alumne+"][id_as="+assignatura+"][id_tn="+tn+"]").val(data[i][k][j]);						
+					}
+				}
+			}
+		});
+
+// 		$.ajax({
+// 				type: 'GET',
+// 				url: "/notes/getnotes/{{ curs.id }}",
+// 				dataType: 'json',
+// 				success: function(data) { t.val(data.nota) },
+// 				data: {},
+// 				async: false
+// 			});
+		
+		$(".nts").change(function() {
+			t = $(this);
+			var nota = t.val();
+			var alumne = t.attr('id_al');
+			var assignatura = t.attr('id_as');
+			var tnota = t.attr('id_tn');
+			var stri="/notes/nnota/" + alumne + "/" + assignatura + "/" + nota + "/" + tnota;
+// 			alert(stri);
+			$.get(stri);
+			
+		});
+		
+		
+
+});
+
+
+
+
+</script>
+
+
+
+
+</head>
+
+
+<body>
+
+<h1> Curs: {{ curs.nom }} </h1>
+
+<table border="1">
+
+<tr><th>.</th>
+{% for a in asgs %}
+	<th colspan=3>{{ a.nom }}</th>
+{% endfor %}
+</tr>
+
+<tr><th>.</th>
+{% for a in asgs %}
+	{% for t in tipnotes %}
+		<td>{{ t.nom }}</td>
+	{% endfor %}
+{% endfor %}
+
+</tr>
+
+
+{% for al in alumnes %}
+
+<tr> <th> {{ al.nom }} </th>
+
+	{% for a in asgs %}
+		
+		{% for t in tipnotes %}
+			<td>
+			<select class="nts" id_al="{{al.id}}" id_as="{{a.id}}" id_tn="{{t.id}}">
+			{% for i in t.itemnota_set.all %}
+				{% if notes.alumne__sa %} kaka {% endif %}
+				<option value="{{ i.id }}">{{ i.it }}</option>
+			{% endfor %}
+			</select>
+			</td>
+		{% endfor %}
+		
+	{% endfor %}
+
+
+</tr>
+
+{% endfor %}
+
+
+<!-- <tr><th> Pep buades </th> <td> 10 </td> <td> 7 </td></tr> -->
+
+</table>
+
+<form method="POST">
+<br><br>
+
+Afegeix assignatura: <br>
+<input type="text" name="ass"> <br>
+<input type="submit" name="newass">
+
+
+</form>
+
+<hline>
+
+<form method="POST">
+<br><br>
+
+Afegeix alumne: <br>
+<input type="text" name="al"> <br>
+<input type="submit" name="newal">
+
+
+</form>
+
+
+</body>
