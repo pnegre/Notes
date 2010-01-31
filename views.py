@@ -25,7 +25,7 @@ def curs(request,curs_id):
 			ass.save()
 	
 	asgs = Assignatura.objects.filter(curs=curs)
-	als = Alumne.objects.filter(curs=curs)
+	als = Alumne.objects.filter(curs=curs).order_by('l1')
 	tipnotes = TipNota.objects.all()
 	items = ItemNota.objects
 	notes = Nota.objects
@@ -50,7 +50,7 @@ def assig(request,as_id):
 	assignatura = Assignatura.objects.filter(id=as_id)[0]
 	curs = Curs.objects.filter(assignatura=assignatura)[0]
 	tipnotes = TipNota.objects.all()
-	als = Alumne.objects.filter(curs=curs)
+	als = Alumne.objects.filter(curs=curs).order_by('l1')
 	
 	for a in als:
 		c = Comentari.objects.filter(alumne=a,assignatura=assignatura)
@@ -138,7 +138,7 @@ def getnotes(request,curs_id):
 
 def butlleti(request,curs_id):
 	curs = Curs.objects.filter(id=curs_id)
-	als = Alumne.objects.filter(curs=curs)
+	als = Alumne.objects.filter(curs=curs).order_by('l1')
 	asgs = Assignatura.objects.filter(curs=curs)
 	tipnotes = TipNota.objects.all()
 	
