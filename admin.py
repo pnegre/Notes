@@ -9,5 +9,6 @@ admin.site.register(Alumne)
 admin.site.register(Nota)
 admin.site.register(TipNota)
 admin.site.register(ItemNota)
+admin.site.register(Comentari)
 
 

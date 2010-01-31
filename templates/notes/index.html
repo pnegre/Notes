@@ -21,6 +21,11 @@
 {% for c in cursos %}
 	
 	<li> <a href="curs/{{ c.id }}">{{ c.nom }}</a> </li>
+	<ul>
+		{% for a in c.assignatura_set.all %}
+			<li> <a href="assignatura/{{ a.id }}">{{ a.nom }}</a> </li>
+		{% endfor %}
+	</ul>
 	
 {% endfor %}
 </ul>

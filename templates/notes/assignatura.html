@@ -7,7 +7,6 @@
 
 $(document).ready(function() {
 
-
 		$.getJSON("/notes/getnotes/{{ curs.id }}", function(data) {
 			for (i in data) {
 				var alumne = i;
@@ -34,6 +33,14 @@ $(document).ready(function() {
 			
 		});
 		
+		$(".ncom").click(function() {
+			var s = $(this).parent().serialize();
+// 			alert(s);
+			$.post("/notes/noucomentari", s);
+			return false;
+		
+		});
+		
 		
 
 });
@@ -52,74 +59,46 @@ $(document).ready(function() {
 <body>
 
 <h1> Curs: {{ curs.nom }} </h1>
+<h2> Assignatura: {{ assignatura.nom }} </h2>
 
 <table border="1">
 
-<tr><th>.</th>
-{% for a in asgs %}
-	<th colspan="{{ntip}}">{{ a.nom }}</th>
-{% endfor %}
-</tr>
-
-<tr><th>.</th>
-{% for a in asgs %}
-	{% for t in tipnotes %}
-		<td>{{ t.nom }}</td>
-	{% endfor %}
-{% endfor %}
-
-</tr>
-
-
-{% for al in alumnes %}
-
-<tr> <th> {{ al.nom }} </th>
-
-	{% for a in asgs %}
-		
+	<tr><th>.</th>
 		{% for t in tipnotes %}
-			<td>
-			<select class="nts" id_al="{{al.id}}" id_as="{{a.id}}" id_tn="{{t.id}}">
-			{% for i in t.itemnota_set.all %}
-				<option value="{{ i.id }}">{{ i.it }}</option>
-			{% endfor %}
-			</select>
-			</td>
+			<td>{{ t.nom }}</td>
 		{% endfor %}
-		
+		<td> Comentari </td>
+	</tr>
+
+	{% for al in alumnes %}
+	<tr> <th> {{ al.nom }} </th>
+
+			{% for t in tipnotes %}
+				<td>
+				<select class="nts" id_al="{{al.id}}" id_as="{{assignatura.id}}" id_tn="{{t.id}}">
+				{% for i in t.itemnota_set.all %}
+					<option value="{{ i.id }}">{{ i.it }}</option>
+				{% endfor %}
+				</select>
+				</td>
+			{% endfor %}
+			<td>
+			
+			<form method="POST">
+			<textarea name="comentari" rows="3" cols="20">{{ al.comm }}</textarea>
+			<br>
+			<input type="hidden" name="al" value="{{al.id}}">
+			<input type="hidden" name="as" value="{{assignatura.id}}">
+			<input type="submit" name="envia" value="Actualitza" class="ncom">
+
+			</form>
+			
+			</td>
+
+	</tr>
 	{% endfor %}
-
-
-</tr>
-
-{% endfor %}
-
-
-<!-- <tr><th> Pep buades </th> <td> 10 </td> <td> 7 </td></tr> -->
-
 </table>
 
-<form method="POST">
-<br><br>
-
-Afegeix assignatura: <br>
-<input type="text" name="ass"> <br>
-<input type="submit" name="newass">
-
-
-</form>
-
-<hline>
-
-<form method="POST">
-<br><br>
-
-Afegeix alumne: <br>
-<input type="text" name="al"> <br>
-<input type="submit" name="newal">
-
-
-</form>
 
 
 </body>

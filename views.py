@@ -4,6 +4,12 @@ from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.utils import simplejson
 
+from reportlab.pdfgen import canvas
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.platypus import *
+from reportlab.lib import colors
+
+
 from notes.models import *
 
 def curs(request,curs_id):
@@ -23,6 +29,10 @@ def curs(request,curs_id):
 	tipnotes = TipNota.objects.all()
 	items = ItemNota.objects
 	notes = Nota.objects
+	
+	ntip=0
+	for i in tipnotes:
+		ntip += 1
 					
 	return render_to_response(
 			'notes/curs.html', { 
@@ -31,8 +41,43 @@ def curs(request,curs_id):
 				'alumnes': als,
 				'tipnotes': tipnotes,
 				'items': items,
-				'notes': notes,
+				#'notes': notes,
+				'ntip': ntip,
 	} )
+
+
+def assig(request,as_id):
+	assignatura = Assignatura.objects.filter(id=as_id)[0]
+	curs = Curs.objects.filter(assignatura=assignatura)[0]
+	tipnotes = TipNota.objects.all()
+	als = Alumne.objects.filter(curs=curs)
+	
+	for a in als:
+		c = Comentari.objects.filter(alumne=a,assignatura=assignatura)
+		if (c):
+			a.comm = c[0].text
+		else:
+			a.comm = ''
+	
+	return render_to_response(
+			'notes/assignatura.html', { 
+				'curs': curs,
+				'assignatura': assignatura,
+				'alumnes': als,
+				'tipnotes': tipnotes,
+	} )
+
+
+def comentari(request):
+	post = request.POST
+	com = Comentari(
+		text = post['comentari'],
+		alumne = Alumne.objects.filter(id=int(post['al']))[0],
+		assignatura = Assignatura.objects.filter(id=int(post['as']))[0]
+	)
+	com.save()
+	return HttpResponse()
+
 
 
 def nnota(request,al_id,as_id,it_id,tn_id):
@@ -88,12 +133,7 @@ def getnotes(request,curs_id):
 	return HttpResponse(simplejson.dumps( r ), mimetype='application/javascript')
 
 
-from reportlab.pdfgen import canvas
-#from django.http import HttpResponse
 
-from reportlab.lib.styles import getSampleStyleSheet
-from reportlab.platypus import *
-from reportlab.lib import colors
 
 
 def butlleti(request,curs_id):
@@ -101,8 +141,6 @@ def butlleti(request,curs_id):
 	als = Alumne.objects.filter(curs=curs)
 	asgs = Assignatura.objects.filter(curs=curs)
 	tipnotes = TipNota.objects.all()
-	
-	al = als[0]
 	
 	# Create the HttpResponse object with the appropriate PDF headers.
 	response = HttpResponse(mimetype='application/pdf')
@@ -117,37 +155,46 @@ def butlleti(request,curs_id):
 	# A basic document for us to write to 'rl_hello_platypus.pdf'
 	doc = SimpleDocTemplate(response)
 	
-	# Create two 'Paragraph' Flowables and add them to our 'elements'
-	elements.append(Paragraph("Notes per " + al.nom, styles['Heading1']))
-	elements.append(Paragraph("<b>Notetes</b>",
-	styles['Normal']))
-	
-	kkk = []
-	for a in asgs:
-		nts = []
-		nts.append(a.nom)
-		for t in tipnotes:
-			try:
-				n = Nota.objects.filter(assignatura=a,alumne=al,tipnota=t)[0]
-				nts.append(n.nota.it)
-			except:
-				nts.append("BLANK")
-		kkk.append(nts)
+	for al in als:
+		# Create two 'Paragraph' Flowables and add them to our 'elements'
+		elements.append(Paragraph("Es Liceu.<br/>Carrer Cabana, 31.<br/> 07141, Pont d'Inca, Marratxí<br/>E-MAIL: escola@esliceu.com<br/>Telèfon: 971 60 09 86<br/><br/><br/>",
+			styles['Normal']))
+		elements.append(Paragraph("Notes per " + al.nom, styles['Heading1']))
+		
+		
+		kkk = []
+		for a in asgs:
+			nts = []
+			nts.append(a.nom)
+			for t in tipnotes:
+				try:
+					n = Nota.objects.filter(assignatura=a,alumne=al,tipnota=t)[0]
+					nts.append(n.nota.it)
+				except:
+					nts.append("BLANK")
+			kkk.append(nts)
 
-	tits = [t.nom for t in tipnotes ]
-	tits.insert(0,'')
-			
-	data = []
-	data.append(tits)
-	for i in kkk:
-		data.append(i)
- 
+		tits = [t.nom for t in tipnotes ]
+		tits.insert(0,'')
+				
+		data = []
+		data.append(tits)
+		for i in kkk:
+			data.append(i)
 	
-	# Create the table with the necessary style, and add it to the
-	# elements list.
-	table = Table(data)
-	elements.append(table)
-	
+		
+		# Create the table with the necessary style, and add it to the
+		# elements list.
+		table = Table(data)
+		elements.append(table)
+		
+		comentaris = Comentari.objects.filter(alumne=al)
+		for c in comentaris:
+			elements.append(Paragraph("Comentaris de " + c.assignatura.nom, styles['Heading3']))
+			elements.append(Paragraph(c.text, styles['Normal']))
+		
+		elements.append(PageBreak()) 
+		
 	
 	# Write the document to disk
 	doc.build(elements)

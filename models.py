@@ -50,5 +50,13 @@ class Nota(models.Model):
 		#return self.nota
 
 
+class Comentari(models.Model):
+	text = models.TextField()
+	alumne = models.ForeignKey(Alumne)
+	assignatura = models.ForeignKey(Assignatura)
+	
+	def __unicode__(self):
+		return self.text
+
 
 
