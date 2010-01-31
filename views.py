@@ -138,7 +138,7 @@ def getnotes(request,curs_id):
 from reportlab.lib.pagesizes import A4, LETTER, landscape, portrait 
 
 def butlleti(request,curs_id):
-	curs = Curs.objects.filter(id=curs_id)
+	curs = Curs.objects.filter(id=curs_id)[0]
 	als = Alumne.objects.filter(curs=curs).order_by('l1')
 	asgs = Assignatura.objects.filter(curs=curs)
 	tipnotes = TipNota.objects.all()
@@ -161,11 +161,12 @@ def butlleti(request,curs_id):
 	
 	for al in als:
 		# Create two 'Paragraph' Flowables and add them to our 'elements'
-		elements.append(Paragraph("Es Liceu.<br/>Carrer Cabana, 31.<br/> 07141, Pont d'Inca, Marratxí<br/>E-MAIL: escola@esliceu.com<br/>Telèfon: 971 60 09 86<br/><br/><br/>",
+		elements.append(Paragraph("Es Liceu.<br/>Carrer Cabana, 31. 07141, Pont d'Inca, Marratxí<br/>E-MAIL: escola@esliceu.com<br/>Telèfon: 971 60 09 86<br/><br/>",
 			styles['Normal']))
 		elements.append(Paragraph("Notes per " + str(al), styles['Heading1']))
 		
-		elements.append(Paragraph("<br/><br/>", styles['Normal']))
+		elements.append(Paragraph("Curs: " + curs.nom, styles['Normal']))
+		elements.append(Paragraph("Tutor: " + curs.tutor + "<br/><br/>", styles['Normal']))
 		
 		
 		kkk = []
