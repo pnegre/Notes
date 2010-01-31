@@ -16,7 +16,7 @@
 
 <body>
 
-<h1> Cursos </h1>
+<h1> Introduccio notes </h1>
 <ul>
 {% for c in cursos %}
 	
@@ -24,4 +24,15 @@
 	
 {% endfor %}
 </ul>
+
+
+<h1> Butlletins </h1>
+<ul>
+{% for c in cursos %}
+	
+	<li> <a href="butlleti/{{ c.id }}">{{ c.nom }}</a> </li>
+	
+{% endfor %}
+</ul>
+
 </body>

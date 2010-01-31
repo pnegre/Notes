@@ -56,15 +56,6 @@ def nnota(request,al_id,as_id,it_id,tn_id):
 	return HttpResponse()
 
 
-#def getnota(request,al_id,as_id,tn_id):
-	#tipnota = TipNota.objects.filter(id=tn_id)[0]
-	#alumne = Alumne.objects.filter(id=al_id)[0]
-	#assignatura = Assignatura.objects.filter(id=as_id)[0]
-	
-	#nota = Nota.objects.filter(tipnota=tipnota,alumne=alumne,assignatura=assignatura)[0]
-	#return HttpResponse(simplejson.dumps( {'nota': nota.nota.id} ), mimetype='application/javascript')
-
-
 def llistat_cursos(request):
 	cursos = Curs.objects.all()
 	return render_to_response(
@@ -95,4 +86,70 @@ def getnotes(request,curs_id):
 		r[a.id] = r1
 		
 	return HttpResponse(simplejson.dumps( r ), mimetype='application/javascript')
+
+
+from reportlab.pdfgen import canvas
+#from django.http import HttpResponse
+
+from reportlab.lib.styles import getSampleStyleSheet
+from reportlab.platypus import *
+from reportlab.lib import colors
+
+
+def butlleti(request,curs_id):
+	curs = Curs.objects.filter(id=curs_id)
+	als = Alumne.objects.filter(curs=curs)
+	asgs = Assignatura.objects.filter(curs=curs)
+	tipnotes = TipNota.objects.all()
 	
+	al = als[0]
+	
+	# Create the HttpResponse object with the appropriate PDF headers.
+	response = HttpResponse(mimetype='application/pdf')
+	response['Content-Disposition'] = 'attachment; filename=somefilename.pdf'
+
+	# Our container for 'Flowable' objects
+	elements = []
+	
+	# A large collection of style sheets pre-made for us
+	styles = getSampleStyleSheet()
+	
+	# A basic document for us to write to 'rl_hello_platypus.pdf'
+	doc = SimpleDocTemplate(response)
+	
+	# Create two 'Paragraph' Flowables and add them to our 'elements'
+	elements.append(Paragraph("Notes per " + al.nom, styles['Heading1']))
+	elements.append(Paragraph("<b>Notetes</b>",
+	styles['Normal']))
+	
+	kkk = []
+	for a in asgs:
+		nts = []
+		nts.append(a.nom)
+		for t in tipnotes:
+			try:
+				n = Nota.objects.filter(assignatura=a,alumne=al,tipnota=t)[0]
+				nts.append(n.nota.it)
+			except:
+				nts.append("BLANK")
+		kkk.append(nts)
+
+	tits = [t.nom for t in tipnotes ]
+	tits.insert(0,'')
+			
+	data = []
+	data.append(tits)
+	for i in kkk:
+		data.append(i)
+ 
+	
+	# Create the table with the necessary style, and add it to the
+	# elements list.
+	table = Table(data)
+	elements.append(table)
+	
+	
+	# Write the document to disk
+	doc.build(elements)
+	return response
+		
