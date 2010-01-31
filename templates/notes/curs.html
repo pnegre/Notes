@@ -73,7 +73,7 @@ $(document).ready(function() {
 
 {% for al in alumnes %}
 
-<tr> <th> {{ al.nom }} </th>
+<tr> <th> {{ al }} </th>
 
 	{% for a in asgs %}
 		
@@ -100,22 +100,25 @@ $(document).ready(function() {
 </table>
 
 <form method="POST">
-<br><br>
 
-Afegeix assignatura: <br>
+<h3>Afegeix assignatura: </h3>
 <input type="text" name="ass"> <br>
 <input type="submit" name="newass">
 
 
 </form>
 
-<hline>
-
 <form method="POST">
-<br><br>
 
-Afegeix alumne: <br>
+
+<h3>Afegeix alumne: </h3>
+Nom:<br>
 <input type="text" name="al"> <br>
+Llinatge1:<br>
+<input type="text" name="l1"> <br>
+Llinatge2:<br>
+<input type="text" name="l2"> <br>
+
 <input type="submit" name="newal">
 
 

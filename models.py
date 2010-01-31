@@ -18,10 +18,12 @@ class Assignatura(models.Model):
 
 class Alumne(models.Model):
 	nom = models.CharField(max_length=200)
+	l1 = models.CharField(max_length=200)
+	l2 = models.CharField(max_length=200)
 	curs = models.ForeignKey(Curs)
 	
 	def __unicode__(self):
-		return self.nom
+		return self.l1 + " " + self.l2 + ", "+ self.nom
 
 
 class TipNota(models.Model):

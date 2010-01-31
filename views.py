@@ -18,7 +18,7 @@ def curs(request,curs_id):
 	if request.method == "POST":
 		fields = request.POST
 		if 'newal' in fields.keys():
-			al = Alumne(nom=fields['al'], curs=curs)
+			al = Alumne(nom=fields['al'], l1=fields['l1'], l2=fields['l2'], curs=curs)
 			al.save()
 		elif 'newass' in fields.keys():
 			ass = Assignatura(nom=fields['ass'], curs=curs)
@@ -159,7 +159,7 @@ def butlleti(request,curs_id):
 		# Create two 'Paragraph' Flowables and add them to our 'elements'
 		elements.append(Paragraph("Es Liceu.<br/>Carrer Cabana, 31.<br/> 07141, Pont d'Inca, Marratxí<br/>E-MAIL: escola@esliceu.com<br/>Telèfon: 971 60 09 86<br/><br/><br/>",
 			styles['Normal']))
-		elements.append(Paragraph("Notes per " + al.nom, styles['Heading1']))
+		elements.append(Paragraph("Notes per " + str(al), styles['Heading1']))
 		
 		
 		kkk = []
