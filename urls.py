@@ -14,6 +14,9 @@ urlpatterns = patterns('',
 	
 	(r'^noucomentari$', 'notes.views.comentari'),
 	
+	(r'^upload$', 'notes.views.upload'),
+	
+	
 	
 	(r'^$', 'notes.views.llistat_cursos'),
 

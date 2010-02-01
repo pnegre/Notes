@@ -1,0 +1,35 @@
+<html>
+
+
+<head></head>
+
+<body>
+
+{% if content %}
+	
+	{{ content }}
+
+{% else %}
+
+<h1> Upload </h1>
+
+<form method="POST" enctype="multipart/form-data">
+
+Fitxer: <input type="file" name="file">
+<br><br>
+Curs: 
+<select name="curs">
+{% for c in cursos %}
+	<option value="{{c.id}}">{{c.nom}}</option>
+{% endfor %}
+</select>
+<br><br>
+<input type="submit">
+
+</form>
+
+{% endif %}
+
+</body>
+
+</html>

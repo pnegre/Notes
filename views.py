@@ -148,6 +148,39 @@ def getnotes(request,curs_id,as_id):
 
 
 
+def upload(request):
+	cursos = Curs.objects.all()
+	r = ""
+	if request.method == 'POST':
+		curs = Curs.objects.filter(id=request.POST['curs'])[0]
+		f = request.FILES['file']
+		ct = ""
+		for chunk in f.chunks():
+			ct += chunk
+		lines = ct.split("\n")
+		for l in lines:
+			s = l.split(",")
+			if len(s) < 4: continue
+			l1 = re.sub('"','',s[0])
+			l2 = re.sub('"','',s[1])
+			nom = re.sub('"','',s[2])
+			r += l1 + " " + l2 + " " + nom + " ||| "
+			alumne = Alumne(
+				l1 = l1,
+				l2 = l2,
+				nom = nom,
+				curs = curs
+			)
+			alumne.save()
+			
+	return render_to_response(
+			'notes/upload.html', {
+				'content': r,
+				'cursos': cursos, 
+	} )
+
+
+
 
 from reportlab.lib.pagesizes import A4, LETTER, landscape, portrait 
 
@@ -192,7 +225,7 @@ def butlleti(request,curs_id):
 					n = Nota.objects.filter(assignatura=a,alumne=al,tipnota=t)[0]
 					nts.append(n.nota.it)
 				except:
-					nts.append("BLANK")
+					nts.append("")
 			kkk.append(nts)
 
 		
