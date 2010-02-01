@@ -38,6 +38,7 @@ class Alumne(models.Model):
 
 class TipNota(models.Model):
 	nom = models.CharField(max_length=100)
+	ordre = models.IntegerField()
 	
 	class Meta:
 		ordering = ('-nom',)

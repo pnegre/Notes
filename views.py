@@ -27,7 +27,7 @@ def curs(request,curs_id):
 	
 	asgs = Assignatura.objects.filter(curs=curs)
 	als = Alumne.objects.filter(curs=curs).order_by('l1')
-	tipnotes = TipNota.objects.all()
+	tipnotes = TipNota.objects.all().order_by('ordre')
 	items = ItemNota.objects
 	notes = Nota.objects
 	
@@ -49,7 +49,7 @@ def curs(request,curs_id):
 def assig(request,as_id):
 	assignatura = Assignatura.objects.filter(id=as_id)[0]
 	curs = Curs.objects.filter(assignatura=assignatura)[0]
-	tipnotes = TipNota.objects.all()
+	tipnotes = TipNota.objects.all().order_by('ordre')
 	als = Alumne.objects.filter(curs=curs).order_by('l1')
 	
 	for a in als:
@@ -188,7 +188,7 @@ def butlleti(request,curs_id):
 	curs = Curs.objects.filter(id=curs_id)[0]
 	als = Alumne.objects.filter(curs=curs).order_by('l1')
 	asgs = Assignatura.objects.filter(curs=curs)
-	tipnotes = TipNota.objects.all()
+	tipnotes = TipNota.objects.all().order_by('ordre')
 	
 	# Create the HttpResponse object with the appropriate PDF headers.
 	response = HttpResponse(mimetype='application/pdf')
