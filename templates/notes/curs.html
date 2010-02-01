@@ -7,35 +7,6 @@
 
 $(document).ready(function() {
 
-
-		$.getJSON("/notes/getnotes/{{ curs.id }}", function(data) {
-			for (i in data) {
-				var alumne = i;
-				for (k in data[i]) {
-					var assignatura = k;
-					for (j in data[i][k]) {
-						var tn = j;
-						$("[id_al="+alumne+"][id_as="+assignatura+"][id_tn="+tn+"]").val(data[i][k][j]);						
-					}
-				}
-			}
-		});
-
-		
-		$(".nts").change(function() {
-			t = $(this);
-			var nota = t.val();
-			var alumne = t.attr('id_al');
-			var assignatura = t.attr('id_as');
-			var tnota = t.attr('id_tn');
-			var stri="/notes/nnota/" + alumne + "/" + assignatura + "/" + nota + "/" + tnota;
-// 			alert(stri);
-			$.get(stri);
-			
-		});
-		
-		
-
 });
 
 
@@ -81,11 +52,7 @@ $(document).ready(function() {
 		
 		{% for t in tipnotes %}
 			<td>
-			<select class="nts" id_al="{{al.id}}" id_as="{{a.id}}" id_tn="{{t.id}}">
-			{% for i in t.itemnota_set.all %}
-				<option value="{{ i.id }}">{{ i.it }}</option>
-			{% endfor %}
-			</select>
+			.
 			</td>
 		{% endfor %}
 		
@@ -96,8 +63,6 @@ $(document).ready(function() {
 
 {% endfor %}
 
-
-<!-- <tr><th> Pep buades </th> <td> 10 </td> <td> 7 </td></tr> -->
 
 </table>
 

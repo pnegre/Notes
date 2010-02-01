@@ -109,25 +109,22 @@ def llistat_cursos(request):
 	} )
 	
 
-
-def getnotes(request,curs_id):
-	notes = Nota.objects.filter(id=curs_id)
-	curs = Curs.objects.filter(id=curs_id)
+# Donat un curs i una assignatura, torna totes les notes d'aquella assignatura, en json
+def getnotes(request,curs_id,as_id):
+	curs = Curs.objects.filter(id=curs_id)[0]
 	r = {}
 	als = Alumne.objects.filter(curs=curs)
-	asgs = Assignatura.objects.filter(curs=curs)
+	asg = Assignatura.objects.filter(id=as_id)[0]
 	tipnotes = TipNota.objects.all()
 	for a in als:
 		r1 = {}
-		for asg in asgs:
-			r2 = {}
-			for t in tipnotes:
-				try:
-					n = Nota.objects.filter(assignatura=asg,alumne=a,tipnota=t)[0]
-					r2[t.id] = n.nota.id
-				except:
-					r2[t.id] = None
-			r1[asg.id] = r2
+		for t in tipnotes:
+			try:
+				n = Nota.objects.filter(assignatura=asg,alumne=a,tipnota=t)[0]
+				r1[t.id] = n.nota.id
+			except:
+				r1[t.id] = None
+		
 		r[a.id] = r1
 		
 	return HttpResponse(simplejson.dumps( r ), mimetype='application/javascript')
