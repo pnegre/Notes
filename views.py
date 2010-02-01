@@ -9,6 +9,7 @@ from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import *
 from reportlab.lib import colors
 
+import re
 
 from notes.models import *
 
@@ -41,7 +42,6 @@ def curs(request,curs_id):
 				'alumnes': als,
 				'tipnotes': tipnotes,
 				'items': items,
-				#'notes': notes,
 				'ntip': ntip,
 	} )
 
@@ -68,14 +68,31 @@ def assig(request,as_id):
 	} )
 
 
+
 def comentari(request):
 	post = request.POST
-	com = Comentari(
-		text = post['comentari'],
-		alumne = Alumne.objects.filter(id=int(post['al']))[0],
-		assignatura = Assignatura.objects.filter(id=int(post['as']))[0]
-	)
-	com.save()
+	text = post['comentari']
+	alumne = Alumne.objects.filter(id=int(post['al']))[0]
+	assignatura = Assignatura.objects.filter(id=int(post['as']))[0]
+	if not re.match('^\s*$', text):
+		try:
+			com = Comentari.objects.filter(alumne=alumne, assignatura=assignatura)[0]
+			com.text = text
+			com.save()
+		except:
+			com = Comentari(
+				text = text,
+				alumne = alumne,
+				assignatura = assignatura
+			)
+			com.save()
+	else:
+		try:
+			com = Comentari.objects.filter(alumne=alumne, assignatura=assignatura)[0]
+			com.delete()
+		except:
+			pass
+		
 	return HttpResponse()
 
 
