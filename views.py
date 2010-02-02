@@ -192,7 +192,7 @@ def butlleti(request,curs_id):
 	
 	# Create the HttpResponse object with the appropriate PDF headers.
 	response = HttpResponse(mimetype='application/pdf')
-	response['Content-Disposition'] = 'attachment; filename=somefilename.pdf'
+	response['Content-Disposition'] = 'attachment; filename=butlletins' + str(curs) + '.pdf'
 
 	# Our container for 'Flowable' objects
 	elements = []
