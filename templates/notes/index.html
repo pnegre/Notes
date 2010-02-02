@@ -3,8 +3,24 @@
 <head>
 <script type="text/javascript" src="/static/notes/jquery.js"></script>
 
+<style type="text/css">
+
+.llista_assignatures {
+	display: none;
+}
+
+</style>
+
+
 <script type="text/javascript">
 
+$(document).ready(function(){
+	$(".mostra_assignatures").click(function() {
+		var l = $(this).parent().next();
+		l.toggle();
+		return false;
+	});
+});
 
 </script>
 
@@ -20,8 +36,8 @@
 <ul>
 {% for c in cursos %}
 	
-	<li> <a href="curs/{{ c.id }}">{{ c.nom }}</a> </li>
-	<ul>
+	<li> {{ c.nom }} [{{ c.id }}] <input type="submit" class="mostra_assignatures" value="mostra/oculta"></li> 
+	<ul class="llista_assignatures">
 		{% for a in c.assignatura_set.all %}
 			<li> <a href="assignatura/{{ a.id }}">{{ a.nom }}</a> </li>
 		{% endfor %}
