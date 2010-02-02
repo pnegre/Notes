@@ -36,7 +36,7 @@ $(document).ready(function(){
 <ul>
 {% for c in cursos %}
 	
-	<li> {{ c.nom }} [{{ c.id }}] <input type="submit" class="mostra_assignatures" value="mostra/oculta"></li> 
+	<li> <a href="" class="mostra_assignatures">[ + ]</a> {{ c.nom }} [{{ c.id }}] </li> 
 	<ul class="llista_assignatures">
 		{% for a in c.assignatura_set.all %}
 			<li> <a href="assignatura/{{ a.id }}">{{ a.nom }}</a> </li>
