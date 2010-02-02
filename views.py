@@ -201,7 +201,7 @@ def butlleti(request,curs_id):
 	styles = getSampleStyleSheet()
 	
 	# A basic document for us to write to 'rl_hello_platypus.pdf'
-	doc = SimpleDocTemplate(response)
+	doc = SimpleDocTemplate(response, leftMargin=25, rightMargin=25, topMargin=40, bottomMargin=40)
 	doc.pagesize = landscape(A4)
 	
 	styles['Normal'].fontsize=8
