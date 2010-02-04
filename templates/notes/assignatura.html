@@ -7,13 +7,9 @@
 $(document).ready(function() {
 
 		$.getJSON("/notes/getnotes/{{ curs.id }}/{{ assignatura.id }}", function(data) {
-			for (i in data) {
-				var alumne = i;
-				for (k in data[i]) {
-					var tn = k;
-					$("[id_al="+alumne+"][id_tn="+tn+"]").val(data[i][k]);						
-				}
-			}
+			for (alumne in data)
+				for (tn in data[alumne])
+					$("[id_al="+alumne+"][id_tn="+tn+"]").val(data[alumne][tn]);
 		});
 
 		
