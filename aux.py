@@ -28,7 +28,7 @@ def butlletins_per_curs_i_alumne(curs,alumnes):
 	styles = getSampleStyleSheet()
 	
 	# A basic document for us to write to 'rl_hello_platypus.pdf'
-	doc = SimpleDocTemplate(response, leftMargin=25, rightMargin=25, topMargin=40, bottomMargin=40)
+	doc = SimpleDocTemplate(response, leftMargin=25, rightMargin=25, topMargin=30, bottomMargin=30)
 	doc.pagesize = landscape(A4)
 	
 	styles['Normal'].fontsize=8
@@ -36,8 +36,16 @@ def butlletins_per_curs_i_alumne(curs,alumnes):
 	strdate = str(today.day) + "/" + str(today.month) + "/" + str(today.year)
 	
 	for al in alumnes:
-		elements.append(Paragraph("Es Liceu.<br/>Carrer Cabana, 31. 07141, Pont d'Inca, Marratxí<br/>Telèfon: 971 60 09 86. E-MAIL: escola@esliceu.com<br/><br/>",
-			styles['Normal']))
+		im = Image("/tmp/image.jpg")
+		im.hAlign = 'RIGHT'
+		#elements.append(im)
+		
+		par = Paragraph("Es Liceu.<br/>Carrer Cabana, 31. 07141, Pont d'Inca, Marratxí<br/>Telèfon: 971 60 09 86. E-MAIL: escola@esliceu.com<br/><br/>",
+			styles['Normal'])
+		
+		#par2 = Paragraph("Retalli per la línia de punts, etc, etc, etc bla bla bla jor joooooooooooooor", styles["Normal"])
+		
+		elements.append(par)
 		
 		elements.append(Paragraph(str(al), styles['Heading1']))
 		
@@ -83,6 +91,9 @@ def butlletins_per_curs_i_alumne(curs,alumnes):
 		
 		elements.append(Paragraph("<br/><br/>", styles['Normal']))
 		elements.append(Paragraph(coms, styles['Normal']))
+		
+		
+		
 		elements.append(PageBreak()) 
 		
 	
