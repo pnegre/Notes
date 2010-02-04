@@ -12,6 +12,11 @@ urlpatterns = patterns('',
 	
 	(r'^butlleti/(?P<curs_id>\d+)', 'notes.views.butlleti'),
 	
+	(r'^butlletins$', 'notes.views.butlletins2'),
+	(r'^llista_alumnes/(?P<curs_id>\d+)', 'notes.views.llista_alumnes'),
+	(r'^butlletins_individuals$', 'notes.views.butlletins_individuals'),
+	
+	
 	(r'^noucomentari$', 'notes.views.comentari'),
 	
 	(r'^upload$', 'notes.views.upload'),

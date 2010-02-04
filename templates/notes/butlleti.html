@@ -1,34 +1,74 @@
-<html>
+{% extends "notes/base.html" %}
 
 
-<body>
+{% block head %}
 
-{% for al in alumnes %}
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#envia_llista").click(function() {
+		var curs = $("select[name=curs]").val();
+		$.getJSON("/notes/llista_alumnes/" + curs, function(data) {
+			var s = "";
+			for (alumne in data)
+				s += '<input type="checkbox" value="ON" id="'+ data +
+				'" class="checks">' + data[alumne] + '<br>';
+			
+			$("#llista_alumnes").html(s);
+			$("#form_llista_alumnes").css("display","block");
+		});
+		
+		return false;
+	});
+	
+	$("#boto_tots").click(function() {
+		$(".checks").attr('checked', true);
+		return false;
+	});
+	
+	$("#boto_cap").click(function() {
+		$(".checks").attr('checked', false);
+		return false;
+	});
+});
+</script>
 
-	<h2>Alumne: {{ al.nom }}</h2>
+<style type="text/css">
 
-	<table border="1">
-	<tr>
-		<th>.</th>
-		{% for t in tipnotes %}
-			<th> {{ t.nom }} </th>
-		{% endfor %}
-	</tr>
+#form_llista_alumnes {
+	display: none;
+}
 
-	{% for asg in asgs %}
-	<tr>
-		<th> {{ asg.nom }} </th>
-		{% for t in tipnotes %}
-			<td> aa </td>
-		{% endfor %}
-	</tr>
-	{% endfor %}
+</style>
 
-	</table>
+{% endblock %}
 
+{% block content %}
+
+
+<h1> Butlletins </h1>
+
+
+<form id="formbutlletins" method="POST">
+
+Curs: 
+<select name="curs">
+{% for c in cursos %}
+	<option value="{{c.id}}">{{c.nom}}</option>
 {% endfor %}
+</select>
+<br><br>
 
-</body>
+<input type="submit" name="envia" value="Mostra Alumnes" id="envia_llista">
 
-</html>
+</form >
 
+<form method="POST" id="form_llista_alumnes">
+<div id="llista_alumnes">
+</div>
+
+<br><a href="" id="boto_tots">Tots</a> || <a href="" id="boto_cap">Cap</a> <br><br>
+
+<input type="submit" value="Mostrar Butlletins" id="mostrar_butlletins">
+</form>
+
+{% endblock %}

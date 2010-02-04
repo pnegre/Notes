@@ -265,4 +265,26 @@ def butlleti(request,curs_id):
 	# Write the document to disk
 	doc.build(elements)
 	return response
-		
+
+
+def butlletins2(request):
+	cursos = Curs.objects.all()
+	return render_to_response(
+			'notes/butlleti.html', {
+				'cursos': cursos, 
+	} )
+
+
+def llista_alumnes(request,curs_id):
+	curs = Curs.objects.filter(id=curs_id)[0]
+	alumnes = Alumne.objects.filter(curs=curs)
+	r = {}
+	for a in alumnes:
+		r[a.id] = str(a)
+	
+	return HttpResponse(simplejson.dumps( r ), mimetype='application/javascript') 
+
+
+def butlletins_individuals(request):
+	pass
+	
