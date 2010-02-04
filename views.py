@@ -9,6 +9,8 @@ from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import *
 from reportlab.lib import colors
 
+import datetime
+
 import re
 
 from notes.models import *
@@ -205,16 +207,19 @@ def butlleti(request,curs_id):
 	doc.pagesize = landscape(A4)
 	
 	styles['Normal'].fontsize=8
+	today = datetime.date.today()
+	strdate = str(today.day) + "/" + str(today.month) + "/" + str(today.year)
 	
 	for al in als:
 		# Create two 'Paragraph' Flowables and add them to our 'elements'
 		elements.append(Paragraph("Es Liceu.<br/>Carrer Cabana, 31. 07141, Pont d'Inca, Marratxí<br/>E-MAIL: escola@esliceu.com<br/>Telèfon: 971 60 09 86<br/><br/>",
 			styles['Normal']))
-		elements.append(Paragraph("Notes per " + str(al), styles['Heading1']))
 		
+		elements.append(Paragraph(str(al), styles['Heading1']))
+		
+		elements.append(Paragraph("Data: " + strdate, styles['Normal']))
 		elements.append(Paragraph("Curs: " + curs.nom, styles['Normal']))
 		elements.append(Paragraph("Tutor: " + curs.tutor + "<br/><br/>", styles['Normal']))
-		
 		
 		kkk = []
 		for a in asgs:
