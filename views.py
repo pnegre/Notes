@@ -252,11 +252,13 @@ def butlleti(request,curs_id):
 		table = Table(data,style=ts)
 		elements.append(table)
 		
+		coms = ""
 		comentaris = Comentari.objects.filter(alumne=al)
 		for c in comentaris:
-			elements.append(Paragraph("Comentaris de " + c.assignatura.nom, styles['Heading3']))
-			elements.append(Paragraph(c.text, styles['Normal']))
+			coms += "<b>" + c.assignatura.nom + ":</b> " + c.text + "  "
 		
+		elements.append(Paragraph("<br/><br/>", styles['Normal']))
+		elements.append(Paragraph(coms, styles['Normal']))
 		elements.append(PageBreak()) 
 		
 	
