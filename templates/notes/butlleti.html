@@ -10,11 +10,11 @@ $(document).ready(function() {
 		$.getJSON("/notes/llista_alumnes/" + curs, function(data) {
 			var s = "";
 			for (alumne in data)
-				s += '<input type="checkbox" value="ON" id="'+ data +
-				'" class="checks">' + data[alumne] + '<br>';
+				s += '<input type="checkbox" value="ON" name="'+ alumne +
+				'" class="checks">' + data[alumne] + alumne + '<br>';
 			
 			$("#llista_alumnes").html(s);
-			$("#form_llista_alumnes").css("display","block");
+			$("#llista_alumnes + div").css("display","block");
 		});
 		
 		return false;
@@ -29,12 +29,19 @@ $(document).ready(function() {
 		$(".checks").attr('checked', false);
 		return false;
 	});
+	
+	$("#mostrar_butlletins").click(function() {
+// 		$.post("/notes/butlletins_individuals", $("#formbutlletins").serialize(), function(data) {
+// 			
+// 		});
+// 		return false;
+	}
 });
 </script>
 
 <style type="text/css">
 
-#form_llista_alumnes {
+#llista_alumnes + div {
 	display: none;
 }
 
@@ -60,15 +67,15 @@ Curs:
 
 <input type="submit" name="envia" value="Mostra Alumnes" id="envia_llista">
 
-</form >
-
-<form method="POST" id="form_llista_alumnes">
 <div id="llista_alumnes">
-</div>
 
+</div>
+<div>
 <br><a href="" id="boto_tots">Tots</a> || <a href="" id="boto_cap">Cap</a> <br><br>
 
-<input type="submit" value="Mostrar Butlletins" id="mostrar_butlletins">
+<input type="submit" value="Mostrar Butlletins" id="mostrar_butlletins" name="envia">
+
+</div>
 </form>
 
 {% endblock %}
