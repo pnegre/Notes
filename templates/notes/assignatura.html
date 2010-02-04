@@ -1,7 +1,6 @@
-<html>
+{% extends "notes/base.html" %}
 
-<head>
-<script type="text/javascript" src="/static/notes/jquery.js"></script>
+{% block head %}
 
 <script type="text/javascript">
 
@@ -47,26 +46,24 @@ $(document).ready(function() {
 
 </script>
 
+{% endblock %}
 
 
+{% block content %}
 
-</head>
-
-
-<body>
 
 <a href="/notes/">Tornar a index</a>
 
 <h1> Curs: {{ curs.nom }} </h1>
 <h2> Assignatura: {{ assignatura.nom }} </h2>
 
-<table border="1">
+<table>
 
 	<tr><th>.</th>
 		{% for t in tipnotes %}
-			<td>{{ t.nom }}</td>
+			<th>{{ t.nom }}</th>
 		{% endfor %}
-		<td> Comentari </td>
+		<th> Comentari </th>
 	</tr>
 
 	{% for al in alumnes %}
@@ -98,6 +95,4 @@ $(document).ready(function() {
 	{% endfor %}
 </table>
 
-
-
-</body>
+{% endblock %}

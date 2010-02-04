@@ -212,7 +212,7 @@ def butlleti(request,curs_id):
 	
 	for al in als:
 		# Create two 'Paragraph' Flowables and add them to our 'elements'
-		elements.append(Paragraph("Es Liceu.<br/>Carrer Cabana, 31. 07141, Pont d'Inca, Marratxí<br/>E-MAIL: escola@esliceu.com<br/>Telèfon: 971 60 09 86<br/><br/>",
+		elements.append(Paragraph("Es Liceu.<br/>Carrer Cabana, 31. 07141, Pont d'Inca, Marratxí<br/>Telèfon: 971 60 09 86. E-MAIL: escola@esliceu.com<br/><br/>",
 			styles['Normal']))
 		
 		elements.append(Paragraph(str(al), styles['Heading1']))

@@ -1,8 +1,6 @@
-<html>
+{% extends "notes/base.html" %}
 
-<head>
-<script type="text/javascript" src="/static/notes/jquery.js"></script>
-
+{% block head %}
 <style type="text/css">
 
 .llista_assignatures {
@@ -24,15 +22,12 @@ $(document).ready(function(){
 
 </script>
 
+{% endblock %}
 
 
+{% block content %}
 
-</head>
-
-
-<body>
-
-<h1> Introduccio notes </h1>
+<h1> Introducció notes </h1>
 <ul>
 {% for c in cursos %}
 	
@@ -56,4 +51,4 @@ $(document).ready(function(){
 {% endfor %}
 </ul>
 
-</body>
+{% endblock %}
