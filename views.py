@@ -44,6 +44,7 @@ def curs(request,curs_id):
 	} )
 
 
+
 def assig(request,as_id):
 	assignatura = Assignatura.objects.filter(id=as_id)[0]
 	curs = Curs.objects.filter(assignatura=assignatura)[0]
@@ -67,21 +68,12 @@ def assig(request,as_id):
 
 
 
-
-
-
-
-
-
-
 def llistat_cursos(request):
 	cursos = Curs.objects.all()
 	return render_to_response(
 			'notes/index.html', { 
 				'cursos': cursos,
-	} )
-	
-
+	} )	
 
 
 
@@ -119,18 +111,11 @@ def upload(request):
 
 
 
-
-
-
-
-
 def butlleti(request,curs_id):
 	curs = Curs.objects.filter(id=curs_id)[0]
 	alumnes = Alumne.objects.filter(curs=curs).order_by('l1')
 	
 	return butlletins_per_curs_i_alumne(curs,alumnes)
-
-
 
 
 
@@ -141,8 +126,6 @@ def butlletins2(request):
 				'cursos': cursos, 
 	} )
 
-
- 
 
 
 def butlletins_individuals(request):

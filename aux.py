@@ -35,21 +35,16 @@ def butlletins_per_curs_i_alumne(curs,alumnes):
 	today = datetime.date.today()
 	strdate = str(today.day) + "/" + str(today.month) + "/" + str(today.year)
 	
-	for al in alumnes:
-		#im = Image("/tmp/image.jpg")
-		#im.hAlign = 'RIGHT'
-		##elements.append(im)
-		
+	for al in alumnes:	
 		par = Paragraph("<b>Es Liceu</b>. Carrer Cabana, 31. 07141, Pont d'Inca, Marratxí<br/>Telèfon: 971 60 09 86. E-MAIL: escola@esliceu.com<br/><br/>",
 			styles['Normal'])
-		
 		elements.append(par)
 		
 		elements.append(Paragraph(str(al), styles['Heading1']))
 		
 		elements.append(Paragraph("Data: " + strdate, styles['Normal']))
 		elements.append(Paragraph("Curs: " + curs.nom, styles['Normal']))
-		elements.append(Paragraph("Tutor: " + curs.tutor + "<br/><br/>", styles['Normal']))
+		elements.append(Paragraph("Tutor/a: " + curs.tutor + "<br/><br/>", styles['Normal']))
 		
 		kkk = []
 		for a in assignatures:
@@ -90,17 +85,14 @@ def butlletins_per_curs_i_alumne(curs,alumnes):
 		elements.append(Paragraph("<br/><br/>", styles['Normal']))
 		elements.append(Paragraph(coms, styles['Normal']))
 		
-		al_nom = str(al)
-		s = "<br/>__________________________________________________________________________________________________________________________________________________<br/>" + "Alumne: " + al_nom + ". Grup: " + str(curs) + ". Tutor: " + str(curs.tutor) + ". Segona Interav." + "<br/>Signatura del Pare/mare:"
-		#s = "<br/>_________________________________________________________________________________________________________________________________________<br/>" + "Alumne: " + str(al) + ". Grup: " + curs.nom + ". Tutor: " + curs.tutor 
-		al_nom = str(al)
+		s = "<br/>__________________________________________________________________________________________________________________________________________________<br/>"
+		s += "Alumne/a: " + str(al) + ". Grup: " + str(curs) + "<br/>Signatura del Pare/mare:"
 		par2 = Paragraph(s, styles["Normal"])
 		
 		elements.append(par2)
-		
 		elements.append(PageBreak()) 
 		
 	
-	# Write the document to disk
+	# Build the pdf document
 	doc.build(elements)
 	return response
