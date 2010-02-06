@@ -34,11 +34,18 @@ def comentari(request):
 
 
 
-def nnota(request,al_id,as_id,it_id,tn_id):
-	tipnota = TipNota.objects.filter(id=tn_id)[0]
-	alumne = Alumne.objects.filter(id=al_id)[0]
-	assignatura = Assignatura.objects.filter(id=as_id)[0]
-	qualif = ItemNota.objects.filter(id=it_id)[0]
+def nnota(request):
+	fields = request.POST
+	tipnota = TipNota.objects.filter(id=fields['tnota'])[0]
+	alumne = Alumne.objects.filter(id=fields['alumne'])[0]
+	assignatura = Assignatura.objects.filter(id=fields['assignatura'])[0]
+	if fields['nota'] == "-1":
+		nota = Nota.objects.filter(tipnota=tipnota,alumne=alumne,assignatura=assignatura)[0]
+		nota.delete()
+		return HttpResponse()
+		
+	qualif = ItemNota.objects.filter(id=fields['nota'])[0]
+	
 	try:
 		nota = Nota.objects.filter(tipnota=tipnota,alumne=alumne,assignatura=assignatura)[0]
 		nota.nota = qualif

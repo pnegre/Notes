@@ -15,13 +15,13 @@ $(document).ready(function() {
 		
 		$(".nts").change(function() {
 			t = $(this);
-			var nota = t.val();
-			var alumne = t.attr('id_al');
-			var assignatura = {{ assignatura.id }};
-			var tnota = t.attr('id_tn');
-			var stri="/notes/nnota/" + alumne + "/" + assignatura + "/" + nota + "/" + tnota;
-// 			alert(stri);
-			$.get(stri);
+			data = {
+				'nota': t.val(),
+				'alumne': t.attr('id_al'),
+				'assignatura': {{ assignatura.id }},
+				'tnota': t.attr('id_tn')
+			};
+			$.post("/notes/nnota", data);
 			
 		});
 		
@@ -68,7 +68,7 @@ $(document).ready(function() {
 			{% for t in tipnotes %}
 				<td>
 				<select class="nts" id_al="{{al.id}}" id_tn="{{t.id}}">
-					<option value="">
+					<option value="-1"></option>
 				{% for i in t.itemnota_set.all %}
 					<option value="{{ i.id }}">{{ i.it }}</option>
 				{% endfor %}
