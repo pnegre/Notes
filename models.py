@@ -3,6 +3,13 @@ from django.db import models
 from gestib.models import *
 
 
+class Assignatura(models.Model):
+	grup = models.ManyToManyField(Grup)
+	nom = nom = models.CharField(max_length=100)
+	
+	def __unicode__(self):
+		return self.nom
+
 
 class TipNota(models.Model):
 	nom = models.CharField(max_length=100)
@@ -31,7 +38,7 @@ class Nota(models.Model):
 	nota = models.ForeignKey(ItemNota)
 	tipnota = models.ForeignKey(TipNota)
 	alumne = models.ForeignKey(Alumne)
-	assignatura = models.ForeignKey(Submateria)
+	assignatura = models.ForeignKey(Assignatura)
 
 
 	def __unicode__(self):
@@ -41,7 +48,7 @@ class Nota(models.Model):
 class Comentari(models.Model):
 	text = models.TextField()
 	alumne = models.ForeignKey(Alumne)
-	assignatura = models.ForeignKey(Submateria)
+	assignatura = models.ForeignKey(Assignatura)
 	
 	class Meta:
 		ordering = ('-text',)

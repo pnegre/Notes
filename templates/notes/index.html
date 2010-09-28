@@ -29,12 +29,12 @@ $(document).ready(function(){
 
 <h1> Introducció notes </h1>
 <ul>
-{% for c in cursos %}
+{% for g in grups %}
 	
-	<li> <a href="" class="mostra_assignatures" tt="{{ c.id }}">[ + ]</a> {{ c.nom }} </li> 
+	<li> <a href="" class="mostra_assignatures">[ + ]</a> {{ g }} </li> 
 	<ul class="llista_assignatures">
-		{% for a in c.assignatura_set.all %}
-			<li> <a href="assignatura/{{ a.id }}">{{ a.nom }}</a> </li>
+		{% for a in g.assignatura_set.all %}
+			<li> <a href="assignatura/{{ a.id }}/{{ g.id }}">{{ a.nom }}</a> </li>
 		{% endfor %}
 	</ul>
 	
@@ -44,9 +44,9 @@ $(document).ready(function(){
 
 <h1> Butlletins </h1>
 <ul>
-{% for c in cursos %}
+{% for g in grups %}
 	
-	<li> <a href="butlleti/{{ c.id }}">{{ c.nom }}</a> </li>
+	<li> <a href="butlleti/{{ g.id }}">{{ g }}</a> </li>
 	
 {% endfor %}
 </ul>

@@ -7,7 +7,7 @@ urlpatterns = patterns('',
 	# Vistes normals
 	(r'^$', 'notes.views.llistat_cursos'),
 	(r'^curs/(?P<curs_id>\d+)$', 'notes.views.curs'),
-	(r'^assignatura/(?P<as_id>\d+)$', 'notes.views.assig'),
+	(r'^assignatura/(?P<as_id>\d+)/(?P<gr_id>\d+)$', 'notes.views.assig'),
 	(r'^butlleti/(?P<curs_id>\d+)', 'notes.views.butlleti'),
 	(r'^butlletins$', 'notes.views.butlletins2'),
 	(r'^butlletins_individuals$', 'notes.views.butlletins_individuals'),
