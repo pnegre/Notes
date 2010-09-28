@@ -69,7 +69,7 @@ $(document).ready(function() {
 				<td>
 				<select class="nts" id_al="{{al.id}}" id_tn="{{t.id}}">
 					<option value="-1"></option>
-				{% for i in t.itemnota_set.all %}
+				{% for i in t.grupNota.itemnota_set.all %}
 					<option value="{{ i.id }}">{{ i.it }}</option>
 				{% endfor %}
 				</select>

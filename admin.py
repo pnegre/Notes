@@ -7,6 +7,7 @@ admin.site.register(Assignatura)
 admin.site.register(Nota)
 admin.site.register(TipNota)
 admin.site.register(ItemNota)
+admin.site.register(GrupNota)
 admin.site.register(Comentari)
 
 

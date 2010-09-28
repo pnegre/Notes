@@ -11,9 +11,21 @@ class Assignatura(models.Model):
 		return self.nom
 
 
+
+
+
+class GrupNota(models.Model):
+	nom = models.CharField(max_length=100)
+	
+	def __unicode__(self):
+		return self.nom
+
+
+
 class TipNota(models.Model):
 	nom = models.CharField(max_length=100)
 	ordre = models.IntegerField()
+	grupNota = models.ForeignKey(GrupNota)
 	
 	class Meta:
 		ordering = ('-nom',)
@@ -22,16 +34,21 @@ class TipNota(models.Model):
 		return self.nom
 
 
+
 class ItemNota(models.Model):
 	it = models.CharField(max_length=100)
-	tipnota = models.ForeignKey(TipNota)
+	grupNota = models.ForeignKey(GrupNota)
 	
 	class Meta:
 		ordering = ('-it',)
 	
 	def __unicode__(self):
-		return self.it + "|" + self.tipnota.nom
-	
+		return self.it + "|" + self.grupNota.nom
+
+
+
+
+
 
 
 class Nota(models.Model):
