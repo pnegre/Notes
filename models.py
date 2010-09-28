@@ -1,39 +1,7 @@
 # -*- coding: utf-8 -*-
 from django.db import models
+from gestib.models import *
 
-
-class Curs(models.Model):
-	nom = models.CharField(max_length=200)
-	tutor = models.CharField(max_length=300)
-	
-	class Meta:
-		ordering = ('-nom',)
-	
-	def __unicode__(self):
-		return self.nom
-
-class Assignatura(models.Model):
-	nom = models.CharField(max_length=200)
-	curs = models.ForeignKey(Curs)
-	
-	class Meta:
-		ordering = ('-nom',)
-
-	def __unicode__(self):
-		return self.nom + " | " + self.curs.nom
-
-
-class Alumne(models.Model):
-	nom = models.CharField(max_length=200)
-	l1 = models.CharField(max_length=200)
-	l2 = models.CharField(max_length=200)
-	curs = models.ForeignKey(Curs)
-	
-	class Meta:
-		ordering = ('-l1','l2')
-	
-	def __unicode__(self):
-		return self.l1 + " " + self.l2 + ", "+ self.nom
 
 
 class TipNota(models.Model):
@@ -45,6 +13,7 @@ class TipNota(models.Model):
 	
 	def __unicode__(self):
 		return self.nom
+
 
 class ItemNota(models.Model):
 	it = models.CharField(max_length=100)
@@ -62,7 +31,7 @@ class Nota(models.Model):
 	nota = models.ForeignKey(ItemNota)
 	tipnota = models.ForeignKey(TipNota)
 	alumne = models.ForeignKey(Alumne)
-	assignatura = models.ForeignKey(Assignatura)
+	assignatura = models.ForeignKey(Submateria)
 
 
 	def __unicode__(self):
@@ -72,7 +41,7 @@ class Nota(models.Model):
 class Comentari(models.Model):
 	text = models.TextField()
 	alumne = models.ForeignKey(Alumne)
-	assignatura = models.ForeignKey(Assignatura)
+	assignatura = models.ForeignKey(Submateria)
 	
 	class Meta:
 		ordering = ('-text',)
