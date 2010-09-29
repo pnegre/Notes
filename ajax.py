@@ -36,32 +36,31 @@ def comentari(request):
 
 
 def nnota(request):
-	pass
-	#fields = request.POST
-	#tipnota = TipNota.objects.filter(id=fields['tnota'])[0]
-	#alumne = Alumne.objects.filter(id=fields['alumne'])[0]
-	#assignatura = Assignatura.objects.filter(id=fields['assignatura'])[0]
-	#if fields['nota'] == "-1":
-		#nota = Nota.objects.filter(tipnota=tipnota,alumne=alumne,assignatura=assignatura)[0]
-		#nota.delete()
-		#return HttpResponse()
+	fields = request.POST
+	tipnota = TipNota.objects.filter(id=fields['tnota'])[0]
+	alumne = Alumne.objects.filter(id=fields['alumne'])[0]
+	assignatura = Assignatura.objects.filter(id=fields['assignatura'])[0]
+	if fields['nota'] == "-1":
+		nota = Nota.objects.filter(tipnota=tipnota,alumne=alumne,assignatura=assignatura)[0]
+		nota.delete()
+		return HttpResponse()
 		
-	#qualif = ItemNota.objects.filter(id=fields['nota'])[0]
+	qualif = ItemNota.objects.filter(id=fields['nota'])[0]
 	
-	#try:
-		#nota = Nota.objects.filter(tipnota=tipnota,alumne=alumne,assignatura=assignatura)[0]
-		#nota.nota = qualif
-		#nota.save()
-	#except:
-		#nota = Nota(
-			#nota = qualif,
-			#tipnota = tipnota,
-			#alumne = alumne,
-			#assignatura = assignatura
-		#)
-		#nota.save()
+	try:
+		nota = Nota.objects.filter(tipnota=tipnota,alumne=alumne,assignatura=assignatura)[0]
+		nota.nota = qualif
+		nota.save()
+	except:
+		nota = Nota(
+			nota = qualif,
+			tipnota = tipnota,
+			alumne = alumne,
+			assignatura = assignatura
+		)
+		nota.save()
 		
-	#return HttpResponse()
+	return HttpResponse()
 
 
 
