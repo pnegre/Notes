@@ -19,7 +19,7 @@ def butlletins_per_grup_i_alumne(grup,alumnes):
 	tipnotes = TipNota.objects.all().order_by('ordre')
 	
 	response = HttpResponse(mimetype='application/pdf')
-	response['Content-Disposition'] = 'attachment; filename=butlletins' + str(grup) + '.pdf'
+	response['Content-Disposition'] = 'attachment; filename=butlletins_' + str(grup) + '.pdf'
 	
 	# Our container for 'Flowable' objects
 	elements = []
@@ -44,7 +44,7 @@ def butlletins_per_grup_i_alumne(grup,alumnes):
 		
 		elements.append(Paragraph("Data: " + strdate, styles['Normal']))
 		elements.append(Paragraph("Curs: " + grup.nom, styles['Normal']))
-		elements.append(Paragraph("Tutor/a: " + "unicode(grup.tutor)" + "<br/><br/>", styles['Normal']))
+		elements.append(Paragraph("Tutor/a: " + unicode(grup.tutor) + "<br/><br/>", styles['Normal']))
 		
 		kkk = []
 		for a in assignatures:
