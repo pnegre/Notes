@@ -3,14 +3,25 @@ from django.db import models
 from gestib.models import *
 
 
+class GrupsPermesos(models.Model):
+	SHOW_CHOICES = (
+		(u'S', u'Si'),
+		(u'N', u'No'),
+	)
+	grup = models.ForeignKey(Grup)
+	mostrar = models.CharField(max_length=1, choices=SHOW_CHOICES)
+	
+	def __unicode__(self):
+		return self.grup.curs.nom + self.grup.nom + " " + self.mostrar
+
+
+
 class Assignatura(models.Model):
 	grup = models.ManyToManyField(Grup)
 	nom = nom = models.CharField(max_length=100)
 	
 	def __unicode__(self):
 		return self.nom
-
-
 
 
 
@@ -44,10 +55,6 @@ class ItemNota(models.Model):
 	
 	def __unicode__(self):
 		return self.it + "|" + self.grupNota.nom
-
-
-
-
 
 
 

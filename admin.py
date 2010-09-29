@@ -9,5 +9,6 @@ admin.site.register(TipNota)
 admin.site.register(ItemNota)
 admin.site.register(GrupNota)
 admin.site.register(Comentari)
+admin.site.register(GrupsPermesos)
 
 

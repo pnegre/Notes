@@ -6,6 +6,17 @@
 
 <style type="text/css">
 
+p.menu {
+	font-size: 24px;
+	background-color: #EEE;
+	padding: 10px;
+}
+
+p.menu a {
+	margin-right: 30px;
+}
+
+
 table {
 	border: 1px solid gray;
 	border-collapse: collapse;
@@ -41,7 +52,11 @@ body {
 
 <body>
 
+<p class="menu"> <a href="/notes/cursos"> Llistat de grups </a>  <a href="/notes/butlletins"> Butlletins </a> </p>
+
+
 {% block content %}
+
 {% endblock %}
 
 </body>

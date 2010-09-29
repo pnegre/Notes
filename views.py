@@ -72,7 +72,14 @@ def assig(request,as_id,gr_id):
 
 
 def llistat_cursos(request):
-	grups = Grup.objects.all()
+	grups = []
+	permesos = GrupsPermesos.objects.all()
+	if permesos:
+		for p in permesos:
+			if p.mostrar == 'S':
+				grups.append(p.grup)
+			
+	#grups = Grup.objects.all()
 	return render_to_response(
 			'notes/index.html', { 
 				'grups': grups,
@@ -92,12 +99,11 @@ def butlleti(request,grup_id):
 
 
 def butlletins2(request):
-	pass
-	#cursos = Curs.objects.all()
-	#return render_to_response(
-			#'notes/butlleti.html', {
-				#'cursos': cursos, 
-	#} )
+	grups = Grup.objects.all()
+	return render_to_response(
+			'notes/butlletins.html', {
+				'grups': grups,
+	} )
 
 
 
