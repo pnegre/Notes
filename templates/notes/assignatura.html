@@ -6,7 +6,7 @@
 
 $(document).ready(function() {
 
-		$.getJSON("/notes/getnotes/{{ curs.id }}/{{ assignatura.id }}", function(data) {
+		$.getJSON("/notes/getnotes/{{ grup.id }}/{{ assignatura.id }}", function(data) {
 			for (alumne in data)
 				for (tn in data[alumne])
 					$("[id_al="+alumne+"][id_tn="+tn+"]").val(data[alumne][tn]);

@@ -17,7 +17,7 @@ urlpatterns = patterns('',
 	# AJAX
 	(r'^noucomentari$', 'notes.ajax.comentari'),
 	(r'^nnota$', 'notes.ajax.nnota'),
-	(r'^getnotes/(?P<curs_id>\d+)/(?P<as_id>\d+)', 'notes.ajax.getnotes'),
+	(r'^getnotes/(?P<grup_id>\d+)/(?P<as_id>\d+)', 'notes.ajax.getnotes'),
 	(r'^llista_alumnes/(?P<curs_id>\d+)', 'notes.ajax.llista_alumnes'),
 	
 	
