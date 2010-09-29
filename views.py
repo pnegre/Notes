@@ -53,9 +53,10 @@ def assig(request,as_id,gr_id):
 	grup = Grup.objects.filter(id=gr_id)[0]
 	tipnotes = TipNota.objects.all().order_by('ordre')
 	als = Alumne.objects.filter(grup=grup)
+	periode = PeriodeActiu.objects.all()[0].periode
 	
 	for a in als:
-		c = Comentari.objects.filter(alumne=a,assignatura=assignatura)
+		c = Comentari.objects.filter(alumne=a,assignatura=assignatura,periode=periode)
 		if (c):
 			a.comm = c[0].text
 		else:
@@ -99,7 +100,13 @@ def butlleti(request,grup_id):
 
 
 def butlletins2(request):
-	grups = Grup.objects.all()
+	grups = []
+	permesos = GrupsPermesos.objects.all()
+	if permesos:
+		for p in permesos:
+			if p.mostrar == 'S':
+				grups.append(p.grup)
+				
 	return render_to_response(
 			'notes/butlletins.html', {
 				'grups': grups,

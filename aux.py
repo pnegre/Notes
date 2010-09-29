@@ -15,6 +15,7 @@ from reportlab.lib.pagesizes import A4, LETTER, landscape, portrait
 
 
 def butlletins_per_grup_i_alumne(grup,alumnes):
+	periode = PeriodeActiu.objects.all()[0].periode
 	assignatures = grup.assignatura_set.all()
 	tipnotes = TipNota.objects.all().order_by('ordre')
 	
@@ -39,6 +40,7 @@ def butlletins_per_grup_i_alumne(grup,alumnes):
 		par = Paragraph("<b>Es Liceu</b>. Carrer Cabana, 31. 07141, Pont d'Inca, Marratxí<br/>Telèfon: 971 60 09 86. E-MAIL: escola@esliceu.com<br/><br/>",
 			styles['Normal'])
 		elements.append(par)
+		elements.append(Paragraph(str(periode.nom), styles['Normal']))
 		
 		elements.append(Paragraph(str(al), styles['Heading1']))
 		
@@ -52,7 +54,7 @@ def butlletins_per_grup_i_alumne(grup,alumnes):
 			nts.append(a.nom)
 			for t in tipnotes:
 				try:
-					n = Nota.objects.filter(assignatura=a,alumne=al,tipnota=t)[0]
+					n = Nota.objects.filter(assignatura=a,alumne=al,tipnota=t,periode=periode)[0]
 					nts.append(n.nota.it)
 				except:
 					nts.append("")
@@ -78,7 +80,7 @@ def butlletins_per_grup_i_alumne(grup,alumnes):
 		elements.append(table)
 		
 		coms = ""
-		comentaris = Comentari.objects.filter(alumne=al)
+		comentaris = Comentari.objects.filter(alumne=al,periode=periode)
 		for c in comentaris:
 			coms += "<b>" + c.assignatura.nom + ":</b> " + c.text + "  "
 		

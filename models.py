@@ -3,6 +3,18 @@ from django.db import models
 from gestib.models import *
 
 
+
+class Periode(models.Model):
+	nom = models.CharField(max_length=100)
+	
+	def __unicode__(self):
+		return self.nom
+
+
+class PeriodeActiu(models.Model):
+	periode = models.ForeignKey(Periode)
+
+
 class GrupsPermesos(models.Model):
 	SHOW_CHOICES = (
 		(u'S', u'Si'),
@@ -63,16 +75,18 @@ class Nota(models.Model):
 	tipnota = models.ForeignKey(TipNota)
 	alumne = models.ForeignKey(Alumne)
 	assignatura = models.ForeignKey(Assignatura)
+	periode = models.ForeignKey(Periode)
 
 
 	def __unicode__(self):
-		return self.nota.it + " | " + self.tipnota.nom + " | " + self.alumne.nom + " | " + self.assignatura.nom
+		return self.nota.it + " | " + self.tipnota.nom + " | " + self.alumne.nom + " | " + self.assignatura.nom + " | " + self.periode.nom
 
 
 class Comentari(models.Model):
 	text = models.TextField()
 	alumne = models.ForeignKey(Alumne)
 	assignatura = models.ForeignKey(Assignatura)
+	periode = models.ForeignKey(Periode)
 	
 	class Meta:
 		ordering = ('-text',)
