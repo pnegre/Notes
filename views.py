@@ -10,7 +10,7 @@ from django.utils import simplejson
 from notes.models import *
 from gestib.models import *
 
-from notes.aux import butlletins_per_curs_i_alumne
+from notes.aux import butlletins_per_grup_i_alumne
 
 
 def curs(request,curs_id):
@@ -81,46 +81,13 @@ def llistat_cursos(request):
 
 
 
-def upload(request):
-	pass
-	#cursos = Curs.objects.all()
-	#r = ""
-	#if request.method == 'POST':
-		#curs = Curs.objects.filter(id=request.POST['curs'])[0]
-		#f = request.FILES['file']
-		#ct = ""
-		#for chunk in f.chunks():
-			#ct += chunk
-		#lines = ct.split("\n")
-		#for l in lines:
-			#s = l.split(",")
-			#if len(s) < 4: continue
-			#l1 = re.sub('"','',s[0])
-			#l2 = re.sub('"','',s[1])
-			#nom = re.sub('"','',s[2])
-			#r += l1 + " " + l2 + " " + nom + " ||| "
-			#alumne = Alumne(
-				#l1 = l1,
-				#l2 = l2,
-				#nom = nom,
-				#curs = curs
-			#)
-			#alumne.save()
-			
-	#return render_to_response(
-			#'notes/upload.html', {
-				#'content': r,
-				#'cursos': cursos, 
-	#} )
 
 
-
-def butlleti(request,curs_id):
-	pass
-	#curs = Curs.objects.filter(id=curs_id)[0]
-	#alumnes = Alumne.objects.filter(curs=curs).order_by('l1')
+def butlleti(request,grup_id):
+	grup = Grup.objects.filter(id=grup_id)[0]
+	alumnes = Alumne.objects.filter(grup=grup).order_by('llinatge1')
 	
-	#return butlletins_per_curs_i_alumne(curs,alumnes)
+	return butlletins_per_grup_i_alumne(grup,alumnes)
 
 
 
