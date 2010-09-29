@@ -40,9 +40,9 @@ def butlletins_per_grup_i_alumne(grup,alumnes):
 		par = Paragraph("<b>Es Liceu</b>. Carrer Cabana, 31. 07141, Pont d'Inca, Marratxí<br/>Telèfon: 971 60 09 86. E-MAIL: escola@esliceu.com<br/><br/>",
 			styles['Normal'])
 		elements.append(par)
-		elements.append(Paragraph(str(periode.nom), styles['Normal']))
+		elements.append(Paragraph(unicode(periode.nom), styles['Normal']))
 		
-		elements.append(Paragraph(str(al), styles['Heading1']))
+		elements.append(Paragraph(unicode(al), styles['Heading1']))
 		
 		elements.append(Paragraph("Data: " + strdate, styles['Normal']))
 		elements.append(Paragraph("Curs: " + grup.nom, styles['Normal']))
