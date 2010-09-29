@@ -4,33 +4,35 @@ from django.http import HttpResponse
 from django.utils import simplejson
 from notes.models import *
 
+import re
+
 
 def comentari(request):
-	pass
-	#post = request.POST
-	#text = post['comentari']
-	#alumne = Alumne.objects.filter(id=int(post['al']))[0]
-	#assignatura = Assignatura.objects.filter(id=int(post['as']))[0]
-	#if not re.match('^\s*$', text):
-		#try:
-			#com = Comentari.objects.filter(alumne=alumne, assignatura=assignatura)[0]
-			#com.text = text
-			#com.save()
-		#except:
-			#com = Comentari(
-				#text = text,
-				#alumne = alumne,
-				#assignatura = assignatura
-			#)
-			#com.save()
-	#else:
-		#try:
-			#com = Comentari.objects.filter(alumne=alumne, assignatura=assignatura)[0]
-			#com.delete()
-		#except:
-			#pass
+	post = request.POST
+	text = post['comentari']
+	alumne = Alumne.objects.filter(id=int(post['al']))[0]
+	assignatura = Assignatura.objects.filter(id=int(post['as']))[0]
+	
+	if not re.match('^\s*$', text):
+		try:
+			com = Comentari.objects.filter(alumne=alumne, assignatura=assignatura)[0]
+			com.text = text
+			com.save()
+		except:
+			com = Comentari(
+				text = text,
+				alumne = alumne,
+				assignatura = assignatura
+			)
+			com.save()
+	else:
+		try:
+			com = Comentari.objects.filter(alumne=alumne, assignatura=assignatura)[0]
+			com.delete()
+		except:
+			pass
 		
-	#return HttpResponse()
+	return HttpResponse()
 
 
 

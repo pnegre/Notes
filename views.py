@@ -54,12 +54,12 @@ def assig(request,as_id,gr_id):
 	tipnotes = TipNota.objects.all().order_by('ordre')
 	als = Alumne.objects.filter(grup=grup)
 	
-	#for a in als:
-		#c = Comentari.objects.filter(alumne=a,assignatura=assignatura)
-		#if (c):
-			#a.comm = c[0].text
-		#else:
-			#a.comm = ''
+	for a in als:
+		c = Comentari.objects.filter(alumne=a,assignatura=assignatura)
+		if (c):
+			a.comm = c[0].text
+		else:
+			a.comm = ''
 	
 	return render_to_response(
 			'notes/assignatura.html', { 

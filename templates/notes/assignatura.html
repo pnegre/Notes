@@ -29,6 +29,7 @@ $(document).ready(function() {
 			var s = $(this).parent().serialize();
 // 			alert(s);
 			$.post("/notes/noucomentari", s);
+			alert("Comentari actualitzat");
 			return false;
 		
 		});
