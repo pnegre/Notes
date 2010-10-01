@@ -45,7 +45,7 @@ def butlletins_per_grup_i_alumne(grup,alumnes):
 		elements.append(Paragraph(unicode(al), styles['Heading1']))
 		
 		elements.append(Paragraph("Data: " + strdate, styles['Normal']))
-		elements.append(Paragraph("Curs: " + grup.nom, styles['Normal']))
+		elements.append(Paragraph("Curs: " + unicode(grup), styles['Normal']))
 		elements.append(Paragraph("Tutor/a: " + unicode(grup.tutor) + "<br/><br/>", styles['Normal']))
 		
 		kkk = []
