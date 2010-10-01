@@ -69,15 +69,10 @@ $(document).ready(function() {
 				<select class="nts" id_al="{{al.id}}" id_tn="{{t.tipnota.id}}">
 					<option value="-1"></option>
 				{% for i in t.tipnota.grupNota.itemnota_set.all %}
-				
 					{% ifequal i.id t.nota.nota.id %}
-					
 						<option value="{{ i.id }}" selected="selected">{{ i.it }}</option>
-					
 					{% else %}
-				
-						<option value="{{ i.id }}" kk="{{ t.nota.nota.id }}">{{ i.it }}</option>
-				
+						<option value="{{ i.id }}">{{ i.it }}</option>
 					{% endifequal %}
 					
 				{% endfor %}
