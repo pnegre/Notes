@@ -49,6 +49,10 @@ def curs(request,curs_id):
 
 
 def assig(request,as_id,gr_id):
+	
+	class NObj(object):
+		pass
+	
 	assignatura = Assignatura.objects.filter(id=as_id)[0]
 	grup = Grup.objects.filter(id=gr_id)[0]
 	tipnotes = TipNota.objects.all().order_by('ordre')
@@ -61,6 +65,19 @@ def assig(request,as_id,gr_id):
 			a.comm = c[0].text
 		else:
 			a.comm = ''
+		
+		notes = []
+		for t in tipnotes:
+			o = NObj()
+			o.tipnota = t
+			n = Nota.objects.filter(assignatura=assignatura,alumne=a,tipnota=t,periode=periode)
+			if not n: 
+				o.nota = None
+			else:
+				o.nota = n[0]
+			notes.append(o)
+		
+		a.notes = notes
 	
 	return render_to_response(
 			'notes/assignatura.html', { 
