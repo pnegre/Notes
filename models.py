@@ -80,6 +80,12 @@ class Nota(models.Model):
 
 	def __unicode__(self):
 		return self.nota.it + " | " + self.tipnota.nom + " | " + self.alumne.nom + " | " + self.assignatura.nom + " | " + self.periode.nom
+	
+	
+	class Meta:
+		permissions = (
+			("posar_notes","Pot posar notes"),
+		)
 
 
 class Comentari(models.Model):

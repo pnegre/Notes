@@ -4,10 +4,7 @@ from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.utils import simplejson
 
-from django.contrib.auth.decorators import login_required
-
-#import datetime
-#import re
+from django.contrib.auth.decorators import login_required, permission_required
 
 from notes.models import *
 from gestib.models import *
@@ -15,41 +12,7 @@ from gestib.models import *
 from notes.aux import butlletins_per_grup_i_alumne
 
 
-def curs(request,curs_id):
-	pass
-	#curs = Curs.objects.filter(id=curs_id)[0]
-	
-	#if request.method == "POST":
-		#fields = request.POST
-		#if 'newal' in fields.keys():
-			#al = Alumne(nom=fields['al'], l1=fields['l1'], l2=fields['l2'], curs=curs)
-			#al.save()
-		#elif 'newass' in fields.keys():
-			#ass = Assignatura(nom=fields['ass'], curs=curs)
-			#ass.save()
-	
-	#asgs = Assignatura.objects.filter(curs=curs)
-	#als = Alumne.objects.filter(curs=curs).order_by('l1')
-	#tipnotes = TipNota.objects.all().order_by('ordre')
-	#items = ItemNota.objects
-	#notes = Nota.objects
-	
-	#ntip=0
-	#for i in tipnotes:
-		#ntip += 1
-					
-	#return render_to_response(
-			#'notes/curs.html', { 
-				#'curs': curs,
-				#'asgs': asgs,
-				#'alumnes': als,
-				#'tipnotes': tipnotes,
-				#'items': items,
-				#'ntip': ntip,
-	#} )
-
-
-
+@permission_required('notes.posar_notes')
 def assig(request,as_id,gr_id):
 	
 	class NObj(object):
@@ -90,7 +53,7 @@ def assig(request,as_id,gr_id):
 	} )
 
 
-@login_required
+@permission_required('notes.posar_notes')
 def llistat_cursos(request):
 	grups = []
 	permesos = GrupsPermesos.objects.all()
@@ -109,7 +72,7 @@ def llistat_cursos(request):
 
 
 
-
+@permission_required('notes.posar_notes')
 def butlleti(request,grup_id):
 	grup = Grup.objects.filter(id=grup_id)[0]
 	alumnes = Alumne.objects.filter(grup=grup).order_by('llinatge1')
@@ -117,7 +80,7 @@ def butlleti(request,grup_id):
 	return butlletins_per_grup_i_alumne(grup,alumnes)
 
 
-
+@permission_required('notes.posar_notes')
 def butlletins2(request):
 	grups = []
 	permesos = GrupsPermesos.objects.all()
@@ -132,7 +95,7 @@ def butlletins2(request):
 	} )
 
 
-
+@permission_required('notes.posar_notes')
 def butlletins_individuals(request):
 	pass
 	#if request.POST:

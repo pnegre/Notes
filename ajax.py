@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
 
+from django.contrib.auth.decorators import login_required, permission_required
+
 from django.http import HttpResponse
 from django.utils import simplejson
 from notes.models import *
 
 import re
 
-
+@permission_required('notes.posar_notes')
 def comentari(request):
 	post = request.POST
 	periode = PeriodeActiu.objects.all()[0].periode
@@ -38,7 +40,7 @@ def comentari(request):
 
 
 
-
+@permission_required('notes.posar_notes')
 def nnota(request):
 	fields = request.POST
 	periode = PeriodeActiu.objects.all()[0].periode
@@ -71,6 +73,7 @@ def nnota(request):
 
 
 # Donat un curs i una assignatura, torna totes les notes d'aquella assignatura, en json
+@permission_required('notes.posar_notes')
 def getnotes(request,grup_id,as_id):
 	periode = PeriodeActiu.objects.all()[0].periode
 	grup = Curs.objects.filter(id=grup_id)[0]
@@ -92,7 +95,7 @@ def getnotes(request,grup_id,as_id):
 	return HttpResponse(simplejson.dumps( r ), mimetype='application/javascript')
 
 
-
+@permission_required('notes.posar_notes')
 def llista_alumnes(request,curs_id):
 	pass
 	#curs = Curs.objects.filter(id=curs_id)[0]
