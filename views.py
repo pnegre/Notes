@@ -4,6 +4,8 @@ from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.utils import simplejson
 
+from django.contrib.auth.decorators import login_required
+
 #import datetime
 #import re
 
@@ -88,7 +90,7 @@ def assig(request,as_id,gr_id):
 	} )
 
 
-
+@login_required
 def llistat_cursos(request):
 	grups = []
 	permesos = GrupsPermesos.objects.all()
