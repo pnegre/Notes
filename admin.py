@@ -10,7 +10,6 @@ admin.site.register(ItemNota)
 admin.site.register(GrupNota)
 admin.site.register(Comentari)
 admin.site.register(GrupsPermesos)
-
 admin.site.register(Periode)
 admin.site.register(PeriodeActiu)
 

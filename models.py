@@ -11,8 +11,10 @@ class Periode(models.Model):
 		return self.nom
 
 
+
 class PeriodeActiu(models.Model):
 	periode = models.ForeignKey(Periode)
+
 
 
 class GrupsPermesos(models.Model):
@@ -77,15 +79,15 @@ class Nota(models.Model):
 	assignatura = models.ForeignKey(Assignatura)
 	periode = models.ForeignKey(Periode)
 
-
 	def __unicode__(self):
 		return self.nota.it + " | " + self.tipnota.nom + " | " + self.alumne.nom + " | " + self.assignatura.nom + " | " + self.periode.nom
-	
 	
 	class Meta:
 		permissions = (
 			("posar_notes","Pot posar notes"),
+			("impr_butlletins","Pot imprimir butlletins"),
 		)
+
 
 
 class Comentari(models.Model):

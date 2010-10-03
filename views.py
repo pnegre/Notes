@@ -3,6 +3,7 @@
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.http import HttpResponse
 from django.utils import simplejson
+from django.template import RequestContext
 
 from django.contrib.auth.decorators import login_required, permission_required
 
@@ -50,7 +51,8 @@ def assig(request,as_id,gr_id):
 				'assignatura': assignatura,
 				'alumnes': als,
 				'tipnotes': tipnotes,
-	} )
+			}, context_instance=RequestContext(request))
+
 
 
 @permission_required('notes.posar_notes')
@@ -62,18 +64,14 @@ def llistat_cursos(request):
 			if p.mostrar == 'S':
 				grups.append(p.grup)
 			
-	#grups = Grup.objects.all()
 	return render_to_response(
 			'notes/index.html', { 
-				'user': request.user,
 				'grups': grups,
-	} )	
+			}, context_instance=RequestContext(request) )
 
 
 
-
-
-@permission_required('notes.posar_notes')
+@permission_required('notes.impr_butlletins')
 def butlleti(request,grup_id):
 	grup = Grup.objects.filter(id=grup_id)[0]
 	alumnes = Alumne.objects.filter(grup=grup).order_by('llinatge1')
@@ -81,7 +79,8 @@ def butlleti(request,grup_id):
 	return butlletins_per_grup_i_alumne(grup,alumnes)
 
 
-@permission_required('notes.posar_notes')
+
+@permission_required('notes.impr_butlletins')
 def butlletins2(request):
 	grups = []
 	permesos = GrupsPermesos.objects.all()
@@ -92,12 +91,12 @@ def butlletins2(request):
 				
 	return render_to_response(
 			'notes/butlletins.html', {
-				'user': request.user,
 				'grups': grups,
-	} )
+			}, context_instance=RequestContext(request) )
 
 
-@permission_required('notes.posar_notes')
+
+@permission_required('notes.impr_butlletins')
 def butlletins_individuals(request):
 	pass
 	#if request.POST:

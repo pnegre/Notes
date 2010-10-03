@@ -8,6 +8,7 @@ from notes.models import *
 
 import re
 
+
 @permission_required('notes.posar_notes')
 def comentari(request):
 	post = request.POST
@@ -93,6 +94,7 @@ def getnotes(request,grup_id,as_id):
 		r[a.id] = r1
 		
 	return HttpResponse(simplejson.dumps( r ), mimetype='application/javascript')
+
 
 
 @permission_required('notes.posar_notes')

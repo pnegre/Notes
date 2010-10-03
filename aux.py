@@ -94,7 +94,6 @@ def butlletins_per_grup_i_alumne(grup,alumnes):
 		elements.append(par2)
 		elements.append(PageBreak()) 
 		
-	
 	# Build the pdf document
 	doc.build(elements)
 	return response
