@@ -92,6 +92,7 @@ def butlletins2(request):
 				
 	return render_to_response(
 			'notes/butlletins.html', {
+				'user': request.user,
 				'grups': grups,
 	} )
 
