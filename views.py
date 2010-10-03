@@ -65,6 +65,7 @@ def llistat_cursos(request):
 	#grups = Grup.objects.all()
 	return render_to_response(
 			'notes/index.html', { 
+				'user': request.user,
 				'grups': grups,
 	} )	
 
