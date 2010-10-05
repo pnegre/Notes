@@ -39,6 +39,9 @@ class Assignatura(models.Model):
 	
 	def __unicode__(self):
 		return self.nom
+	
+	class Meta:
+		ordering = ('nom',)
 
 
 
