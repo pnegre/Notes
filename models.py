@@ -27,6 +27,9 @@ class GrupsPermesos(models.Model):
 	
 	def __unicode__(self):
 		return self.grup.curs.nom + self.grup.nom + " " + self.mostrar
+	
+	class Meta:
+		ordering = ('grup',)
 
 
 
