@@ -16,6 +16,10 @@ p.menu a {
 	margin-right: 30px;
 }
 
+p.menu span a {
+	margin: 0px;
+}
+
 p.menu span {
 	float: right;
 	font-size: 16px;
@@ -61,7 +65,7 @@ body {
 {% if perms.impr_butlletins %}
 	<a href="/notes/butlletins"> Butlletins </a>
 {% endif %}
-<span> {{ user.username }} |  <a href="/auth/logout/"> Logout </a> </span>
+<span> {{ user.username }} &nbsp; | &nbsp; <a href="/hub/"> Tornar a intranet </a> &nbsp; | &nbsp; <a href="/auth/logout/"> Sortir </a> &nbsp; </span>
 </p>
 
 
