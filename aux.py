@@ -48,17 +48,19 @@ def butlletins_per_grup_i_alumne(grup,alumnes):
 		elements.append(Paragraph("Curs: " + unicode(grup), styles['Normal']))
 		elements.append(Paragraph("Tutor/a: " + unicode(grup.tutor) + "<br/><br/>", styles['Normal']))
 		
-		kkk = []
+		dadesTaula = []
 		for a in assignatures:
+			notesFiltrades = Nota.objects.filter(assignatura=a,alumne=al,periode=periode)
+			if len(notesFiltrades) == 0: continue
 			nts = []
 			nts.append(a.nom)
 			for t in tipnotes:
 				try:
-					n = Nota.objects.filter(assignatura=a,alumne=al,tipnota=t,periode=periode)[0]
+					n = notesFiltrades.get(tipnota=t)
 					nts.append(n.nota.it)
 				except:
 					nts.append("")
-			kkk.append(nts)
+			dadesTaula.append(nts)
 
 		
 		tits = [Paragraph(t.nom,styles['Normal']) for t in tipnotes ]
@@ -66,7 +68,7 @@ def butlletins_per_grup_i_alumne(grup,alumnes):
 				
 		data = []
 		data.append(tits)
-		for i in kkk:
+		for i in dadesTaula:
 			data.append(i)
 	
 		ts = [
