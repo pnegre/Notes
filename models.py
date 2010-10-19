@@ -35,7 +35,7 @@ class GrupsPermesos(models.Model):
 
 class Assignatura(models.Model):
 	grup = models.ManyToManyField(Grup)
-	nom = nom = models.CharField(max_length=100)
+	nom = models.CharField(max_length=100)
 	
 	def __unicode__(self):
 		return self.nom
@@ -74,7 +74,7 @@ class ItemNota(models.Model):
 		ordering = ('-it',)
 	
 	def __unicode__(self):
-		return self.it + "|" + self.grupNota.nom
+		return self.it + " | " + self.grupNota.nom
 
 
 
