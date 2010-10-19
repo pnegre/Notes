@@ -62,7 +62,7 @@ body {
 <body>
 
 <p class="menu"> <a href="/notes/cursos"> Llistat de grups </a>  
-{% if perms.impr_butlletins %}
+{% if perms.notes.impr_butlletins %}
 	<a href="/notes/butlletins"> Butlletins </a>
 {% endif %}
 <span> {{ user.username }} &nbsp; <!--| &nbsp; <a href="/hub/"> Tornar a intranet </a> &nbsp;--> | &nbsp; <a href="/auth/logout/"> Sortir </a> &nbsp; </span>
