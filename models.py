@@ -11,9 +11,14 @@ class Periode(models.Model):
 		return self.nom
 
 
-
-class PeriodeActiu(models.Model):
-	periode = models.ForeignKey(Periode)
+class Config(models.Model):
+	NOTES_CHOICES = (
+		(u'S', u'Es poden posar notes'),
+		(u'N', u'No es poden posar notes')
+	)
+	
+	periodeActiu = models.ForeignKey(Periode)
+	escriureNotes = models.CharField(max_length=1, choices=NOTES_CHOICES)
 
 
 

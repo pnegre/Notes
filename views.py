@@ -13,6 +13,17 @@ from gestib.models import *
 from notes.aux import butlletins_per_grup_i_alumne
 
 
+def getPeriode():
+	return Config.objects.all()[0].periodeActiu
+
+
+def esPodenPosarNotes():
+	if Config.objects.all()[0].escriureNotes == 'S':
+		return True
+	else:
+		return False
+
+
 @permission_required('notes.posar_notes')
 def assig(request,as_id,gr_id):
 	
@@ -23,7 +34,7 @@ def assig(request,as_id,gr_id):
 	grup = Grup.objects.filter(id=gr_id)[0]
 	tipnotes = TipNota.objects.all().order_by('ordre')
 	als = Alumne.objects.filter(grup=grup)
-	periode = PeriodeActiu.objects.all()[0].periode
+	periode = getPeriode()
 	
 	for a in als:
 		c = Comentari.objects.filter(alumne=a,assignatura=assignatura,periode=periode)
@@ -51,6 +62,7 @@ def assig(request,as_id,gr_id):
 				'assignatura': assignatura,
 				'alumnes': als,
 				'tipnotes': tipnotes,
+				'activat': not esPodenPosarNotes(),
 			}, context_instance=RequestContext(request))
 
 

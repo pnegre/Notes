@@ -15,7 +15,7 @@ from reportlab.lib.pagesizes import A4, LETTER, landscape, portrait
 
 
 def butlletins_per_grup_i_alumne(grup,alumnes):
-	periode = PeriodeActiu.objects.all()[0].periode
+	periode = Config.objects.all()[0].periodeActiu
 	assignatures = grup.assignatura_set.all()
 	tipnotes = TipNota.objects.all().order_by('ordre')
 	

@@ -9,10 +9,22 @@ from notes.models import *
 import re
 
 
+def getPeriode():
+	return Config.objects.all()[0].periodeActiu
+
+def esPodenPosarNotes():
+	if Config.objects.all()[0].escriureNotes == 'S':
+		return True
+	else:
+		return False
+
+
 @permission_required('notes.posar_notes')
 def comentari(request):
+	if esPodenPosarNotes() == False: return HttpResponse()
+	
 	post = request.POST
-	periode = PeriodeActiu.objects.all()[0].periode
+	periode = getPeriode()
 	text = post['comentari']
 	alumne = Alumne.objects.filter(id=int(post['al']))[0]
 	assignatura = Assignatura.objects.filter(id=int(post['as']))[0]
@@ -43,8 +55,10 @@ def comentari(request):
 
 @permission_required('notes.posar_notes')
 def nnota(request):
+	if esPodenPosarNotes() == False: return HttpResponse()
+	
 	fields = request.POST
-	periode = PeriodeActiu.objects.all()[0].periode
+	periode = getPeriode()
 	tipnota = TipNota.objects.filter(id=fields['tnota'])[0]
 	alumne = Alumne.objects.filter(id=fields['alumne'])[0]
 	assignatura = Assignatura.objects.filter(id=fields['assignatura'])[0]
@@ -76,7 +90,7 @@ def nnota(request):
 # Donat un curs i una assignatura, torna totes les notes d'aquella assignatura, en json
 @permission_required('notes.posar_notes')
 def getnotes(request,grup_id,as_id):
-	periode = PeriodeActiu.objects.all()[0].periode
+	periode = getPeriode()
 	grup = Curs.objects.filter(id=grup_id)[0]
 	r = {}
 	als = Alumne.objects.filter(grup=grup)
