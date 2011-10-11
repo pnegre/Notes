@@ -33,7 +33,7 @@ def assig(request,as_id,gr_id):
 	assignatura = Assignatura.objects.filter(id=as_id)[0]
 	grup = Grup.objects.filter(id=gr_id)[0]
 	tipnotes = TipNota.objects.all().order_by('ordre')
-	als = Alumne.objects.filter(grup=grup)
+	als = Alumne.objects.filter(grup=grup).order_by('llinatge1')
 	periode = getPeriode()
 	
 	for a in als:
