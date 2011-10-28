@@ -21,7 +21,11 @@ $(document).ready(function() {
 				'assignatura': {{ assignatura.id }},
 				'tnota': t.attr('id_tn')
 			};
-			$.post("/notes/nnota", data);
+			$.post("/notes/nnota", data, function(data, textStatus) { 
+				alert(data);
+				alert(textStatus);
+			});
+			
 			
 		});
 		

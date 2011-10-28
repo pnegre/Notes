@@ -1,12 +1,41 @@
 # -*- coding: utf-8 -*-
 
+from functools import wraps
+
 from django.contrib.auth.decorators import login_required, permission_required
 
-from django.http import HttpResponse
+from django.template import RequestContext
+from django.shortcuts import render_to_response
+from django.utils.decorators import available_attrs
+
+from django.http import HttpResponse, HttpResponseForbidden
 from django.utils import simplejson
 from notes.models import *
 
 import re
+
+
+
+def permission_required_403(perm):
+	def decorator(view_func):
+		@wraps(view_func, assigned=available_attrs(view_func))
+		def _wrapped_view(request, *args, **kwargs):
+			if request.user.has_perm(perm):
+				return view_func(request, *args, **kwargs)
+			else:
+				return HttpResponseForbidden('forbidden');
+				#resp = render_to_response('403.html', context_instance=RequestContext(request))
+				#resp.status_code = 403
+				#return resp
+		
+		return _wrapped_view
+	return decorator
+
+
+
+
+
+
 
 
 def getPeriode():
@@ -53,7 +82,7 @@ def comentari(request):
 
 
 
-@permission_required('notes.posar_notes')
+@permission_required_403('notes.posar_notes')
 def nnota(request):
 	if esPodenPosarNotes() == False: return HttpResponse()
 	
