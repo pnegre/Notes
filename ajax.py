@@ -15,7 +15,9 @@ from notes.models import *
 import re
 
 
-
+# Custom decorator.
+# Envia un codi 403 (forbidden) enlloc de redirigir a login
+# Això va molt bé per les cridades AJAX
 def permission_required_403(perm):
 	def decorator(view_func):
 		@wraps(view_func, assigned=available_attrs(view_func))
@@ -24,9 +26,6 @@ def permission_required_403(perm):
 				return view_func(request, *args, **kwargs)
 			else:
 				return HttpResponseForbidden('forbidden');
-				#resp = render_to_response('403.html', context_instance=RequestContext(request))
-				#resp.status_code = 403
-				#return resp
 		
 		return _wrapped_view
 	return decorator
@@ -48,7 +47,7 @@ def esPodenPosarNotes():
 		return False
 
 
-@permission_required('notes.posar_notes')
+@permission_required_403('notes.posar_notes')
 def comentari(request):
 	if esPodenPosarNotes() == False: return HttpResponse()
 	

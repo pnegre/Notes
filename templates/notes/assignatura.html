@@ -6,11 +6,27 @@
 
 $(document).ready(function() {
 
-// 		$.getJSON("/notes/getnotes/{{ grup.id }}/{{ assignatura.id }}", function(data) {
-// 			for (alumne in data)
-// 				for (tn in data[alumne])
-// 					$("[id_al="+alumne+"][id_tn="+tn+"]").val(data[alumne][tn]);
-// 		});
+		$.ajaxSetup({
+		error:function(x,e){
+				if(x.status==0){
+				alert('You are offline!!\n Please Check Your Network.');
+				}else if(x.status==404){
+				alert('Requested URL not found.');
+				}else if(x.status==500){
+				alert('Internel Server Error.');
+				}else if(x.status==403){
+				alert('La sessió ha caducat');
+				}else if(e=='parsererror'){
+				alert('Error.\nParsing JSON Request failed.');
+				}else if(e=='timeout'){
+				alert('Request Time out.');
+				}else {
+				alert('Unknow Error.\n'+x.responseText);
+				}
+				window.location.replace("/");
+
+			}
+		});
 
 		
 		$(".nts").change(function() {
@@ -21,19 +37,14 @@ $(document).ready(function() {
 				'assignatura': {{ assignatura.id }},
 				'tnota': t.attr('id_tn')
 			};
-			$.post("/notes/nnota", data, function(data, textStatus) { 
-				alert(data);
-				alert(textStatus);
-			});
+			$.post("/notes/nnota", data);
 			
 			
 		});
 		
 		$(".ncom").click(function() {
 			var s = $(this).parent().serialize();
-// 			alert(s);
-			$.post("/notes/noucomentari", s);
-			alert("Comentari actualitzat");
+			$.post("/notes/noucomentari", s, function() { alert("Comentari actualitzat"); } );
 			return false;
 		
 		});
