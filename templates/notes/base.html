@@ -7,9 +7,10 @@
 <style type="text/css">
 
 p.menu {
-	font-size: 24px;
+	font-size: 14px;
 	background-color: #EEE;
 	padding: 10px;
+	margin-top: 0px;
 }
 
 p.menu a {
@@ -61,12 +62,14 @@ body {
 </head>
 
 <body>
+	
+<iframe src="/hub/menu" style="width: 100%; border: 0px; height: 140px; margin: 0px; padding: 0px;">
+</iframe>
 
 <p class="menu"> <a href="/notes/cursos"> Llistat de grups </a>  
 {% if perms.notes.impr_butlletins %}
 	<a href="/notes/butlletins"> Butlletins </a>
 {% endif %}
-<span> {{ user.username }} &nbsp; |  <a href="/hub/"> Tornar a intranet </a> |  <a href="/auth/logout/"> Sortir </a> &nbsp; </span>
 </p>
 
 
