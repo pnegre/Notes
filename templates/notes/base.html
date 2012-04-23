@@ -1,82 +1,77 @@
-<html>
 
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<script type="text/javascript" src="/static/notes/jquery.js"></script>
+{% extends "hub/menu_base.html" %}
 
-<style type="text/css">
+{% block baseheader %}
 
-p.menu {
-	font-size: 14px;
-	background-color: #EEE;
-	padding: 10px;
-	margin-top: 0px;
-}
+	<script type="text/javascript" src="/static/notes/jquery.js"></script>
 
-p.menu a {
-	margin-right: 30px;
-}
+	<style type="text/css">
 
-p.menu span a {
-	margin-left: 10px;
-	margin-right: 10px;
-}
+	p.menu {
+		font-size: 14px;
+		background-color: #EEE;
+		padding: 10px;
+		margin-top: 0px;
+	}
 
-p.menu span {
-	float: right;
-	font-size: 16px;
-}
+	p.menu a {
+		margin-right: 30px;
+	}
 
+	p.menu span a {
+		margin-left: 10px;
+		margin-right: 10px;
+	}
 
-table {
-	border: 1px solid gray;
-	border-collapse: collapse;
-	font-size: inherit;
-}
-
-input {
-	font-size: inherit;
-}
-
-table td, table th {
-	border: 1px solid gray;
-	padding: 5px;
-	vertical-align: top;
-}
-
-table th {
-	text-align: left;
-	background-color: #DDD;
-}
-
-body {
-	font-size: 12px;
-}
-
-</style>
-
-{% block head %}
-{% endblock %}
+	p.menu span {
+		float: right;
+		font-size: 16px;
+	}
 
 
-</head>
+	table {
+		border: 1px solid gray;
+		border-collapse: collapse;
+		font-size: inherit;
+	}
 
-<body>
-	
-{% include "hub/menu_iframe.html" %}
+	input {
+		font-size: inherit;
+	}
 
-<p class="menu"> <a href="/notes/cursos"> Llistat de grups </a>  
-{% if perms.notes.impr_butlletins %}
-	<a href="/notes/butlletins"> Butlletins </a>
-{% endif %}
-</p>
+	table td, table th {
+		border: 1px solid gray;
+		padding: 5px;
+		vertical-align: top;
+	}
 
+	table th {
+		text-align: left;
+		background-color: #DDD;
+	}
 
-{% block content %}
+	body {
+		font-size: 12px;
+	}
+
+	</style>
+
+	{% block head %}
+	{% endblock %}
 
 {% endblock %}
 
-</body>
+
+{% block basebody %}
+
+	<p class="menu"> <a href="/notes/cursos"> Llistat de grups </a>  
+	{% if perms.notes.impr_butlletins %}
+		<a href="/notes/butlletins"> Butlletins </a>
+	{% endif %}
+	</p>
 
 
-</html>
+	{% block content %}
+	{% endblock %}
+
+{% endblock %}
