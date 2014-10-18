@@ -30,14 +30,14 @@ $(document).ready(function(){
 <h1> Introducció notes </h1>
 <ul>
 {% for g in grups %}
-	
-	<li> <a href="" class="mostra_assignatures">[ + ]</a> {{ g }} </li> 
+
+	<li> <a href="" class="mostra_assignatures">[ + ]</a> {{ g }} </li>
 	<ul class="llista_assignatures">
-		{% for a in g.assignatura_set.all %}
-			<li> <a href="assignatura/{{ a.id }}/{{ g.id }}">{{ a.nom }}</a> </li>
+		{% for a in g.assignatures %}
+			<li> <a href="assignatura/{{ a.id }}/{{ g.id }}">{{ a.descripcio }}</a> </li>
 		{% endfor %}
 	</ul>
-	
+
 {% endfor %}
 </ul>
 

@@ -4,57 +4,23 @@ from gestib.models import *
 
 
 
-class Periode(models.Model):
+class InterAvaluacio(models.Model):
 	nom = models.CharField(max_length=100)
-	
+	anny = models.ForeignKey(Any)
+	data1 = models.DateField()
+	data2 = models.DateField()
+
+	grups = models.ManyToManyField(Grup)
+
 	def __unicode__(self):
-		return self.nom
-
-
-class Config(models.Model):
-	NOTES_CHOICES = (
-		(u'S', u'Es poden posar notes'),
-		(u'N', u'No es poden posar notes')
-	)
-	
-	periodeActiu = models.ForeignKey(Periode)
-	escriureNotes = models.CharField(max_length=1, choices=NOTES_CHOICES)
-
-
-
-class GrupsPermesos(models.Model):
-	SHOW_CHOICES = (
-		(u'S', u'Si'),
-		(u'N', u'No'),
-	)
-	grup = models.ForeignKey(Grup)
-	mostrar = models.CharField(max_length=1, choices=SHOW_CHOICES)
-	
-	def __unicode__(self):
-		return self.grup.curs.nom + self.grup.nom + " " + self.mostrar
-	
-	class Meta:
-		ordering = ('grup',)
-
-
-
-class Assignatura(models.Model):
-	grup = models.ManyToManyField(Grup)
-	nom = models.CharField(max_length=100)
-	
-	def __unicode__(self):
-		return self.nom
-	
-	class Meta:
-		ordering = ('nom',)
-
-
+		return str(self.anny) + ' ' + self.nom
 
 class GrupNota(models.Model):
 	nom = models.CharField(max_length=100)
-	
+
 	def __unicode__(self):
 		return self.nom
+
 
 
 
@@ -62,10 +28,10 @@ class TipNota(models.Model):
 	nom = models.CharField(max_length=100)
 	ordre = models.IntegerField()
 	grupNota = models.ForeignKey(GrupNota)
-	
+
 	class Meta:
 		ordering = ('-nom',)
-	
+
 	def __unicode__(self):
 		return self.nom
 
@@ -74,12 +40,13 @@ class TipNota(models.Model):
 class ItemNota(models.Model):
 	it = models.CharField(max_length=100)
 	grupNota = models.ForeignKey(GrupNota)
-	
+
 	class Meta:
 		ordering = ('-it',)
-	
+
 	def __unicode__(self):
 		return self.it + " | " + self.grupNota.nom
+
 
 
 
@@ -87,12 +54,12 @@ class Nota(models.Model):
 	nota = models.ForeignKey(ItemNota)
 	tipnota = models.ForeignKey(TipNota)
 	alumne = models.ForeignKey(Alumne)
-	assignatura = models.ForeignKey(Assignatura)
-	periode = models.ForeignKey(Periode)
+	assignatura = models.ForeignKey(Submateria)
+	interavaluacio = models.ForeignKey(InterAvaluacio)
 
 	def __unicode__(self):
-		return self.nota.it + " | " + self.tipnota.nom + " | " + self.alumne.nom + " | " + self.assignatura.nom + " | " + self.periode.nom
-	
+		return self.nota.it + " | " + self.tipnota.nom + " | " + self.alumne.nom + " | " + self.assignatura.nom + " | " + self.interavaluacio
+
 	class Meta:
 		permissions = (
 			("posar_notes","Pot posar notes"),
@@ -104,14 +71,11 @@ class Nota(models.Model):
 class Comentari(models.Model):
 	text = models.TextField()
 	alumne = models.ForeignKey(Alumne)
-	assignatura = models.ForeignKey(Assignatura)
-	periode = models.ForeignKey(Periode)
-	
+	assignatura = models.ForeignKey(Submateria)
+	interavaluacio = models.ForeignKey(InterAvaluacio)
+
 	class Meta:
 		ordering = ('-text',)
-	
+
 	def __unicode__(self):
 		return self.text
-
-
-

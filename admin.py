@@ -3,14 +3,9 @@
 from django.contrib import admin
 from notes.models import *
 
-admin.site.register(Assignatura)
 admin.site.register(Nota)
 admin.site.register(TipNota)
 admin.site.register(ItemNota)
 admin.site.register(GrupNota)
 admin.site.register(Comentari)
-admin.site.register(GrupsPermesos)
-admin.site.register(Periode)
-admin.site.register(Config)
-
-
+admin.site.register(InterAvaluacio)
