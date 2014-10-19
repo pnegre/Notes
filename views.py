@@ -10,11 +10,31 @@ from django.contrib.auth.decorators import login_required, permission_required
 from notes.models import *
 from gestib.models import *
 
+import aux
+
 
 def getActiveInter():
 	# TODO: marcar interavaluació activa d'alguna manera...
 	iact = Config.objects.all()[0]
 	return iact.interactiva
+
+
+def getAlumnes(grup, anny):
+	als = []
+	for m in Matricula.objects.filter(grup=grup,anny=anny):
+		als.append(m.alumne)
+	return sorted(als, key=lambda al: al.llinatge1)
+
+
+def getAssignaturesGrup(grup, inter):
+	assigs = []
+	for a in Assignatura.objects.all():
+		try:
+			AssignaturaGrupInter.objects.get(assignatura=a, grup=grup, interavaluacio=inter)
+			assigs.append(a)
+		except AssignaturaGrupInter.DoesNotExist:
+			pass
+	return assigs
 
 
 @permission_required('notes.posar_notes')
@@ -23,13 +43,7 @@ def llistat_cursos(request):
 	grups = inter.grups.all()
 
 	for g in grups:
-		g.assignatures = []
-		for a in Assignatura.objects.all():
-			try:
-				AssignaturaGrupInter.objects.get(assignatura=a, grup=g, interavaluacio=inter)
-				g.assignatures.append(a)
-			except AssignaturaGrupInter.DoesNotExist:
-				pass
+		g.assignatures = getAssignaturesGrup(g, inter)
 
 	return render_to_response(
 			'notes/index.html', {
@@ -57,11 +71,7 @@ def assig(request,inter_id, as_id,gr_id):
 	inter = InterAvaluacio.objects.get(id=inter_id)
 
 	tipnotes = TipNota.objects.all().order_by('ordre')
-	als = []
-	for m in Matricula.objects.filter(grup=grup,anny=inter.anny):
-		als.append(m.alumne)
-
-	# als = Alumne.objects.filter(grup=grup).order_by('llinatge1')
+	als = getAlumnes(grup, inter.anny)
 
 	for a in als:
 		c = Comentari.objects.filter(alumne=a,assignatura=assignatura,interavaluacio=inter)
@@ -94,16 +104,25 @@ def assig(request,inter_id, as_id,gr_id):
 			}, context_instance=RequestContext(request))
 
 
-#
-#
-# @permission_required('notes.posar_notes')
-# def assig(request,as_id,gr_id):
-#
-# 	return render_to_response(
-# 			'notes/assignatura.html', {
-# 				'grup': grup,
-# 				'assignatura': assignatura,
-# 				'alumnes': als,
-# 				'tipnotes': tipnotes,
-# 				'activat': not esPodenPosarNotes(),
-# 			}, context_instance=RequestContext(request))
+
+
+@permission_required('notes.impr_butlletins')
+def butlleti(request, inter_id, grup_id):
+	inter = InterAvaluacio.objects.get(id=inter_id)
+	grup = Grup.objects.get(id=grup_id)
+	alumnes = getAlumnes(grup, inter.anny)
+	assignatures = getAssignaturesGrup(grup, inter)
+	return aux.butlletins_per_grup_i_alumne(inter, assignatures, grup, alumnes)
+
+
+
+@permission_required('notes.impr_butlletins')
+def butlletins2(request):
+	inter = getActiveInter()
+	grups = inter.grups.all()
+
+	return render_to_response(
+			'notes/butlletins.html', {
+				'grups': grups,
+				'inter': inter,
+			}, context_instance=RequestContext(request) )

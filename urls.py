@@ -9,8 +9,8 @@ urlpatterns = patterns('',
 	(r'^$', 'notes.views.llistat_cursos'),
 	(r'^cursos$', 'notes.views.llistat_cursos'),
 	(r'^assignatura/(?P<inter_id>\d+)/(?P<as_id>\d+)/(?P<gr_id>\d+)$', 'notes.views.assig'),
-	# (r'^butlleti/(?P<grup_id>\d+)', 'notes.views.butlleti'),
-	# (r'^butlletins$', 'notes.views.butlletins2'),
+	(r'^butlleti/(?P<inter_id>\d+)/(?P<grup_id>\d+)', 'notes.views.butlleti'),
+	(r'^butlletins$', 'notes.views.butlletins2'),
 	# (r'^butlletins_individuals$', 'notes.views.butlletins_individuals'),
 	#
 
