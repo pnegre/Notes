@@ -69,7 +69,10 @@
 		<a href="/notes/butlletins"> Butlletins </a>
 	{% endif %}
 	{% if user.is_superuser %}
-		<a href="/notes/admin"> Administra </a>
+		<a href="/notes/admin"> Administra assignatures </a>
+	{% endif %}
+	{% if user.is_superuser %}
+		<a href="/notes/admin2"> Administra interavaluacions </a>
 	{% endif %}
 	</p>
 

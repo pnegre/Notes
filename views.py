@@ -51,12 +51,22 @@ def llistat_cursos(request):
 				'inter': inter,
 			}, context_instance=RequestContext(request) )
 
+# Administrar assignatures dels cursos d'una interavaluació
 @permission_required('is_superuser')
 def admin(request):
 	return render_to_response(
 		'notes/admin1.html', { },
 		context_instance=RequestContext(request)
 	)
+
+# Administrar cursos d'una interavaluació
+@permission_required('is_superuser')
+def admin2(request):
+	return render_to_response(
+		'notes/admin2.html', { },
+		context_instance=RequestContext(request)
+	)
+
 
 
 

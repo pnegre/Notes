@@ -1,0 +1,45 @@
+{% extends "notes/base.html" %}
+
+{% block head %}
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+    $.getJSON("/notes/inters", function(data) {
+        for (var i=0; i<data.length; i++) {
+            $("#inter").append("<option value=" + data[i][0] + ">" + data[i][1] + "</option>");
+        }
+        $("#inter").change();
+    });
+
+    $("#inter").change( function() {
+        getGrups($(this).val());
+    })
+
+    function getGrups(inter) {
+        $.getJSON("/notes/grupsany/?", { inter: inter }, function(data) {
+            for (var i=0; i<data.length; i++) {
+                $('#divgrups').append(data[i][1]);
+            }
+        });
+    }
+
+});
+
+</script>
+
+
+
+{% endblock %}
+
+
+{% block content %}
+
+<h1> Administra cursos d'una interavaluació </h1>
+
+Interavaluació: <select id="inter"> </select> <br>
+
+<div id="divgrups"> </div>
+
+
+{% endblock %}
