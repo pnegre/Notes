@@ -35,6 +35,27 @@ def butlletins_per_grup_i_alumne(inter, assignatures, grup, alumnes):
 	strdate = str(today.day) + "/" + str(today.month) + "/" + str(today.year)
 
 	for al in alumnes:
+		dadesTaula = []
+		for a in assignatures:
+			notesFiltrades = Nota.objects.filter(assignatura=a,alumne=al,interavaluacio=inter)
+			if len(notesFiltrades) == 0: continue
+			nts = []
+			if not a.curt:
+				nts.append(a.nom)
+			else:
+				nts.append(a.curt)
+
+			for t in tipnotes:
+				try:
+					n = notesFiltrades.get(tipnota=t)
+					nts.append(n.nota.it)
+				except:
+					nts.append("")
+			dadesTaula.append(nts)
+
+		if len(dadesTaula) == 0:
+			continue
+
 		par = Paragraph("<b>Es Liceu</b>. Carrer Cabana, 31. 07141, Pont d'Inca, Marratxí<br/>Telèfon: 971 60 09 86. E-MAIL: escola@esliceu.com<br/><br/>",
 			styles['Normal'])
 		elements.append(par)
@@ -45,21 +66,6 @@ def butlletins_per_grup_i_alumne(inter, assignatures, grup, alumnes):
 		elements.append(Paragraph("Data: " + strdate, styles['Normal']))
 		elements.append(Paragraph("Curs: " + unicode(grup), styles['Normal']))
 		elements.append(Paragraph("Tutor/a: " + unicode(grup.tutor) + "<br/><br/>", styles['Normal']))
-
-		dadesTaula = []
-		for a in assignatures:
-			notesFiltrades = Nota.objects.filter(assignatura=a,alumne=al,interavaluacio=inter)
-			if len(notesFiltrades) == 0: continue
-			nts = []
-			nts.append(a.nom)
-			for t in tipnotes:
-				try:
-					n = notesFiltrades.get(tipnota=t)
-					nts.append(n.nota.it)
-				except:
-					nts.append("")
-			dadesTaula.append(nts)
-
 
 		tits = [Paragraph(t.nom,styles['Normal']) for t in tipnotes ]
 		tits.insert(0,'')
@@ -87,7 +93,7 @@ def butlletins_per_grup_i_alumne(inter, assignatures, grup, alumnes):
 		elements.append(Paragraph("<br/><br/>", styles['Normal']))
 		elements.append(Paragraph(coms, styles['Normal']))
 
-		s = "<br/>__________________________________________________________________________________________________________________________________________________<br/>"
+		s = "<br/>_______________________________________________________________________________________________________________________________________<br/>"
 		s += "Alumne/a: " + str(al) + ". Grup: " + str(grup) + "<br/>Signatura del Pare/mare:"
 		par2 = Paragraph(s, styles["Normal"])
 

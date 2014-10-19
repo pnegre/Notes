@@ -5,6 +5,7 @@ from gestib.models import *
 
 class Assignatura(models.Model):
 	nom = models.CharField(max_length=100)
+	curt = models.CharField(max_length=100, blank=True, null=True)
 
 	def __unicode__(self):
 		return self.nom
