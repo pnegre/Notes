@@ -48,12 +48,47 @@ def inters(request):
 
 @permission_required_403('notes.posar_notes')
 def grupsAny(request):
-	interid = request.GET.get("inter")
+	interid = request.POST.get("inter")
 	inter = InterAvaluacio.objects.get(id=interid)
 	anny = inter.anny
 	grups = Grup.objects.filter(curs__anny=anny)
+	ginter = inter.grups
+	for g in grups:
+		try:
+			ginter.get(id=g.id)
+			g.checked = True
+		except:
+			pass
+
+	return render_to_response(
+		'notes/grupsinter.html', {
+			'grups': grups,
+			'inter': inter,
+		}
+	)
+
+
 	res = [ [a.id, str(a) ] for a in grups ]
 	return HttpResponse(simplejson.dumps(res), mimetype='application/json')
+
+
+@permission_required_403('notes.posar_notes')
+def updateintergrup(request):
+	gid = request.GET.get('gid')
+	interid = request.GET.get('inter')
+	checked = request.GET.get('checked')
+
+	grup = Grup.objects.get(id=gid)
+	inter = InterAvaluacio.objects.get(id=interid)
+
+	if checked == 'true':
+		inter.grups.add(grup)
+	else:
+		inter.grups.remove(grup)
+
+	return HttpResponse()
+
+
 
 
 @permission_required_403('notes.posar_notes')
@@ -68,10 +103,8 @@ def cursosinters(request):
 @permission_required_403('notes.posar_notes')
 def assignaturescursos(request):
 	interid = request.POST.get("inter")
-	print interid
 	inter = InterAvaluacio.objects.get(id=interid)
 	grupid = request.POST.get("grup")
-	print grupid
 	grup = Grup.objects.get(id=grupid)
 	assignatures = Assignatura.objects.all()
 

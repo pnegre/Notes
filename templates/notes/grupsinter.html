@@ -1,0 +1,21 @@
+
+
+{% for g in grups %}
+
+    <input type="checkbox"
+        {% if g.checked %} checked {% endif %}
+        class="grupcheck" gid="{{ g.id }}"> {{ g }} <br>
+
+{% endfor %}
+
+
+<script>
+
+    $(".grupcheck").change( function() {
+        var checked = $(this).is(':checked');
+        var inter = $("#inter").val();
+        var gid = $(this).attr('gid');
+        $.get("/notes/updateintergrup/", { inter: inter, gid: gid, checked: checked });
+    });
+
+</script>

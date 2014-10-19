@@ -13,16 +13,18 @@ $(document).ready(function() {
     });
 
     $("#inter").change( function() {
-        getGrups($(this).val());
+        $("#divgrups").load("/notes/grupsany/", {
+            inter: $(this).val(),
+        });
     })
 
-    function getGrups(inter) {
-        $.getJSON("/notes/grupsany/?", { inter: inter }, function(data) {
-            for (var i=0; i<data.length; i++) {
-                $('#divgrups').append(data[i][1]);
-            }
-        });
-    }
+    // function getGrups(inter) {
+    //     $.getJSON("/notes/grupsany/?", { inter: inter }, function(data) {
+    //         for (var i=0; i<data.length; i++) {
+    //             $('#divgrups').append(data[i][1]);
+    //         }
+    //     });
+    // }
 
 });
 
