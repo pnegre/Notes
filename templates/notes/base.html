@@ -64,9 +64,12 @@
 
 {% block basebody %}
 
-	<p class="menu"> <a href="/notes/cursos"> Llistat de grups </a>  
+	<p class="menu"> <a href="/notes/cursos"> Llistat de grups </a>
 	{% if perms.notes.impr_butlletins %}
 		<a href="/notes/butlletins"> Butlletins </a>
+	{% endif %}
+	{% if user.is_superuser %}
+		<a href="/notes/admin"> Administra </a>
 	{% endif %}
 	</p>
 

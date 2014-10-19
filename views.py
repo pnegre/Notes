@@ -16,24 +16,38 @@ def getActiveInter():
 	i = InterAvaluacio.objects.all()[0]
 	return i
 
-def getSubmateries(grup):
-	result = []
-	sgrup = SubmateriaGrup.objects.filter(grup=grup)
-	for sg in sgrup:
-		result.append(sg.submateria)
-
-	return result
-
 
 @permission_required('notes.posar_notes')
 def llistat_cursos(request):
 	inter = getActiveInter()
 	grups = inter.grups.all()
 
-	for g in grups:
-		g.assignatures = getSubmateries(g)
+	# for g in grups:
+	# 	g.assignatures = getSubmateries(g)
 
 	return render_to_response(
 			'notes/index.html', {
 				'grups': grups,
 			}, context_instance=RequestContext(request) )
+
+@permission_required('is_superuser')
+def admin(request):
+	return render_to_response(
+		'notes/admin1.html', { },
+		context_instance=RequestContext(request)
+	)
+
+
+#
+#
+# @permission_required('notes.posar_notes')
+# def assig(request,as_id,gr_id):
+#
+# 	return render_to_response(
+# 			'notes/assignatura.html', {
+# 				'grup': grup,
+# 				'assignatura': assignatura,
+# 				'alumnes': als,
+# 				'tipnotes': tipnotes,
+# 				'activat': not esPodenPosarNotes(),
+# 			}, context_instance=RequestContext(request))
