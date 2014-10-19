@@ -23,6 +23,7 @@ urlpatterns = patterns('',
 	(r'^inters$', 'notes.ajax.inters'),
 	(r'^cursosinter/$', 'notes.ajax.cursosinters'),
 	(r'^assignaturescursos/$', 'notes.ajax.assignaturescursos'),
+	(r'^updateassignaturacurs/$', 'notes.ajax.updateassignaturacurs'),
 
 
 )

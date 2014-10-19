@@ -4,10 +4,21 @@
 
 {% for a in assignatures %}
 
-    {% if a.checked %}
-        <input type="checkbox" checked> {{ a }} <br>
-    {% else %}
-        <input type="checkbox"> {{ a }} <br>
-    {% endif %}
+    <input type="checkbox"
+        {% if a.checked %} checked {% endif %}
+        class="assigcheck" assid="{{ a.id }}"> {{ a }} <br>
 
 {% endfor %}
+
+
+<script>
+
+    $(".assigcheck").change( function() {
+        var checked = $(this).is(':checked');
+        var inter = $("#inter").val();
+        var grup = {{ grup.id }};
+        var assid = $(this).attr('assid');
+        $.get("/notes/updateassignaturacurs/", { inter: inter, grup: grup, assid: assid, checked: checked });
+    });
+
+</script>

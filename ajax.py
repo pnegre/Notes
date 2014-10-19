@@ -79,6 +79,27 @@ def assignaturescursos(request):
 		}
 	)
 
+@permission_required_403('notes.posar_notes')
+def updateassignaturacurs(request):
+	assid = request.GET.get('assid')
+	interid = request.GET.get('inter')
+	grupid = request.GET.get('grup')
+	checked = request.GET.get('checked')
+
+	assignatura = Assignatura.objects.get(id=assid)
+	inter = InterAvaluacio.objects.get(id=interid)
+	grup = Grup.objects.get(id=grupid)
+
+	if checked == 'true':
+		agi = AssignaturaGrupInter(interavaluacio=inter, grup=grup, assignatura=assignatura)
+		agi.save()
+	else:
+		AssignaturaGrupInter.objects.filter(interavaluacio=inter, grup=grup, assignatura=assignatura).delete()
+
+	return HttpResponse()
+
+
+
 
 #
 #
