@@ -22,12 +22,19 @@ def llistat_cursos(request):
 	inter = getActiveInter()
 	grups = inter.grups.all()
 
-	# for g in grups:
-	# 	g.assignatures = getSubmateries(g)
+	for g in grups:
+		g.assignatures = []
+		for a in Assignatura.objects.all():
+			try:
+				AssignaturaGrupInter.objects.get(assignatura=a, grup=g, interavaluacio=inter)
+				g.assignatures.append(a)
+			except AssignaturaGrupInter.DoesNotExist:
+				pass
 
 	return render_to_response(
 			'notes/index.html', {
 				'grups': grups,
+				'inter': inter,
 			}, context_instance=RequestContext(request) )
 
 @permission_required('is_superuser')

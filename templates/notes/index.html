@@ -34,7 +34,7 @@ $(document).ready(function(){
 	<li> <a href="" class="mostra_assignatures">[ + ]</a> {{ g }} </li>
 	<ul class="llista_assignatures">
 		{% for a in g.assignatures %}
-			<li> <a href="assignatura/{{ a.id }}/{{ g.id }}">{{ a.descripcio }}</a> </li>
+			<li> <a href="assignatura/{{ inter.id }}/{{ a.id }}/{{ g.id }}">{{ a.nom }}</a> </li>
 		{% endfor %}
 	</ul>
 
