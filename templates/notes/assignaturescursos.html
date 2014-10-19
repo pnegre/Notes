@@ -1,0 +1,13 @@
+
+
+<h2> Grup {{ grup }} </h2>
+
+{% for a in assignatures %}
+
+    {% if a.checked %}
+        <input type="checkbox" checked> {{ a }} <br>
+    {% else %}
+        <input type="checkbox"> {{ a }} <br>
+    {% endif %}
+
+{% endfor %}

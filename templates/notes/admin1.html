@@ -2,11 +2,49 @@
 
 {% block head %}
 
+<script type="text/javascript">
+
+$(document).ready(function() {
+    $.getJSON("/notes/inters", function(data) {
+        for (var i=0; i<data.length; i++) {
+            $("#inter").append("<option value=" + data[i][0] + ">" + data[i][1] + "</option>");
+            $("#inter").change();
+        }
+    });
+
+    $("#inter").change( function() {
+        var n = $(this).val();
+        $("#grup").text("");
+        $.getJSON("/notes/cursosinter/?", { inter: n }, function(data) {
+            for (var i=0; i<data.length; i++) {
+                $("#grup").append("<option value=" + data[i][0] + ">" + data[i][1] + "</option>");
+            }
+        })
+    });
+
+    $("#mostra").click( function() {
+        $("#divassignatures").load("/notes/assignaturescursos/", {
+            inter: $("#inter").val(),
+            grup: $("#grup").val(),
+        });
+        return false;
+    })
+});
+
+</script>
+
+
+
 {% endblock %}
 
 
 {% block content %}
 
-Any: <select id="any"> </select>
+Interavaluació: <select id="inter"> </select> <br>
+Curs: <select id="grup"> </select> <br>
+<input type="submit" value="Mostra assignatures" id="mostra">
+
+<div id="divassignatures"> </div>
+
 
 {% endblock %}
