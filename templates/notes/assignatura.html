@@ -13,7 +13,7 @@ $(document).ready(function() {
 				}else if(x.status==404){
 				alert('Requested URL not found.');
 				}else if(x.status==500){
-				alert('Internel Server Error.');
+				alert('Internal Server Error.');
 				}else if(x.status==403){
 				alert('La sessió ha caducat');
 				}else if(e=='parsererror'){
@@ -28,28 +28,29 @@ $(document).ready(function() {
 			}
 		});
 
-		
+
 		$(".nts").change(function() {
 			t = $(this);
 			data = {
 				'nota': t.val(),
 				'alumne': t.attr('id_al'),
 				'assignatura': {{ assignatura.id }},
-				'tnota': t.attr('id_tn')
+				'tnota': t.attr('id_tn'),
+				'inter': {{ inter.id }},
 			};
 			$.post("/notes/nnota", data);
-			
-			
+
+
 		});
-		
+
 		$(".ncom").click(function() {
 			var s = $(this).parent().serialize();
 			$.post("/notes/noucomentari", s, function() { alert("Comentari actualitzat"); } );
 			return false;
-		
+
 		});
-		
-		
+
+
 
 });
 
@@ -57,7 +58,7 @@ $(document).ready(function() {
 </script>
 
 <style type="text/css">
-	
+
 </style>
 
 
@@ -79,7 +80,7 @@ $(document).ready(function() {
 		<th> Comentari </th>
 	</tr>
 	</thead>
-	
+
 	<tbody>
 
 	{% for al in alumnes %}
@@ -95,27 +96,28 @@ $(document).ready(function() {
 					{% else %}
 						<option value="{{ i.id }}">{{ i.it }}</option>
 					{% endifequal %}
-					
+
 				{% endfor %}
 				</select>
 				</td>
 			{% endfor %}
 			<td>
-			
+
 			<form method="POST">
 			<textarea name="comentari" rows="3" cols="20"  {% if activat %} disabled="1" {% endif %} >{{ al.comm }}</textarea>
 			<br>
 			<input type="hidden" name="al" value="{{al.id}}">
 			<input type="hidden" name="as" value="{{assignatura.id}}">
+			<input type="hidden" name="inter" value="{{inter.id}}"
 			<input type="submit" name="envia" value="Actualitza" class="ncom"  {% if activat %} disabled="1" {% endif %} >
 
 			</form>
-			
+
 			</td>
 
 	</tr>
 	{% endfor %}
-	
+
 	</tbody>
 </table>
 

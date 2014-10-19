@@ -99,7 +99,42 @@ def updateassignaturacurs(request):
 	return HttpResponse()
 
 
+@permission_required_403('notes.posar_notes')
+def comentari(request):
+	pass
 
+
+
+@permission_required_403('notes.posar_notes')
+def nnota(request):
+	fields = request.POST
+
+	tipnota = TipNota.objects.get(id=fields['tnota'])
+	alumne = Alumne.objects.get(id=fields['alumne'])
+	assignatura = Assignatura.objects.get(id=fields['assignatura'])
+	inter = InterAvaluacio.objects.get(id=fields['inter'])
+
+	if fields['nota'] == "-1":
+		Nota.objects.filter(tipnota=tipnota,alumne=alumne,assignatura=assignatura,interavaluacio=inter).delete()
+		return HttpResponse()
+
+	qualif = ItemNota.objects.get(id=fields['nota'])
+
+	try:
+		nota = Nota.objects.get(tipnota=tipnota,alumne=alumne,assignatura=assignatura,interavaluacio=inter)
+		nota.nota = qualif
+		nota.save()
+	except:
+		nota = Nota(
+			nota = qualif,
+			tipnota = tipnota,
+			alumne = alumne,
+			assignatura = assignatura,
+			interavaluacio=inter,
+		)
+		nota.save()
+
+	return HttpResponse()
 
 #
 #
