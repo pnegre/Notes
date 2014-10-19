@@ -136,6 +136,39 @@ def nnota(request):
 
 	return HttpResponse()
 
+
+
+@permission_required_403('notes.posar_notes')
+def comentari(request):
+	post = request.POST
+	text = post['comentari']
+	alumne = Alumne.objects.get(id=int(post['al']))
+	assignatura = Assignatura.objects.get(id=int(post['as']))
+	inter = InterAvaluacio.objects.get(id=int(post['inter']))
+
+	if not re.match('^\s*$', text):
+		try:
+			com = Comentari.objects.get(alumne=alumne, assignatura=assignatura,interavaluacio=inter)
+			com.text = text
+			com.save()
+		except:
+			com = Comentari(
+				text = text,
+				alumne = alumne,
+				assignatura = assignatura,
+				interavaluacio=inter,
+			)
+			com.save()
+	else:
+		try:
+			Comentari.objects.filter(alumne=alumne, assignatura=assignatura, interavaluacio=inter).delete()
+		except:
+			pass
+
+	return HttpResponse()
+
+
+
 #
 #
 #

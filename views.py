@@ -13,8 +13,8 @@ from gestib.models import *
 
 def getActiveInter():
 	# TODO: marcar interavaluació activa d'alguna manera...
-	i = InterAvaluacio.objects.all()[0]
-	return i
+	iact = Config.objects.all()[0]
+	return iact.interactiva
 
 
 @permission_required('notes.posar_notes')
