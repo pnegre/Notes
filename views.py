@@ -10,6 +10,8 @@ from django.contrib.auth.decorators import login_required, permission_required
 from notes.models import *
 from gestib.models import *
 
+import datetime
+
 import aux
 
 
@@ -103,6 +105,13 @@ def assig(request,inter_id, as_id,gr_id):
 
 		a.notes = notes
 
+	desactivat = False
+	dt = datetime.datetime.now().date()
+	if dt < inter.data1 or dt > inter.data2:
+		desactivat = True
+
+	print desactivat
+
 	return render_to_response(
 			'notes/assignatura.html', {
 				'grup': grup,
@@ -110,7 +119,7 @@ def assig(request,inter_id, as_id,gr_id):
 				'alumnes': als,
 				'tipnotes': tipnotes,
 				'inter': inter,
-				# 'activat': not esPodenPosarNotes(),
+				'desactivat': desactivat,
 			}, context_instance=RequestContext(request))
 
 
