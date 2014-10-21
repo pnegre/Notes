@@ -20,7 +20,7 @@ class InterAvaluacio(models.Model):
 	data1 = models.DateField()
 	data2 = models.DateField()
 
-	grups = models.ManyToManyField(Grup)
+	grups = models.ManyToManyField(Grup, blank=True, null=True)
 
 	def __unicode__(self):
 		return str(self.anny) + ' ' + self.nom
