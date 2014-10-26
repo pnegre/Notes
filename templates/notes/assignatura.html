@@ -110,15 +110,21 @@ $(document).ready(function() {
 <h1> Grup: {{ grup }} </h1>
 <h2> Assignatura: {{ assignatura.nom }} </h2>
 
-Alumne:
-<select id="selectalumnes">
-	{% for a in alumnes %}
-	<option value="{{ a.id }}"> {{ a }} </option>
-	{% endfor %}
-</select>
-
-<input type="submit" value="anterior" id="butanterior">
-<input type="submit" value="següent" id="butseguent">
+<table> <tr>
+	<td> Alumne: </td>
+	<td> <select id="selectalumnes">
+			{% for a in alumnes %}
+			<option value="{{ a.id }}"> {{ a }} </option>
+			{% endfor %}
+		</select>
+	</td>
+	<td>
+		<input type="submit" value="anterior" id="butanterior">
+	</td>
+	<td>
+		<input type="submit" value="següent" id="butseguent">
+	</td>
+</table>
 
 <br><br>
 
@@ -157,6 +163,7 @@ Alumne:
 
 <div class="divcomentari">
 
+	Comentari:
 	<form method="POST">
 	<textarea name="comentari" rows="3" cols="80" {% if desactivat %} disabled="1" {% endif %} >{{ al.comm }}</textarea>
 	<br>
