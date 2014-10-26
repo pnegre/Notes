@@ -56,10 +56,12 @@ def butlletins_per_grup_i_alumne(inter, assignatures, grup, alumnes):
 		if len(dadesTaula) == 0:
 			continue
 
+		internom = unicode(inter.nom) + " %d-%d" % (inter.anny.any1, inter.anny.any2)
+
 		par = Paragraph("<b>Es Liceu</b>. Carrer Cabana, 31. 07141, Pont d'Inca, Marratxí<br/>Telèfon: 971 60 09 86. E-MAIL: escola@esliceu.com<br/><br/>",
 			styles['Normal'])
 		elements.append(par)
-		elements.append(Paragraph(unicode(inter.nom), styles['Normal']))
+		elements.append(Paragraph(internom, styles['Normal']))
 
 		elements.append(Paragraph(unicode(al), styles['Heading1']))
 
@@ -93,8 +95,10 @@ def butlletins_per_grup_i_alumne(inter, assignatures, grup, alumnes):
 		elements.append(Paragraph("<br/><br/>", styles['Normal']))
 		elements.append(Paragraph(coms, styles['Normal']))
 
-		s = "<br/>_______________________________________________________________________________________________________________________________________<br/>"
-		s += "Alumne/a: " + str(al) + ". Grup: " + str(grup) + "<br/>Signatura del Pare/mare:"
+		s = "<br/>" + "_" * 137 + "<br/>"
+		s += "Alumne/a: " + unicode(al) + ". Grup: " + unicode(grup) + ". "
+		s += internom + "<br/>"
+		s += "Signatura del Pare/mare:"
 		par2 = Paragraph(s, styles["Normal"])
 
 		elements.append(par2)
