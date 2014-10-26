@@ -117,9 +117,12 @@ Alumne:
 
 <br><br>
 
+{% for al in alumnes %}
+<div alid="{{ al.id }}" class="hidden">
+
 <table>
 	<thead>
-	<tr><th>.</th>
+	<tr>
 		{% for t in tipnotes %}
 			<th>{{ t.nom }}</th>
 		{% endfor %}
@@ -129,8 +132,7 @@ Alumne:
 
 	<tbody>
 
-	{% for al in alumnes %}
-	<tr alid="{{ al.id }}" class="hidden"> <th> {{ al }} </th>
+	<tr>
 
 			{% for t in al.notes %}
 				<td>
@@ -162,9 +164,11 @@ Alumne:
 			</td>
 
 	</tr>
-	{% endfor %}
 
 	</tbody>
 </table>
+
+</div>
+{% endfor %}
 
 {% endblock %}
