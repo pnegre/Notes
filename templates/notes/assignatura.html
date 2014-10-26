@@ -93,6 +93,11 @@ $(document).ready(function() {
 	display: none;
 }
 
+.divcomentari {
+	margin-top: 20px;
+	width: 100%;
+}
+
 </style>
 
 
@@ -126,14 +131,11 @@ Alumne:
 		{% for t in tipnotes %}
 			<th>{{ t.nom }}</th>
 		{% endfor %}
-		<th> Comentari </th>
 	</tr>
 	</thead>
 
 	<tbody>
-
 	<tr>
-
 			{% for t in al.notes %}
 				<td>
 				<select class="nts" id_al="{{al.id}}" id_tn="{{t.tipnota.id}}" title="{{t.tipnota.nom}}" {% if desactivat %} disabled="1" {% endif %} >
@@ -149,24 +151,23 @@ Alumne:
 				</select>
 				</td>
 			{% endfor %}
-			<td>
-
-			<form method="POST">
-			<textarea name="comentari" rows="3" cols="20"  {% if desactivat %} disabled="1" {% endif %} >{{ al.comm }}</textarea>
-			<br>
-			<input type="hidden" name="al" value="{{al.id}}">
-			<input type="hidden" name="as" value="{{assignatura.id}}">
-			<input type="hidden" name="inter" value="{{inter.id}}">
-			<input type="submit" name="envia" value="Actualitza" class="ncom"  {% if desactivat %} disabled="1" {% endif %} >
-
-			</form>
-
-			</td>
-
 	</tr>
-
 	</tbody>
 </table>
+
+<div class="divcomentari">
+
+	<form method="POST">
+	<textarea name="comentari" rows="3" cols="80" {% if desactivat %} disabled="1" {% endif %} >{{ al.comm }}</textarea>
+	<br>
+	<input type="hidden" name="al" value="{{al.id}}">
+	<input type="hidden" name="as" value="{{assignatura.id}}">
+	<input type="hidden" name="inter" value="{{inter.id}}">
+	<input type="submit" name="envia" value="Actualitza" class="ncom"  {% if desactivat %} disabled="1" {% endif %} >
+
+	</form>
+
+</div>
 
 </div>
 {% endfor %}
