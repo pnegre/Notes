@@ -1,9 +1,35 @@
 {% extends "notes/base.html" %}
 
+{% block head %}
+
+<script type="text/javascript">
+
+$(document).ready(function() {
+		$.getJSON("/notes/inters", function(data) {
+				for (var i=0; i<data.length; i++) {
+						$("#inter").append("<option value=" + data[i][0] + ">" + data[i][1] + "</option>");
+						$("#inter").change();
+				}
+		});
+
+
+
+});
+
+</script>
+
+{% endblock %}
 
 {% block content %}
 
 <h1> Butlletins </h1>
+
+<table>
+<tr> <td>Any:</td> <td> <select id="any"></select> </td> </tr>
+<tr> <td>Interavaluació:</td> <td> <select id="inter"></select> </td> </tr>
+<tr> <td colspan="2"> <input type="submit" value="mostra"> </td> </tr>
+</table>
+
 <ul>
 {% for g in grups %}
 
