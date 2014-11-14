@@ -135,11 +135,6 @@ def updateassignaturacurs(request):
 	return HttpResponse()
 
 
-@permission_required_403('notes.posar_notes')
-def comentari(request):
-	pass
-
-
 
 @permission_required_403('notes.posar_notes')
 def nnota(request):
