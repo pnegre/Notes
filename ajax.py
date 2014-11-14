@@ -49,7 +49,7 @@ def anys(request):
 
 @permission_required_403('notes.posar_notes')
 def inters(request):
-	inters = InterAvaluacio.objects.all()
+	inters = InterAvaluacio.objects.all().order_by('-data1')
 	res = [ [a.id, str(a) ] for a in inters ]
 	return HttpResponse(simplejson.dumps(res), mimetype='application/json')
 
@@ -76,8 +76,19 @@ def grupsAny(request):
 	)
 
 
-	res = [ [a.id, str(a) ] for a in grups ]
+#
+# Torna els grups de la interavaluació, en format JSON
+#
+@permission_required_403('notes.posar_notes')
+def grupsInter(request):
+	interid = request.POST.get("inter")
+	inter = InterAvaluacio.objects.get(id=interid)
+	ginter = inter.grups.all()
+
+	res = [ [a.id, str(a) ] for a in ginter ]
 	return HttpResponse(simplejson.dumps(res), mimetype='application/json')
+
+
 
 
 @permission_required_403('notes.posar_notes')
