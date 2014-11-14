@@ -39,7 +39,9 @@ def permission_required_403(perm):
 		return _wrapped_view
 	return decorator
 
-
+#
+# Retorna els anys ordenats de major a menor, en JSON
+#
 @permission_required_403('notes.posar_notes')
 def anys(request):
 	annys = Any.objects.all().order_by('-any1')
@@ -47,6 +49,9 @@ def anys(request):
 	return HttpResponse(simplejson.dumps(res), mimetype='application/json')
 
 
+#
+# Retorna totes les interavaluacions, en format JSON. Les més recents primer
+#
 @permission_required_403('notes.posar_notes')
 def inters(request):
 	inters = InterAvaluacio.objects.all().order_by('-data1')
@@ -86,17 +91,6 @@ def updateintergrup(request):
 		inter.grups.remove(grup)
 
 	return HttpResponse()
-
-
-#
-#
-# @permission_required_403('notes.posar_notes')
-# def cursosinters(request):
-# 	interid = request.GET.get("inter")
-# 	inter = InterAvaluacio.objects.get(id=interid)
-# 	grups = inter.grups.all()
-# 	res = [ [a.id, str(a) ] for a in grups ]
-# 	return HttpResponse(simplejson.dumps(res), mimetype='application/json')
 
 
 @permission_required_403('notes.posar_notes')
