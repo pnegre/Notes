@@ -5,9 +5,9 @@ from django.conf.urls.defaults import *
 urlpatterns = patterns('',
 
 	# Vistes normals
+	(r'^$', 'notes.views.llistat_cursos'),
 	(r'^admin$', 'notes.views.admin'),
 	(r'^admin2$', 'notes.views.admin2'),
-	(r'^$', 'notes.views.llistat_cursos'),
 	(r'^cursos$', 'notes.views.llistat_cursos'),
 	(r'^assignatura/(?P<inter_id>\d+)/(?P<as_id>\d+)/(?P<gr_id>\d+)$', 'notes.views.assig'),
 	(r'^butlleti/(?P<inter_id>\d+)/(?P<grup_id>\d+)', 'notes.views.butlleti'),
