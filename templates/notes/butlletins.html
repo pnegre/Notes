@@ -6,24 +6,30 @@
 
 $(document).ready(function() {
 
-		$.getJSON("/notes/inters", function(data) {
-				for (var i=0; i<data.length; i++) {
-						$("#inter").append("<option value=" + data[i][0] + ">" + data[i][1] + "</option>");
-						$("#inter").change();
-				}
-		});
+	$.getJSON("/notes/anys", function(data) {
+		for (var i=0; i<data.length; i++) {
+			$("#any").append('<option value="' + data[i][0] + '">' + data[i][1] + '</option>');
+		}
+	});
 
-		$("#mostra").click(function() {
-				var inter_id = $("#inter").val();
-				var lb = $("#llistabutlletins");
-				lb.text("");
-				$.post("/notes/grupsinter/", {'inter': inter_id}, function(data) {
-						for (var i=0; i<data.length; i++) {
-							lb.append('<li><a href="butlleti/' + inter_id + '/' + data[i][0] + '">'
-								+ data[i][1] + '</a> </li>');
-						}
-				}, 'json');
-		});
+	$.getJSON("/notes/inters", function(data) {
+		for (var i=0; i<data.length; i++) {
+			$("#inter").append("<option value=" + data[i][0] + ">" + data[i][1] + "</option>");
+			$("#inter").change();
+		}
+	});
+
+	$("#mostra").click(function() {
+		var inter_id = $("#inter").val();
+		var lb = $("#llistabutlletins");
+		lb.text("");
+		$.post("/notes/grupsinter/", {'inter': inter_id}, function(data) {
+			for (var i=0; i<data.length; i++) {
+				lb.append('<li><a href="/notes/butlleti/' + inter_id + '/' + data[i][0] + '">'
+				+ data[i][1] + '</a> </li>');
+			}
+		}, 'json');
+	});
 
 });
 
@@ -35,9 +41,12 @@ $(document).ready(function() {
 
 <h1> Butlletins </h1>
 
+
+
 <table>
-<tr> <td>Interavaluació:</td> <td> <select id="inter"></select> </td>
-	<td> <input type="submit" value="mostra" id="mostra"> </td> </tr>
+<tr> <td> Any: </td> <td> <select id="any"></select> </td> </tr>
+<tr> <td>Interavaluació:</td> <td> <select id="inter"></select> </td> </tr>
+<tr> <td colspan="2"> <input type="submit" value="mostra" id="mostra"> </td> </tr>
 </table>
 
 <ul id="llistabutlletins">
