@@ -10,13 +10,22 @@ $(document).ready(function() {
 		for (var i=0; i<data.length; i++) {
 			$("#any").append('<option value="' + data[i][0] + '">' + data[i][1] + '</option>');
 		}
+		$("#any").change();
 	});
 
-	$.getJSON("/notes/inters", function(data) {
-		for (var i=0; i<data.length; i++) {
-			$("#inter").append("<option value=" + data[i][0] + ">" + data[i][1] + "</option>");
-			$("#inter").change();
-		}
+	$("#any").change(function() {
+		anyid = $(this).val();
+		$("#inter").text("");
+		$("#llistabutlletins").text("");
+		$.post("/notes/intersany", {'any': anyid }, function(data) {
+			for (var i=0; i<data.length; i++) {
+				$("#inter").append("<option value=" + data[i][0] + ">" + data[i][1] + "</option>");
+			}
+		}, 'json');
+	});
+
+	$("#inter").change(function() {
+		$("#llistabutlletins").text("");
 	});
 
 	$("#mostra").click(function() {

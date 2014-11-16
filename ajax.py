@@ -59,6 +59,18 @@ def inters(request):
 	return HttpResponse(simplejson.dumps(res), mimetype='application/json')
 
 
+#
+# Retorna totes les interavaluacions d'un any (passat per post)
+#
+@permission_required_403('notes.posar_notes')
+def intersAny(request):
+	any_id = request.POST.get("any");
+	anny = Any.objects.get(id=any_id);
+	inters = InterAvaluacio.objects.filter(anny=anny).order_by('-data1')
+	res = [ [a.id, str(a) ] for a in inters ]
+	return HttpResponse(simplejson.dumps(res), mimetype='application/json')
+
+
 
 
 #
