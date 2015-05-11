@@ -70,6 +70,27 @@ def admin2(request):
 	)
 
 
+@permission_required('notes.posar_notes')
+def grupsAny(request):
+	interid = request.POST.get("inter")
+	inter = InterAvaluacio.objects.get(id=interid)
+	anny = inter.anny
+	grups = Grup.objects.filter(curs__anny=anny)
+	ginter = inter.grups
+	for g in grups:
+		try:
+			ginter.get(id=g.id)
+			g.checked = True
+		except:
+			pass
+
+	return render_to_response(
+		'notes/grupsinter.html', {
+			'grups': grups,
+			'inter': inter,
+		}
+	)
+
 
 
 @permission_required('notes.posar_notes')

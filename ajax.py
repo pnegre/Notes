@@ -39,7 +39,9 @@ def permission_required_403(perm):
 		return _wrapped_view
 	return decorator
 
-
+#
+# Retorna els anys ordenats de major a menor, en JSON
+#
 @permission_required_403('notes.posar_notes')
 def anys(request):
 	annys = Any.objects.all().order_by('-any1')
@@ -47,37 +49,43 @@ def anys(request):
 	return HttpResponse(simplejson.dumps(res), mimetype='application/json')
 
 
+#
+# Retorna totes les interavaluacions, en format JSON. Les més recents primer
+#
 @permission_required_403('notes.posar_notes')
 def inters(request):
-	inters = InterAvaluacio.objects.all()
+	inters = InterAvaluacio.objects.all().order_by('-data1')
 	res = [ [a.id, str(a) ] for a in inters ]
 	return HttpResponse(simplejson.dumps(res), mimetype='application/json')
 
 
+#
+# Retorna totes les interavaluacions d'un any (passat per post)
+#
 @permission_required_403('notes.posar_notes')
-def grupsAny(request):
+def intersAny(request):
+	any_id = request.POST.get("any");
+	anny = Any.objects.get(id=any_id);
+	inters = InterAvaluacio.objects.filter(anny=anny).order_by('-data1')
+	res = [ [a.id, a.nom ] for a in inters ]
+	return HttpResponse(simplejson.dumps(res), mimetype='application/json')
+
+
+
+
+#
+# Torna els grups de la interavaluació, en format JSON
+#
+@permission_required_403('notes.posar_notes')
+def grupsInter(request):
 	interid = request.POST.get("inter")
 	inter = InterAvaluacio.objects.get(id=interid)
-	anny = inter.anny
-	grups = Grup.objects.filter(curs__anny=anny)
-	ginter = inter.grups
-	for g in grups:
-		try:
-			ginter.get(id=g.id)
-			g.checked = True
-		except:
-			pass
+	ginter = inter.grups.all()
 
-	return render_to_response(
-		'notes/grupsinter.html', {
-			'grups': grups,
-			'inter': inter,
-		}
-	)
-
-
-	res = [ [a.id, str(a) ] for a in grups ]
+	res = [ [a.id, str(a) ] for a in ginter ]
 	return HttpResponse(simplejson.dumps(res), mimetype='application/json')
+
+
 
 
 @permission_required_403('notes.posar_notes')
@@ -95,17 +103,6 @@ def updateintergrup(request):
 		inter.grups.remove(grup)
 
 	return HttpResponse()
-
-
-
-
-@permission_required_403('notes.posar_notes')
-def cursosinters(request):
-	interid = request.GET.get("inter")
-	inter = InterAvaluacio.objects.get(id=interid)
-	grups = inter.grups.all()
-	res = [ [a.id, str(a) ] for a in grups ]
-	return HttpResponse(simplejson.dumps(res), mimetype='application/json')
 
 
 @permission_required_403('notes.posar_notes')
@@ -148,11 +145,6 @@ def updateassignaturacurs(request):
 		AssignaturaGrupInter.objects.filter(interavaluacio=inter, grup=grup, assignatura=assignatura).delete()
 
 	return HttpResponse()
-
-
-@permission_required_403('notes.posar_notes')
-def comentari(request):
-	pass
 
 
 

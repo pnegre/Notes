@@ -56,7 +56,12 @@ def butlletins_per_grup_i_alumne(inter, assignatures, grup, alumnes):
 		if len(dadesTaula) == 0:
 			continue
 
-		internom = unicode(inter.nom) + " %d-%d" % (inter.anny.any1, inter.anny.any2)
+		internom = ""
+		if inter.nomButlleti is not None:
+			internom = unicode(inter.nomButlleti)
+		if internom is None or internom == "":
+			internom = unicode(inter.nom)
+		internom += " %d-%d" % (inter.anny.any1, inter.anny.any2)
 
 		par = Paragraph("<b>Es Liceu</b>. Carrer Cabana, 31. 07141, Pont d'Inca, Marratxí<br/>Telèfon: 971 60 09 86. E-MAIL: escola@esliceu.com<br/><br/>",
 			styles['Normal'])

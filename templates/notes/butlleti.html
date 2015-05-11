@@ -12,27 +12,27 @@ $(document).ready(function() {
 			for (alumne in data)
 				s += '<input type="checkbox" value="ON" name="'+ alumne +
 				'" class="checks">' + data[alumne] + alumne + '<br>';
-			
+
 			$("#llista_alumnes").html(s);
 			$("#llista_alumnes + div").css("display","block");
 		});
-		
+
 		return false;
 	});
-	
+
 	$("#boto_tots").click(function() {
 		$(".checks").attr('checked', true);
 		return false;
 	});
-	
+
 	$("#boto_cap").click(function() {
 		$(".checks").attr('checked', false);
 		return false;
 	});
-	
+
 	$("#mostrar_butlletins").click(function() {
 // 		$.post("/notes/butlletins_individuals", $("#formbutlletins").serialize(), function(data) {
-// 			
+//
 // 		});
 // 		return false;
 	}
@@ -57,7 +57,7 @@ $(document).ready(function() {
 
 <form id="formbutlletins" method="POST">
 
-Curs: 
+Curs:
 <select name="curs">
 {% for c in cursos %}
 	<option value="{{c.id}}">{{c.nom}}</option>

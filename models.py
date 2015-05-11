@@ -16,6 +16,7 @@ class Assignatura(models.Model):
 
 class InterAvaluacio(models.Model):
 	nom = models.CharField(max_length=100)
+	nomButlleti = models.CharField(max_length=100, blank=True, null=True)
 	anny = models.ForeignKey(Any)
 	data1 = models.DateField()
 	data2 = models.DateField()

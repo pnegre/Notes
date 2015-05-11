@@ -5,7 +5,7 @@
 <style>
 
 #divgrups {
-     -webkit-columns: 100px 4; /* Chrome, Safari, Opera */
+    -webkit-columns: 100px 4; /* Chrome, Safari, Opera */
     -moz-columns: 100px 4; /* Firefox */
     columns: 100px 4;
     margin-top: 20px;
@@ -16,26 +16,30 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
-    $.getJSON("/notes/inters", function(data) {
+    $.getJSON("/notes/anys", function(data) {
         for (var i=0; i<data.length; i++) {
-            $("#inter").append("<option value=" + data[i][0] + ">" + data[i][1] + "</option>");
+            $("#any").append('<option value="' + data[i][0] + '">' + data[i][1] + '</option>');
         }
-        $("#inter").change();
+        $("#any").change();
+    });
+
+    $("#any").change(function() {
+        var anyid = $(this).val();
+        $("#inter").text("");
+        $.post("/notes/intersany", {'any': anyid}, function(data) {
+            for (var i=0; i<data.length; i++) {
+                $("#inter").append("<option value=" + data[i][0] + ">" + data[i][1] + "</option>");
+            }
+            $("#inter").change();
+        }, 'json');
     });
 
     $("#inter").change( function() {
+        $("#divgrups").text("Carregant...");
         $("#divgrups").load("/notes/grupsany/", {
             inter: $(this).val(),
         });
     })
-
-    // function getGrups(inter) {
-    //     $.getJSON("/notes/grupsany/?", { inter: inter }, function(data) {
-    //         for (var i=0; i<data.length; i++) {
-    //             $('#divgrups').append(data[i][1]);
-    //         }
-    //     });
-    // }
 
 });
 
@@ -50,7 +54,10 @@ $(document).ready(function() {
 
 <h1> Administra cursos d'una interavaluació </h1>
 
-Interavaluació: <select id="inter"> </select> <br>
+<table>
+    <tr> <td>Any:</td> <td> <select id="any"> </select> </td> </tr>
+    <tr> <td>Interavaluació:</td> <td> <select id="inter"> </select> </td> </tr>
+</table>
 
 <div id="divgrups"> </div>
 

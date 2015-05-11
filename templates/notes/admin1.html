@@ -5,7 +5,7 @@
 <style>
 
 #divassignatures {
-     -webkit-columns: 100px 4; /* Chrome, Safari, Opera */
+    -webkit-columns: 100px 4; /* Chrome, Safari, Opera */
     -moz-columns: 100px 4; /* Firefox */
     columns: 100px 4;
     margin-top: 20px;
@@ -16,25 +16,44 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
-    $.getJSON("/notes/inters", function(data) {
+    $.getJSON("/notes/anys", function(data) {
         for (var i=0; i<data.length; i++) {
-            $("#inter").append("<option value=" + data[i][0] + ">" + data[i][1] + "</option>");
-            $("#inter").change();
+            $("#any").append('<option value="' + data[i][0] + '">' + data[i][1] + '</option>');
         }
+        $("#any").change();
+    });
+
+    $("#any").change(function(data) {
+        anyid = $(this).val();
+        $("#inter").text("");
+        $("#grup").text("");
+        $("#divassignatures").text("");
+        $.post("/notes/intersany", {'any': anyid }, function(data) {
+            for (var i=0; i<data.length; i++) {
+                $("#inter").append("<option value=" + data[i][0] + ">" + data[i][1] + "</option>");
+            }
+            $("#inter").change();
+        }, 'json');
     });
 
     $("#inter").change( function() {
         var n = $(this).val();
         $("#grup").text("");
-        $.getJSON("/notes/cursosinter/?", { inter: n }, function(data) {
+        $("#divassignatures").text("");
+        $.post("/notes/grupsinter/", { inter: n }, function(data) {
             for (var i=0; i<data.length; i++) {
                 $("#grup").append("<option value=" + data[i][0] + ">" + data[i][1] + "</option>");
             }
             $("#grup").change();
-        })
+        },
+        'json');
     });
 
-    $("#grup").change( function() {
+    $("#grup").change(function() {
+        $("#divassignatures").text("");
+    });
+
+    $("#mostra").click( function() {
         $("#divassignatures").load("/notes/assignaturescursos/", {
             inter: $("#inter").val(),
             grup: $("#grup").val(),
@@ -53,8 +72,10 @@ $(document).ready(function() {
 {% block content %}
 
 <table>
+    <tr><td>Any: </td> <td> <select id="any"> </select> </td> </tr>
     <tr><td>Interavaluació: </td> <td> <select id="inter"> </select> </td> </tr>
     <tr><td>Curs: </td> <td> <select id="grup"> </select> </td> </tr>
+    <tr><td colspan="2"> <input type="submit" value="mostra" id="mostra"> </td> </tr>
 </table>
 <div id="divassignatures"> </div>
 
