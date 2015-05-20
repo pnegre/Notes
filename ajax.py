@@ -63,8 +63,7 @@ def inters(request):
 # Retorna totes les interavaluacions d'un any (passat per post)
 #
 @permission_required_403('notes.posar_notes')
-def intersAny(request):
-	any_id = request.POST.get("any");
+def intersAny(request, any_id):
 	anny = Any.objects.get(id=any_id);
 	inters = InterAvaluacio.objects.filter(anny=anny).order_by('-data1')
 	res = [ [a.id, a.nom ] for a in inters ]

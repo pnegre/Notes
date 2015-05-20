@@ -71,9 +71,9 @@ def admin2(request):
 
 
 @permission_required('notes.posar_notes')
-def grupsAny(request):
+def grupsAny(request, inter_id):
 	interid = request.POST.get("inter")
-	inter = InterAvaluacio.objects.get(id=interid)
+	inter = InterAvaluacio.objects.get(id=inter_id)
 	anny = inter.anny
 	grups = Grup.objects.filter(curs__anny=anny)
 	ginter = inter.grups

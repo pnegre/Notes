@@ -12,7 +12,7 @@ urlpatterns = patterns('',
 	(r'^assignatura/(?P<inter_id>\d+)/(?P<as_id>\d+)/(?P<gr_id>\d+)$', 'notes.views.assig'),
 	(r'^butlleti/(?P<inter_id>\d+)/(?P<grup_id>\d+)', 'notes.views.butlleti'),
 	(r'^butlletins$', 'notes.views.butlletins2'),
-	(r'^grupsany/$', 'notes.views.grupsAny'),
+	(r'^grupsany/(?P<inter_id>\d+)$', 'notes.views.grupsAny'),
 	# (r'^butlletins_individuals$', 'notes.views.butlletins_individuals'),
 
 	# AJAX
@@ -22,7 +22,7 @@ urlpatterns = patterns('',
 	(r'^updateintergrup/$', 'notes.ajax.updateintergrup'),
 	(r'^anys$', 'notes.ajax.anys'),
 	(r'^inters$', 'notes.ajax.inters'),
-	(r'^intersany$', 'notes.ajax.intersAny'),
+	(r'^intersany/(?P<any_id>\d+)$', 'notes.ajax.intersAny'),
 	(r'^assignaturescursos/$', 'notes.ajax.assignaturescursos'),
 	(r'^updateassignaturacurs/$', 'notes.ajax.updateassignaturacurs'),
 
