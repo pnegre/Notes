@@ -88,19 +88,20 @@ def grupsInter(request, inter_id):
 
 @permission_required_403('notes.posar_notes')
 def updateintergrup(request):
-	gid = request.GET.get('gid')
-	interid = request.GET.get('inter')
-	checked = request.GET.get('checked')
+	if request.method == 'POST':
+		gid = request.POST.get('gid')
+		interid = request.POST.get('inter')
+		checked = request.POST.get('checked')
 
-	grup = Grup.objects.get(id=gid)
-	inter = InterAvaluacio.objects.get(id=interid)
+		grup = Grup.objects.get(id=gid)
+		inter = InterAvaluacio.objects.get(id=interid)
 
-	if checked == 'true':
-		inter.grups.add(grup)
-	else:
-		inter.grups.remove(grup)
+		if checked == 'true':
+			inter.grups.add(grup)
+		else:
+			inter.grups.remove(grup)
 
-	return HttpResponse()
+		return HttpResponse()
 
 
 @permission_required_403('notes.posar_notes')

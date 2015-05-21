@@ -15,7 +15,7 @@
         var checked = $(this).is(':checked');
         var inter = $("#inter").val();
         var gid = $(this).attr('gid');
-        $.get("/notes/updateintergrup/", { inter: inter, gid: gid, checked: checked });
+        $.post("/notes/updateintergrup/", { inter: inter, gid: gid, checked: checked });
     });
 
 </script>
