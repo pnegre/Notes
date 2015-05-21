@@ -16,7 +16,7 @@
         var inter = $("#inter").val();
         var grup = {{ grup.id }};
         var assid = $(this).attr('assid');
-        $.get("/notes/updateassignaturacurs/", { inter: inter, grup: grup, assid: assid, checked: checked });
+        $.post("/notes/updateassignaturacurs/", { inter: inter, grup: grup, assid: assid, checked: checked });
     });
 
 </script>
