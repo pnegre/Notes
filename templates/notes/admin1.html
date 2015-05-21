@@ -16,6 +16,24 @@
 <script type="text/javascript">
 
 $(document).ready(function() {
+
+    function getCookie(name) {
+        var cookieValue = null;
+        if (document.cookie && document.cookie != '') {
+            var cookies = document.cookie.split(';');
+            for (var i = 0; i < cookies.length; i++) {
+                var cookie = jQuery.trim(cookies[i]);
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    var csrftoken = getCookie('csrftoken');
+
     $.getJSON("/notes/anys", function(data) {
         for (var i=0; i<data.length; i++) {
             $("#any").append('<option value="' + data[i][0] + '">' + data[i][1] + '</option>');
@@ -28,7 +46,7 @@ $(document).ready(function() {
         $("#inter").text("");
         $("#grup").text("");
         $("#divassignatures").text("");
-        $.post("/notes/intersany", {'any': anyid }, function(data) {
+        $.get("/notes/intersany/" + anyid, function(data) {
             for (var i=0; i<data.length; i++) {
                 $("#inter").append("<option value=" + data[i][0] + ">" + data[i][1] + "</option>");
             }
@@ -40,7 +58,7 @@ $(document).ready(function() {
         var n = $(this).val();
         $("#grup").text("");
         $("#divassignatures").text("");
-        $.post("/notes/grupsinter/", { inter: n }, function(data) {
+        $.get("/notes/grupsinter/" + n, function(data) {
             for (var i=0; i<data.length; i++) {
                 $("#grup").append("<option value=" + data[i][0] + ">" + data[i][1] + "</option>");
             }
@@ -57,7 +75,9 @@ $(document).ready(function() {
         $("#divassignatures").load("/notes/assignaturescursos/", {
             inter: $("#inter").val(),
             grup: $("#grup").val(),
+            csrfmiddlewaretoken: csrftoken,
         });
+        return false;
     });
 
 });
@@ -75,7 +95,9 @@ $(document).ready(function() {
     <tr><td>Any: </td> <td> <select id="any"> </select> </td> </tr>
     <tr><td>Interavaluació: </td> <td> <select id="inter"> </select> </td> </tr>
     <tr><td>Curs: </td> <td> <select id="grup"> </select> </td> </tr>
-    <tr><td colspan="2"> <input type="submit" value="mostra" id="mostra"> </td> </tr>
+    <tr><td colspan="2">
+        <input type="submit" value="mostra" id="mostra">
+    </td> </tr>
 </table>
 <div id="divassignatures"> </div>
 

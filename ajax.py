@@ -76,9 +76,8 @@ def intersAny(request, any_id):
 # Torna els grups de la interavaluació, en format JSON
 #
 @permission_required_403('notes.posar_notes')
-def grupsInter(request):
-	interid = request.POST.get("inter")
-	inter = InterAvaluacio.objects.get(id=interid)
+def grupsInter(request, inter_id):
+	inter = InterAvaluacio.objects.get(id=inter_id)
 	ginter = inter.grups.all()
 
 	res = [ [a.id, str(a) ] for a in ginter ]
