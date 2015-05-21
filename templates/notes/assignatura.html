@@ -6,6 +6,13 @@
 
 $(document).ready(function() {
 
+		var csrftoken = getCookie('csrftoken');
+
+		function csrfSafeMethod(method) {
+		    // these HTTP methods do not require CSRF protection
+		    return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+		}
+
 		$.ajaxSetup({
 		error:function(x,e){
 				if(x.status==0){
@@ -25,7 +32,13 @@ $(document).ready(function() {
 				}
 				window.location.replace("/");
 
-			}
+			},
+
+		beforeSend: function(xhr, settings) {
+	        if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+	            xhr.setRequestHeader("X-CSRFToken", csrftoken);
+	        }
+	    }
 		});
 
 
