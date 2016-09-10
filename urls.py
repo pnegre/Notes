@@ -15,6 +15,7 @@ urlpatterns = patterns('',
 	(r'^grupsany/(?P<inter_id>\d+)$', 'notes.views.grupsAny'),
 	# (r'^butlletins_individuals$', 'notes.views.butlletins_individuals'),
 
+
 	# AJAX
 	(r'^noucomentari$', 'notes.ajax.comentari'),
 	(r'^nnota$', 'notes.ajax.nnota'),
