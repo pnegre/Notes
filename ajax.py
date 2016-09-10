@@ -76,6 +76,7 @@ def interCursos(request):
 		for a in getAssignaturesGrup(g, iact):
 			assigs.append(model_to_dict(a))
 		gg['assignatures'] = assigs
+		gg['nomcomplet'] = g.curs.nom + ' ' + g.nom
 		theGrups.append(gg)
 
 

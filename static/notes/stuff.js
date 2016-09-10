@@ -16,9 +16,15 @@ app.config(['$httpProvider', function($httpProvider) {
 }]);
 
 app.controller("notesController", function($scope, $http) {
-    $scope.prova = "EPA";
+    $scope.mostraLlista = true;
     $http.get('/notes/interCursos').then(function(response) {
         console.log(response.data)
         $scope.av = response.data;
     });
+
+    $scope.showCurs = function(grup, assig) {
+        $scope.mostraLlista = false;
+        console.log(grup);
+        console.log(assig);
+    }
 });
