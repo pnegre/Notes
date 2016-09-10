@@ -17,4 +17,7 @@ app.config(['$httpProvider', function($httpProvider) {
 
 app.controller("notesController", function($scope, $http) {
     $scope.prova = "EPA";
+    $http.get('/notes/interCursos').then(function(response) {
+        $scope.av = response.data;
+    });
 });

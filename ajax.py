@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.template import RequestContext
 from django.shortcuts import render_to_response
 from django.utils.decorators import available_attrs
+from django.forms.models import model_to_dict
 
 from django.http import HttpResponse, HttpResponseForbidden
 from django.utils import simplejson
@@ -14,6 +15,13 @@ from notes.models import *
 from gestib.models import *
 
 import re, datetime
+
+
+#
+# Torna una resposta de tipus application/json amb les dades que es passen com a paràmetre
+#
+def toJson(data):
+    return HttpResponse(simplejson.dumps(data), content_type="application/json");
 
 
 # Mira si la data actual està dins el rang [ inter.data1, inter.data2 ]
@@ -38,6 +46,24 @@ def permission_required_403(perm):
 
 		return _wrapped_view
 	return decorator
+
+#
+# Torna la interavaluacio activa
+# I els cursos corresponents
+#
+@permission_required_403('notes.posar_notes')
+def interCursos(request):
+	# TODO: marcar interavaluació activa d'alguna manera...
+	iact = Config.objects.all()[0].interactiva
+
+	
+
+	return toJson({
+		'nom': iact.nom,
+		'data1': str(iact.data1),
+		'data2': str(iact.data2),
+		'any': str(iact.anny),
+	})
 
 #
 # Retorna els anys ordenats de major a menor, en JSON
