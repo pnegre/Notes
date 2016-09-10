@@ -47,6 +47,19 @@ def permission_required_403(perm):
 		return _wrapped_view
 	return decorator
 
+
+def getAssignaturesGrup(grup, inter):
+	assigs = []
+	for a in Assignatura.objects.all():
+		try:
+			AssignaturaGrupInter.objects.get(assignatura=a, grup=grup, interavaluacio=inter)
+			assigs.append(a)
+		except AssignaturaGrupInter.DoesNotExist:
+			pass
+	return assigs
+
+
+
 #
 # Torna la interavaluacio activa
 # I els cursos corresponents
@@ -55,14 +68,23 @@ def permission_required_403(perm):
 def interCursos(request):
 	# TODO: marcar interavaluació activa d'alguna manera...
 	iact = Config.objects.all()[0].interactiva
+	grups = iact.grups.all()
+	theGrups = []
+	for g in grups:
+		gg = model_to_dict(g)
+		assigs = []
+		for a in getAssignaturesGrup(g, iact):
+			assigs.append(model_to_dict(a))
+		gg['assignatures'] = assigs
+		theGrups.append(gg)
 
-	
 
 	return toJson({
 		'nom': iact.nom,
 		'data1': str(iact.data1),
 		'data2': str(iact.data2),
 		'any': str(iact.anny),
+		'grups': theGrups,
 	})
 
 #

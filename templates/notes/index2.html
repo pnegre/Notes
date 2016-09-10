@@ -10,16 +10,28 @@
 {% block content %}
 
 <div ng-app="app">
-<div ng-controller="notesController">
-	<h1> Introducció notes // prova // </h1>
+	<div ng-controller="notesController">
+		<h1> Introducció notes </h1>
 
-	<p>
-		Interavaluació activa: <b> // av.nom // // av.any //</b>.
-	</p>
-	<p>
-		Es poden posar notes des del // av.data1 // fins a // av.data2 //
-	</p>
-</div>
+		<p>
+			Interavaluació activa: <b> // av.nom // // av.any //</b>.
+		</p>
+		<p>
+			Es poden posar notes des del // av.data1 // fins a // av.data2 //
+		</p>
+
+		<ul>
+			<li ng-repeat="g in av.grups">
+				// g.nom //
+				<ul>
+					<li ng-repeat="a in g.assignatures">
+						// a.nom //
+					</li>
+				</ul>
+			</li>
+		</ul>
+
+	</div>
 </div>
 
 {% endblock %}

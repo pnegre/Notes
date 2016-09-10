@@ -27,16 +27,16 @@ def getAlumnes(grup, anny):
 		als.append(m.alumne)
 	return sorted(als, key=lambda al: al.llinatge1)
 
-
-def getAssignaturesGrup(grup, inter):
-	assigs = []
-	for a in Assignatura.objects.all():
-		try:
-			AssignaturaGrupInter.objects.get(assignatura=a, grup=grup, interavaluacio=inter)
-			assigs.append(a)
-		except AssignaturaGrupInter.DoesNotExist:
-			pass
-	return assigs
+# 
+# def getAssignaturesGrup(grup, inter):
+# 	assigs = []
+# 	for a in Assignatura.objects.all():
+# 		try:
+# 			AssignaturaGrupInter.objects.get(assignatura=a, grup=grup, interavaluacio=inter)
+# 			assigs.append(a)
+# 		except AssignaturaGrupInter.DoesNotExist:
+# 			pass
+# 	return assigs
 
 #
 # @permission_required('notes.posar_notes')
