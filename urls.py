@@ -27,7 +27,8 @@ urlpatterns = patterns('',
 	(r'^assignaturescursos/$', 'notes.ajax.assignaturescursos'),
 	(r'^updateassignaturacurs/$', 'notes.ajax.updateassignaturacurs'),
 
-	(r'^interCursos$', 'notes.ajax.interCursos')
+	(r'^interCursos$', 'notes.ajax.interCursos'),
+	(r'^alumnes/(?P<gid>\d+)/(?P<anyid>\d+)$', 'notes.ajax.alumnes'),
 	# (r'^cursosinter/$', 'notes.ajax.cursosinters'),
 	# (r'^getnotes/(?P<grup_id>\d+)/(?P<as_id>\d+)', 'notes.ajax.getnotes'),
 	# (r'^llista_alumnes/(?P<curs_id>\d+)', 'notes.ajax.llista_alumnes'),

@@ -22,9 +22,13 @@ app.controller("notesController", function($scope, $http) {
         $scope.av = response.data;
     });
 
-    $scope.showCurs = function(grup, assig) {
-        $scope.mostraLlista = false;
-        console.log(grup);
-        console.log(assig);
+    $scope.showCurs = function(inter, grup, assig) {
+        $http.get('/notes/alumnes/' + grup.id + '/' + inter.anyid).then(function(response) {
+            $scope.grup = grup;
+            $scope.assignatura = assig;
+            $scope.alumnes = response.data;
+            $scope.mostraLlista = false;
+        });
+
     }
 });

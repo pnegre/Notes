@@ -85,8 +85,25 @@ def interCursos(request):
 		'data1': str(iact.data1),
 		'data2': str(iact.data2),
 		'any': str(iact.anny),
+		'anyid': iact.anny.id,
 		'grups': theGrups,
 	})
+
+
+#
+# Alumnes d'un grup, en JSON
+#
+@permission_required_403('notes.posar_notes')
+def alumnes(request, gid, anyid):
+	grup = Grup.objects.get(id=gid)
+	anny = Any.objects.get(id=anyid)
+	als = []
+	for m in Matricula.objects.filter(grup=grup,anny=anny):
+		als.append(m.alumne)
+
+	als = sorted(als, key=lambda al: al.llinatge1)
+	return toJson([model_to_dict(a) for a in als])
+
 
 #
 # Retorna els anys ordenats de major a menor, en JSON

@@ -25,7 +25,7 @@
 				<li ng-repeat="g in av.grups">
 					// g.nomcomplet //
 					<ul>
-						<li ng-repeat="a in g.assignatures" ng-click="showCurs(g,a)">
+						<li ng-repeat="a in g.assignatures" ng-click="showCurs(av,g,a)">
 							<a href=""> // a.nom // </a>
 						</li>
 					</ul>
@@ -34,7 +34,18 @@
 		</div>
 
 		<div ng-hide="mostraLlista">
-			EEEPA
+			<h1> Grup: // grup.nomcomplet // </h1>
+			<h2> Assignatura: // assignatura.nom // </h2>
+
+			<table> <tr>
+				<td> Alumne: </td>
+				<td> <select id="selectalumnes">
+						<option ng-repeat="a in alumnes">
+							// a.llinatge1 + ' ' + a.llinatge2 + ', ' + a.nom //
+						</option>
+					</select>
+				</td>
+			</table>
 		</div>
 
 	</div>
