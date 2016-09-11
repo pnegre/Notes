@@ -130,7 +130,9 @@ def itemsAlumne(request, interid, alid, assigid, gid):
 		nota = None
 		if n:
 			nota = model_to_dict(n[0])
-		notes.append({'tipnota': model_to_dict(t), 'nota': nota})
+
+		its = [model_to_dict(i) for i in ItemNota.objects.filter(grupNota=t.grupNota) ]
+		notes.append({ 'tipnota': model_to_dict(t), 'nota': nota, 'its': its })
 
 	desactivat = False
 	dt = datetime.datetime.now().date()

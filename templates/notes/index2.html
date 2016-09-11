@@ -46,15 +46,21 @@
 				</td>
 			</table>
 
-			<p> Comentari: // dadesAlumne.comentari // </p>
-			<p> Notes:
-				<ul>
-					<li ng-repeat="n in dadesAlumne.notes">
-						// n.tipnota.nom // --- // n.nota.nota //
-					</li>
-				</ul>
-
-			</p>
+			<div ng-show="dadesAlumne">
+				<p> Comentari: </p>
+				<textarea ng-model="dadesAlumne.comentari"> </textarea>
+				<p> Notes:
+					<table>
+						<tr ng-repeat="n in dadesAlumne.notes">
+							<th> // n.tipnota.nom // </th>
+							<td> <select ng-model="n.nota">
+								<option ng-repeat="i in n.its"> // i.it // </option>
+							</select>
+							</td>
+						</tr>
+					</table>
+				</p>
+			</div>
 
 		</div>
 
