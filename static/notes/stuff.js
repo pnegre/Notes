@@ -46,8 +46,11 @@ app.controller("notesController", function($scope, $http) {
         var av = $scope.av;
         var gr = $scope.grup;
         var dades = $scope.dadesAlumne;
-        for (n of dades.notes) {
-            console.log(n);
+        console.log(dades);
+        var index = 0;
+        for (index=0; index < dades.notes.length; ++index) {
+            var nota = dades.notes[index];
+            console.log(nota);
         }
 
 
