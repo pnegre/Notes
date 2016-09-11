@@ -39,13 +39,23 @@
 
 			<table> <tr>
 				<td> Alumne: </td>
-				<td> <select id="selectalumnes">
-						<option ng-repeat="a in alumnes">
-							// a.llinatge1 + ' ' + a.llinatge2 + ', ' + a.nom //
-						</option>
-					</select>
+				<td>
+				<select ng-options="a.llinatge1 + ' ' + a.llinatge2 + ', ' + a.nom for a in alumnes"
+					ng-model="selectedAlumne" ng-change="changedAlumne()">
+				</select>
 				</td>
 			</table>
+
+			<p> Comentari: // dadesAlumne.comentari // </p>
+			<p> Notes:
+				<ul>
+					<li ng-repeat="n in dadesAlumne.notes">
+						// n.tipnota.nom // --- // n.nota.nota //
+					</li>
+				</ul>
+
+			</p>
+
 		</div>
 
 	</div>

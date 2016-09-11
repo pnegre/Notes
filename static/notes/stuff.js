@@ -18,7 +18,6 @@ app.config(['$httpProvider', function($httpProvider) {
 app.controller("notesController", function($scope, $http) {
     $scope.mostraLlista = true;
     $http.get('/notes/interCursos').then(function(response) {
-        console.log(response.data)
         $scope.av = response.data;
     });
 
@@ -29,6 +28,17 @@ app.controller("notesController", function($scope, $http) {
             $scope.alumnes = response.data;
             $scope.mostraLlista = false;
         });
+    }
 
+    $scope.changedAlumne = function() {
+        console.log($scope.selectedAlumne);
+        var al = $scope.selectedAlumne;
+        var as = $scope.assignatura;
+        var av = $scope.av;
+        var gr = $scope.grup;
+        $http.get('/notes/itemsAlumne/' + av.id +'/' + al.id + '/' + as.id + '/' + gr.id).then(function(response) {
+            console.log(response);
+            $scope.dadesAlumne = response.data;
+        });
     }
 });

@@ -81,6 +81,7 @@ def interCursos(request):
 
 
 	return toJson({
+		'id': iact.id,
 		'nom': iact.nom,
 		'data1': str(iact.data1),
 		'data2': str(iact.data2),
@@ -103,6 +104,61 @@ def alumnes(request, gid, anyid):
 
 	als = sorted(als, key=lambda al: al.llinatge1)
 	return toJson([model_to_dict(a) for a in als])
+
+
+
+#
+# Items, en JSON
+#
+@permission_required_403('notes.posar_notes')
+def itemsAlumne(request, interid, alid, assigid, gid):
+	assignatura = Assignatura.objects.get(id=assigid)
+	grup = Grup.objects.get(id=gid)
+	inter = InterAvaluacio.objects.get(id=interid)
+	alumne = Alumne.objects.get(id=alid)
+
+	try:
+		comentari = Comentari.objects.get(alumne=alumne,assignatura=assignatura,interavaluacio=inter).text
+	except Comentari.DoesNotExist:
+		comentari = ''
+
+	tipnotes = TipNota.objects.all().order_by('ordre')
+
+	notes = []
+	for t in tipnotes:
+		n = Nota.objects.filter(assignatura=assignatura,alumne=alumne,tipnota=t,interavaluacio=inter)
+		nota = None
+		if n:
+			nota = model_to_dict(n[0])
+		notes.append({'tipnota': model_to_dict(t), 'nota': nota})
+
+	desactivat = False
+	dt = datetime.datetime.now().date()
+	if dt < inter.data1 or dt > inter.data2:
+		desactivat = True
+
+	return toJson({
+		'comentari': comentari,
+		'desactivat': desactivat,
+		'notes': notes,
+	})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 #
