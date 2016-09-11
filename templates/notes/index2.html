@@ -53,8 +53,9 @@
 					<table>
 						<tr ng-repeat="n in dadesAlumne.notes">
 							<th> // n.tipnota.nom // </th>
-							<td> <select ng-model="n.nota">
-								<option ng-repeat="i in n.its"> // i.it // </option>
+							<td> <select ng-model="n.nota2"
+								ng-options="i.it for i in n.its track by i.id"
+								ng-init="n.nota2.id=n.nota.nota">
 							</select>
 							</td>
 						</tr>
