@@ -53,14 +53,16 @@
 					<table>
 						<tr ng-repeat="n in dadesAlumne.notes">
 							<th> // n.tipnota.nom // </th>
-							<td> <select ng-model="n.nota2"
+							<td> <select ng-model="n.notaSelected"
 								ng-options="i.it for i in n.its track by i.id"
-								ng-init="n.nota2.id=n.nota.nota">
+								ng-init="n.notaSelected.id=n.nota.nota">
 							</select>
 							</td>
 						</tr>
 					</table>
 				</p>
+
+				<button ng-click="desa()"> Desa les dades </button>
 			</div>
 
 		</div>

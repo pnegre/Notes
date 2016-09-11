@@ -31,14 +31,25 @@ app.controller("notesController", function($scope, $http) {
     }
 
     $scope.changedAlumne = function() {
-        console.log($scope.selectedAlumne);
         var al = $scope.selectedAlumne;
         var as = $scope.assignatura;
         var av = $scope.av;
         var gr = $scope.grup;
         $http.get('/notes/itemsAlumne/' + av.id +'/' + al.id + '/' + as.id + '/' + gr.id).then(function(response) {
-            console.log(response);
             $scope.dadesAlumne = response.data;
         });
+    }
+
+    $scope.desa = function() {
+        var al = $scope.selectedAlumne;
+        var as = $scope.assignatura;
+        var av = $scope.av;
+        var gr = $scope.grup;
+        var dades = $scope.dadesAlumne;
+        for (n of dades.notes) {
+            console.log(n);
+        }
+
+
     }
 });
