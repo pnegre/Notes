@@ -147,7 +147,36 @@ def itemsAlumne(request, interid, alid, assigid, gid):
 
 
 
+#
+# Post on venen les notes d'una assignatura d'un alumne d'una INTER
+#
+@permission_required_403('notes.posar_notes')
+def postNotes(request):
+    if request.POST:
+        mypost = simplejson.loads(request.body)
+        print mypost
 
+        # TODO: sanitize
+        inter = InterAvaluacio.objects.get(id=mypost['inter'])
+        alumne = Alumne.objects.get(id=mypost['alumne'])
+        assignatura = Assignatura.objects.get(id=mypost['assignatura'])
+
+        for n in mypost['notes']:
+            if 'nota' in n.keys():
+                tipnota = TipNota.objects.get(id=n['tipnota'])
+                itemNota = ItemNota.objects.get(id=n['nota'])
+
+                nexistents = Nota.objects.filter(tipnota=tipnota, alumne=alumne, assignatura=assignatura, interavaluacio=inter)
+                if nexistents:
+                    nexistents.delete()
+
+                nn = Nota(tipnota=tipnota, alumne=alumne, assignatura=assignatura, interavaluacio=inter, nota=itemNota)
+                nn.save()
+            else:
+                # TODO: Esborrar...
+                pass
+
+    return HttpResponse()
 
 
 

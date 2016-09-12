@@ -31,12 +31,32 @@ app.controller("notesController", function($scope, $http) {
         var av = $scope.av;
         var gr = $scope.grup;
         var dades = $scope.dadesAlumne;
-        console.log(dades);
+
+        // console.log(dades);
+        var notes = []
         var index = 0;
         for (index=0; index < dades.notes.length; ++index) {
             var nota = dades.notes[index];
-            console.log(nota);
+            var notaSelected = nota.notaSelected;
+            if (notaSelected == null) {
+                notes.push({'tipnota': nota.tipnota.id, 'nota': null});
+            } else {
+                notes.push({'tipnota': nota.tipnota.id, 'nota': notaSelected.id});
+            }
         }
+
+        var data = {
+            'inter': av.id,
+            'assignatura': as.id,
+            'alumne': al.id,
+            'notes': notes,
+        }
+
+        console.log(data);
+
+        $http.post("/notes/postNotes", data).then(function(response) {
+
+        });
 
 
     }
