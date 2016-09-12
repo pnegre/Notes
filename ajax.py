@@ -161,6 +161,17 @@ def postNotes(request):
         alumne = Alumne.objects.get(id=mypost['alumne'])
         assignatura = Assignatura.objects.get(id=mypost['assignatura'])
 
+        # Comentari: Esborrem els existents i posem el nou
+        comentari = mypost['comentari']
+        coms = Comentari.objects.filter(alumne=alumne, assignatura=assignatura, interavaluacio=inter)
+        if coms:
+            coms.delete()
+
+        if not re.match('^\s*$', comentari):
+            com = Comentari(alumne=alumne, assignatura=assignatura, interavaluacio=inter, text=comentari)
+            com.save()
+
+        # Bucle que emmagatzema les notes dins la base de dades
         for n in mypost['notes']:
             tipnota = TipNota.objects.get(id=n['tipnota'])
 

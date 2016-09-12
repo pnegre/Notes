@@ -46,6 +46,7 @@ app.controller("notesController", function($scope, $http) {
         }
 
         var data = {
+            'comentari': dades.comentari,
             'inter': av.id,
             'assignatura': as.id,
             'alumne': al.id,
