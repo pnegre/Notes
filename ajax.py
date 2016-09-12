@@ -162,19 +162,18 @@ def postNotes(request):
         assignatura = Assignatura.objects.get(id=mypost['assignatura'])
 
         for n in mypost['notes']:
+            tipnota = TipNota.objects.get(id=n['tipnota'])
+
+            # Primer, esborrem les notes existents per aquella assignatura de l'alumne i inter
+            nexistents = Nota.objects.filter(tipnota=tipnota, alumne=alumne, assignatura=assignatura, interavaluacio=inter)
+            if nexistents:
+                nexistents.delete()
+
+            # Si hi ha nota, l'enregistrem
             if 'nota' in n.keys():
-                tipnota = TipNota.objects.get(id=n['tipnota'])
                 itemNota = ItemNota.objects.get(id=n['nota'])
-
-                nexistents = Nota.objects.filter(tipnota=tipnota, alumne=alumne, assignatura=assignatura, interavaluacio=inter)
-                if nexistents:
-                    nexistents.delete()
-
                 nn = Nota(tipnota=tipnota, alumne=alumne, assignatura=assignatura, interavaluacio=inter, nota=itemNota)
                 nn.save()
-            else:
-                # TODO: Esborrar...
-                pass
 
     return HttpResponse()
 
