@@ -150,11 +150,12 @@ def itemsAlumne(request, interid, alid, assigid, gid):
 #
 # Post on venen les notes d'una assignatura d'un alumne d'una INTER
 #
+# TODO: abans d'introduir la nota, verificar que estem en el periode corresponent...
 @permission_required_403('notes.posar_notes')
 def postNotes(request):
     if request.POST:
         mypost = simplejson.loads(request.body)
-        print mypost
+        # print mypost
 
         # TODO: sanitize
         inter = InterAvaluacio.objects.get(id=mypost['inter'])
@@ -182,9 +183,10 @@ def postNotes(request):
 
             # Si hi ha nota, l'enregistrem
             if 'nota' in n.keys():
-                itemNota = ItemNota.objects.get(id=n['nota'])
-                nn = Nota(tipnota=tipnota, alumne=alumne, assignatura=assignatura, interavaluacio=inter, nota=itemNota)
-                nn.save()
+                if n['nota'] is not None:
+                    itemNota = ItemNota.objects.get(id=n['nota'])
+                    nn = Nota(tipnota=tipnota, alumne=alumne, assignatura=assignatura, interavaluacio=inter, nota=itemNota)
+                    nn.save()
 
     return HttpResponse()
 

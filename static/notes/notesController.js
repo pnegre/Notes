@@ -58,7 +58,13 @@ app.controller("notesController", function($scope, $http) {
         $http.post("/notes/postNotes", data).then(function(response) {
 
         });
+    }
 
-
+    $scope.clear = function() {
+        $scope.dadesAlumne.comentari = "";
+        var index = 0;
+        for(index=0; index < $scope.dadesAlumne.notes.length; index++) {
+            $scope.dadesAlumne.notes[index].notaSelected = null;
+        }
     }
 });
