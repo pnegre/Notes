@@ -10,7 +10,13 @@
 	<script type="text/javascript" src="/static/notes/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript" src="/static/notes/utils.js"></script>
 
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<style type="text/css">
+
+	#notesdivmain {
+		margin-left: 15px;
+		margin-right: 15px;
+	}
 
 		/* unvisited link */
 	a:link {
@@ -53,7 +59,7 @@
 		float: right;
 		font-size: 16px;
 	}
-
+/*
 
 	table {
 		border: 1px solid gray;
@@ -78,7 +84,7 @@
 
 	body {
 		font-size: 14px;
-	}
+	}*/
 
 	</style>
 
@@ -90,22 +96,22 @@
 
 {% block basebody %}
 
-	<p class="menu"> <a href="/notes/cursos"> Llistat de grups </a>
-	{% if perms.notes.impr_butlletins %}
-		<a href="/notes/butlletins"> Butlletins </a>
-	{% endif %}
-	{% if user.is_superuser %}
-		<a href="/notes/admin"> Administra assignatures </a>
-	{% endif %}
-	{% if user.is_superuser %}
-		<a href="/notes/admin2"> Administra interavaluacions </a>
-	{% endif %}
-	</p>
+	<div ng-app="app" id="notesdivmain">
 
-	<div ng-app="app">
+		<p class="menu"> <a href="/notes/cursos"> Llistat de grups </a>
+		{% if perms.notes.impr_butlletins %}
+			<a href="/notes/butlletins"> Butlletins </a>
+		{% endif %}
+		{% if user.is_superuser %}
+			<a href="/notes/admin"> Administra assignatures </a>
+		{% endif %}
+		{% if user.is_superuser %}
+			<a href="/notes/admin2"> Administra interavaluacions </a>
+		{% endif %}
+		</p>
+
 		{% block content %}
 		{% endblock %}
 	</div>
-
 
 {% endblock %}

@@ -21,8 +21,8 @@
 
 		<ul>
 			<li ng-repeat="g in av.grups">
-				// g.nomcomplet //
-				<ul>
+				<a href="" ng-click="g.visible=!g.visible">[+]</a> // g.nomcomplet //
+				<ul ng-show="g.visible">
 					<li ng-repeat="a in g.assignatures" ng-click="showCurs(av,g,a)">
 						<a href=""> // a.nom // </a>
 					</li>
@@ -32,36 +32,33 @@
 	</div>
 
 	<div ng-hide="mostraLlista">
-		<h1> Grup: // grup.nomcomplet // </h1>
-		<h2> Assignatura: // assignatura.nom // </h2>
+		<h2> // grup.nomcomplet //. Assignatura: // assignatura.nom // </h2>
 
-		<table> <tr>
-			<td> Alumne: </td>
-			<td>
-			<select ng-options="a.llinatge1 + ' ' + a.llinatge2 + ', ' + a.nom for a in alumnes"
-				ng-model="selectedAlumne" ng-change="changedAlumne()">
-			</select>
-			</td>
-		</table>
+		<label>Alumne:</label>
+		<select ng-options="a.llinatge1 + ' ' + a.llinatge2 + ', ' + a.nom for a in alumnes"
+			ng-model="selectedAlumne" ng-change="changedAlumne()" class="form-control">
+		</select>
 
-		<div ng-show="dadesAlumne">
-			<p> Comentari: </p>
-			<textarea ng-model="dadesAlumne.comentari"> </textarea>
-			<p> Notes:
-				<table>
+		<div class="col-xs-12" style="height:20px;"></div>
+		<div ng-show="dadesAlumne" class="form-group">
+			<label for="comment">Comentari:</label>
+			<textarea ng-model="dadesAlumne.comentari" class="form-control"> </textarea>
+			<div class="col-xs-12" style="height:20px;"></div>
+
+				<table class="table">
 					<tr ng-repeat="n in dadesAlumne.notes">
 						<th> // n.tipnota.nom // </th>
 						<td> <select ng-model="n.notaSelected"
 							ng-options="i.it for i in n.its track by i.id"
-							ng-init="n.notaSelected.id=n.nota.nota">
+							ng-init="n.notaSelected.id=n.nota.nota" class="form-control">
 						</select>
 						</td>
 					</tr>
 				</table>
-			</p>
 
-			<button ng-click="desa()"> Desa les dades </button>
-			<button ng-click="clear()"> Esborra les dades </button>
+
+			<button ng-click="desa()" class="form-control"> Desa les dades </button>
+			<button ng-click="clear()"class="form-control"> Esborra el formulari </button>
 		</div>
 
 	</div>
