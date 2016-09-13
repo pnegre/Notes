@@ -8,66 +8,64 @@
 
 {% block content %}
 
-<div ng-app="app">
-	<div ng-controller="notesController">
-		<h1> Introducció notes </h1>
+<div ng-controller="notesController">
+	<h1> Introducció notes </h1>
 
-		<div ng-show="mostraLlista">
-			<p>
-				Interavaluació activa: <b> // av.nom // // av.any //</b>.
+	<div ng-show="mostraLlista">
+		<p>
+			Interavaluació activa: <b> // av.nom // // av.any //</b>.
+		</p>
+		<p>
+			Es poden posar notes des del // av.data1 // fins a // av.data2 //
+		</p>
+
+		<ul>
+			<li ng-repeat="g in av.grups">
+				// g.nomcomplet //
+				<ul>
+					<li ng-repeat="a in g.assignatures" ng-click="showCurs(av,g,a)">
+						<a href=""> // a.nom // </a>
+					</li>
+				</ul>
+			</li>
+		</ul>
+	</div>
+
+	<div ng-hide="mostraLlista">
+		<h1> Grup: // grup.nomcomplet // </h1>
+		<h2> Assignatura: // assignatura.nom // </h2>
+
+		<table> <tr>
+			<td> Alumne: </td>
+			<td>
+			<select ng-options="a.llinatge1 + ' ' + a.llinatge2 + ', ' + a.nom for a in alumnes"
+				ng-model="selectedAlumne" ng-change="changedAlumne()">
+			</select>
+			</td>
+		</table>
+
+		<div ng-show="dadesAlumne">
+			<p> Comentari: </p>
+			<textarea ng-model="dadesAlumne.comentari"> </textarea>
+			<p> Notes:
+				<table>
+					<tr ng-repeat="n in dadesAlumne.notes">
+						<th> // n.tipnota.nom // </th>
+						<td> <select ng-model="n.notaSelected"
+							ng-options="i.it for i in n.its track by i.id"
+							ng-init="n.notaSelected.id=n.nota.nota">
+						</select>
+						</td>
+					</tr>
+				</table>
 			</p>
-			<p>
-				Es poden posar notes des del // av.data1 // fins a // av.data2 //
-			</p>
 
-			<ul>
-				<li ng-repeat="g in av.grups">
-					// g.nomcomplet //
-					<ul>
-						<li ng-repeat="a in g.assignatures" ng-click="showCurs(av,g,a)">
-							<a href=""> // a.nom // </a>
-						</li>
-					</ul>
-				</li>
-			</ul>
-		</div>
-
-		<div ng-hide="mostraLlista">
-			<h1> Grup: // grup.nomcomplet // </h1>
-			<h2> Assignatura: // assignatura.nom // </h2>
-
-			<table> <tr>
-				<td> Alumne: </td>
-				<td>
-				<select ng-options="a.llinatge1 + ' ' + a.llinatge2 + ', ' + a.nom for a in alumnes"
-					ng-model="selectedAlumne" ng-change="changedAlumne()">
-				</select>
-				</td>
-			</table>
-
-			<div ng-show="dadesAlumne">
-				<p> Comentari: </p>
-				<textarea ng-model="dadesAlumne.comentari"> </textarea>
-				<p> Notes:
-					<table>
-						<tr ng-repeat="n in dadesAlumne.notes">
-							<th> // n.tipnota.nom // </th>
-							<td> <select ng-model="n.notaSelected"
-								ng-options="i.it for i in n.its track by i.id"
-								ng-init="n.notaSelected.id=n.nota.nota">
-							</select>
-							</td>
-						</tr>
-					</table>
-				</p>
-
-				<button ng-click="desa()"> Desa les dades </button>
-				<button ng-click="clear()"> Esborra les dades </button>
-			</div>
-
+			<button ng-click="desa()"> Desa les dades </button>
+			<button ng-click="clear()"> Esborra les dades </button>
 		</div>
 
 	</div>
+
 </div>
 
 {% endblock %}

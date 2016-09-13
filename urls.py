@@ -17,8 +17,8 @@ urlpatterns = patterns('',
 
 
 	# AJAX
-	(r'^noucomentari$', 'notes.ajax.comentari'),
-	(r'^nnota$', 'notes.ajax.nnota'),
+	# (r'^noucomentari$', 'notes.ajax.comentari'),
+	# (r'^nnota$', 'notes.ajax.nnota'),
 	(r'^grupsinter/(?P<inter_id>\d+)$', 'notes.ajax.grupsInter'),
 	(r'^updateintergrup/$', 'notes.ajax.updateintergrup'),
 	(r'^anys$', 'notes.ajax.anys'),
