@@ -53,10 +53,10 @@ app.controller("notesController", function($scope, $http) {
             'notes': notes,
         }
 
-        console.log(data);
+        // console.log(data);
 
         $http.post("/notes/postNotes", data).then(function(response) {
-
+            alert("Notes desades");
         });
     }
 

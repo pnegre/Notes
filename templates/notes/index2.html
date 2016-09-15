@@ -45,7 +45,7 @@
 			<textarea ng-model="dadesAlumne.comentari" class="form-control"> </textarea>
 			<div class="col-xs-12" style="height:20px;"></div>
 
-				<table class="table">
+				<table class="table table-bordered">
 					<tr ng-repeat="n in dadesAlumne.notes">
 						<th> // n.tipnota.nom // </th>
 						<td> <select ng-model="n.notaSelected"
@@ -57,8 +57,8 @@
 				</table>
 
 
-			<button ng-click="desa()" class="form-control"> Desa les dades </button>
-			<button ng-click="clear()"class="form-control"> Esborra el formulari </button>
+			<button ng-click="desa()" class="btn btn-default"> Desa les dades </button>
+			<button ng-click="clear()"class="btn btn-default"> Esborra el formulari </button>
 		</div>
 
 	</div>
