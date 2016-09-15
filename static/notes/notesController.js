@@ -22,6 +22,7 @@ app.controller("notesController", function($scope, $http) {
         var gr = $scope.grup;
         $http.get('/notes/itemsAlumne/' + av.id +'/' + al.id + '/' + as.id + '/' + gr.id).then(function(response) {
             $scope.dadesAlumne = response.data;
+            $scope.desaMsg = "Desa les dades";
         });
     }
 
@@ -55,8 +56,12 @@ app.controller("notesController", function($scope, $http) {
 
         // console.log(data);
 
+        $scope.showWait = true;
+
         $http.post("/notes/postNotes", data).then(function(response) {
-            alert("Notes desades");
+            // alert("Notes desades");
+            $scope.desaMsg = "Dades DESADES!";
+            $scope.showWait = false;
         });
     }
 
@@ -66,5 +71,11 @@ app.controller("notesController", function($scope, $http) {
         for(index=0; index < $scope.dadesAlumne.notes.length; index++) {
             $scope.dadesAlumne.notes[index].notaSelected = null;
         }
+        $scope.desaMsg = "Desa les dades";
+    }
+
+    $scope.chg = function() {
+        // console.log("Dins chg");
+        $scope.desaMsg = "Desa les dades";
     }
 });
