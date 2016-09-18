@@ -7,7 +7,11 @@
 <div ng-controller="adminInterController">
 <h1> Administra Interavaluacions </h1>
 
-// prova //
+Any: <select ng-options="a.nom for a in anys track by a.id" ng-model="selectedAny" ng-change="showInters()"></select>
+<br><br>
+Inter: <select ng-options="i.nom for i in selectedAny.inters track by i.id" ng-model="selectedInter"></select>
+<br><br>
+<button> Mostra cursos </button>
 
 </div>
 
