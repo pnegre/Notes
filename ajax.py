@@ -207,40 +207,55 @@ def postNotes(request):
 
 
 
+@permission_required_403('notes.posar_notes')
+def inters(request):
+    result = []
+    annys = Any.objects.all().order_by('-any1')
+    for a in annys:
+        inters = InterAvaluacio.objects.filter(anny=a).order_by('-data1')
+        result.append({ 'id': a.id, 'nom': str(a), 'inters': [
+            {'nom': i.nom, 'id': i.id } for i in inters
+        ] })
 
-
+    return toJson(result)
 
 
 
 #
 # Retorna els anys ordenats de major a menor, en JSON
 #
-@permission_required_403('notes.posar_notes')
-def anys(request):
-	annys = Any.objects.all().order_by('-any1')
-	res = [ [a.id, str(a) ] for a in annys ]
-	return HttpResponse(simplejson.dumps(res), mimetype='application/json')
-
+# @permission_required_403('notes.posar_notes')
+# def anys(request):
+# 	annys = Any.objects.all().order_by('-any1')
+# 	res = [ [a.id, str(a) ] for a in annys ]
+# 	return HttpResponse(simplejson.dumps(res), mimetype='application/json')
+#
 
 #
-# Retorna totes les interavaluacions, en format JSON. Les més recents primer
+# # Retorna totes les interavaluacions, en format JSON. Les més recents primer
+# #
+# @permission_required_403('notes.posar_notes')
+# def inters(request):
+# 	inters = InterAvaluacio.objects.all().order_by('-data1')
+# 	res = [ [a.id, str(a) ] for a in inters ]
+# 	return HttpResponse(simplejson.dumps(res), mimetype='application/json')
 #
-@permission_required_403('notes.posar_notes')
-def inters(request):
-	inters = InterAvaluacio.objects.all().order_by('-data1')
-	res = [ [a.id, str(a) ] for a in inters ]
-	return HttpResponse(simplejson.dumps(res), mimetype='application/json')
-
 
 #
 # Retorna totes les interavaluacions d'un any (passat per post)
 #
-@permission_required_403('notes.posar_notes')
-def intersAny(request, any_id):
-	anny = Any.objects.get(id=any_id);
-	inters = InterAvaluacio.objects.filter(anny=anny).order_by('-data1')
-	res = [ [a.id, a.nom ] for a in inters ]
-	return HttpResponse(simplejson.dumps(res), mimetype='application/json')
+# @permission_required_403('notes.posar_notes')
+# def intersAny(request, any_id):
+# 	anny = Any.objects.get(id=any_id);
+# 	inters = InterAvaluacio.objects.filter(anny=anny).order_by('-data1')
+# 	res = [ [a.id, a.nom ] for a in inters ]
+# 	return HttpResponse(simplejson.dumps(res), mimetype='application/json')
+#
+#
+
+
+
+
 
 
 
