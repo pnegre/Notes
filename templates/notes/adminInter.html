@@ -14,7 +14,7 @@ Inter: <select ng-options="i.nom for i in selectedAny.inters track by i.id" ng-m
 <button ng-click="showCursos()"> Mostra cursos </button>
 
 <div ng-repeat="c in cursos">
-    <input type="checkbox"> </input> // c.nom // <br>
+    <input type="checkbox" ng-model=c.checked> </input> // c.nom // <br>
 </div>
 
 

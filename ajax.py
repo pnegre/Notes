@@ -228,9 +228,16 @@ def inters(request):
 def grupsInter(request, inter_id):
     inter = InterAvaluacio.objects.get(id=inter_id)
     ginter = inter.grups.all()
+    grups = Grup.objects.filter(curs__anny=inter.anny)
+    result = []
+    for g in grups:
+        checked = g in ginter
+        result.append({'nom': str(g), 'id': g.id, 'checked': checked})
 
-    res = [ {'nom': str(g), 'id': g.id } for g in ginter ]
-    return toJson(res)
+    return toJson(result)
+
+    # res = [ {'nom': str(g), 'id': g.id } for g in ginter ]
+    # return toJson(res)
 	# return HttpResponse(simplejson.dumps(res), mimetype='application/json')
 
 
