@@ -19,7 +19,7 @@ urlpatterns = patterns('',
 	# AJAX
 	# (r'^noucomentari$', 'notes.ajax.comentari'),
 	# (r'^nnota$', 'notes.ajax.nnota'),
-	(r'^grupsinter/(?P<inter_id>\d+)$', 'notes.ajax.grupsInter'),
+
 	(r'^updateintergrup/$', 'notes.ajax.updateintergrup'),
 	(r'^anys$', 'notes.ajax.anys'),
 
@@ -37,6 +37,7 @@ urlpatterns = patterns('',
 
 	(r'^adminInter$', 'notes.views.adminInter'),
 	(r'^inters$', 'notes.ajax.inters'),
+	(r'^grupsInter/(?P<inter_id>\d+)$', 'notes.ajax.grupsInter'),
 	# (r'^cursosinter/$', 'notes.ajax.cursosinters'),
 	# (r'^getnotes/(?P<grup_id>\d+)/(?P<as_id>\d+)', 'notes.ajax.getnotes'),
 	# (r'^llista_alumnes/(?P<curs_id>\d+)', 'notes.ajax.llista_alumnes'),
