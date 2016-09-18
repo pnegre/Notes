@@ -47,17 +47,25 @@ def permission_required_403(perm):
 		return _wrapped_view
 	return decorator
 
+#
+# def getAssignaturesGrup(grup, inter):
+# 	assigs = []
+# 	for a in Assignatura.objects.all():
+# 		try:
+# 			AssignaturaGrupInter.objects.get(assignatura=a, grup=grup, interavaluacio=inter)
+# 			assigs.append(a)
+# 		except AssignaturaGrupInter.DoesNotExist:
+# 			pass
+# 	return assigs
 
-def getAssignaturesGrup(grup, inter):
-	assigs = []
-	for a in Assignatura.objects.all():
-		try:
-			AssignaturaGrupInter.objects.get(assignatura=a, grup=grup, interavaluacio=inter)
-			assigs.append(a)
-		except AssignaturaGrupInter.DoesNotExist:
-			pass
-	return assigs
 
+def getSubmateriesGrup(grup, inter):
+    result = []
+    for s in grup.submateries.all():
+        result.append({ 'nom': s.descripcio, 'id': s.id })
+
+    print grup, "Result: ", result
+    return result
 
 
 #
@@ -73,8 +81,8 @@ def interCursos(request):
 	for g in grups:
 		gg = model_to_dict(g)
 		assigs = []
-		for a in getAssignaturesGrup(g, iact):
-			assigs.append(model_to_dict(a))
+		for a in getSubmateriesGrup(g, iact):
+			assigs.append(a)
 		gg['assignatures'] = assigs
 		gg['nomcomplet'] = g.curs.nom + ' ' + g.nom
 		theGrups.append(gg)
