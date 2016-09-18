@@ -6,6 +6,7 @@
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.7/angular.min.js"></script>
 	<script src="/static/notes/stuff.js"></script>
 	<script src="/static/notes/notesController.js"></script>
+	<script src="/static/notes/adminInterController.js"></script>
 
 	<script type="text/javascript" src="/static/notes/jquery-2.1.4.min.js"></script>
 	<script type="text/javascript" src="/static/notes/utils.js"></script>
@@ -106,7 +107,7 @@
 			<a href="/notes/admin"> Administra assignatures </a>
 		{% endif %}
 		{% if user.is_superuser %}
-			<a href="/notes/admin2"> Administra interavaluacions </a>
+			<a href="/notes/adminInter"> Administra interavaluacions </a>
 		{% endif %}
 		</p>
 

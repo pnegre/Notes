@@ -27,7 +27,7 @@ def getAlumnes(grup, anny):
 		als.append(m.alumne)
 	return sorted(als, key=lambda al: al.llinatge1)
 
-# 
+#
 # def getAssignaturesGrup(grup, inter):
 # 	assigs = []
 # 	for a in Assignatura.objects.all():
@@ -67,11 +67,19 @@ def admin(request):
 		context_instance=RequestContext(request)
 	)
 
+# # Administrar cursos d'una interavaluació
+# @permission_required('is_superuser')
+# def admin2(request):
+# 	return render_to_response(
+# 		'notes/admin2.html', { },
+# 		context_instance=RequestContext(request)
+# 	)
+
 # Administrar cursos d'una interavaluació
 @permission_required('is_superuser')
-def admin2(request):
+def adminInter(request):
 	return render_to_response(
-		'notes/admin2.html', { },
+		'notes/adminInter.html', { },
 		context_instance=RequestContext(request)
 	)
 
