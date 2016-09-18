@@ -241,6 +241,47 @@ def grupsInter(request, inter_id):
 	# return HttpResponse(simplejson.dumps(res), mimetype='application/json')
 
 
+@permission_required_403('notes.posar_notes')
+def saveInter(request):
+    if request.method == 'POST':
+        # Necessari perquè json no envia la info correctament codificada per django
+        # TODO: sanitize data
+        mypost = simplejson.loads(request.body)
+        inter = InterAvaluacio.objects.get(id=mypost['inter'])
+        inter.grups.clear()
+        for c in mypost['cursos']:
+            g = Grup.objects.get(id=c['id'])
+            if c['checked']:
+                inter.grups.add(g)
+
+        return HttpResponse()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 @permission_required_403('notes.posar_notes')

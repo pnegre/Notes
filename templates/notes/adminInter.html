@@ -9,12 +9,16 @@
 
 Any: <select ng-options="a.nom for a in anys track by a.id" ng-model="selectedAny"></select>
 <br><br>
-Inter: <select ng-options="i.nom for i in selectedAny.inters track by i.id" ng-model="selectedInter"></select>
+Inter: <select ng-options="i.nom for i in selectedAny.inters track by i.id" ng-model="selectedInter" ng-change="showCursos()"></select>
 <br><br>
-<button ng-click="showCursos()"> Mostra cursos </button>
 
-<div ng-repeat="c in cursos">
-    <input type="checkbox" ng-model=c.checked> </input> // c.nom // <br>
+<div ng-show="cursos != null">
+    <div ng-repeat="c in cursos">
+        <input type="checkbox" ng-model=c.checked> </input> // c.nom // <br>
+    </div>
+    <br>
+    <button ng-click="desaCursos()"> Desa </button>
+
 </div>
 
 
