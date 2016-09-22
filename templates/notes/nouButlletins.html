@@ -1,0 +1,18 @@
+{% extends "notes/base.html" %}
+
+
+
+{% block content %}
+
+<div ng-controller="butlletinsController">
+<h1> Butlletins de notes </h1>
+
+Any: <select ng-options="a.nom for a in anys track by a.id" ng-model="selectedAny"></select>
+<br><br>
+Inter: <select ng-options="i.nom for i in selectedAny.inters track by i.id" ng-model="selectedInter" ng-change="showCursos()"></select>
+<br><br>
+
+<button ng-click="baixa()"> Baixa el PDF </button>
+
+
+{% endblock %}
