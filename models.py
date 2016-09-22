@@ -3,15 +3,15 @@ from django.db import models
 from gestib.models import *
 
 
-class Assignatura(models.Model):
-	nom = models.CharField(max_length=100)
-	curt = models.CharField(max_length=100, blank=True, null=True)
-
-	def __unicode__(self):
-		return self.nom
-
-	class Meta:
-		ordering = ('nom',)
+# class Assignatura(models.Model):
+# 	nom = models.CharField(max_length=100)
+# 	curt = models.CharField(max_length=100, blank=True, null=True)
+#
+# 	def __unicode__(self):
+# 		return self.nom
+#
+# 	class Meta:
+# 		ordering = ('nom',)
 
 
 class InterAvaluacio(models.Model):
@@ -31,11 +31,11 @@ class Config(models.Model):
 	interactiva = models.ForeignKey(InterAvaluacio)
 
 
-
-class AssignaturaGrupInter(models.Model):
-	interavaluacio = models.ForeignKey(InterAvaluacio)
-	grup = models.ForeignKey(Grup)
-	assignatura = models.ForeignKey(Assignatura)
+#
+# class AssignaturaGrupInter(models.Model):
+# 	interavaluacio = models.ForeignKey(InterAvaluacio)
+# 	grup = models.ForeignKey(Grup)
+# 	assignatura = models.ForeignKey(Assignatura)
 
 
 class GrupNota(models.Model):
@@ -72,7 +72,8 @@ class Nota(models.Model):
 	nota = models.ForeignKey(ItemNota)
 	tipnota = models.ForeignKey(TipNota)
 	alumne = models.ForeignKey(Alumne)
-	assignatura = models.ForeignKey(Assignatura)
+	# assignatura = models.ForeignKey(Assignatura)
+	submateria = models.ForeignKey(Submateria)
 	interavaluacio = models.ForeignKey(InterAvaluacio)
 
 	def __unicode__(self):
@@ -88,7 +89,7 @@ class Nota(models.Model):
 class Comentari(models.Model):
 	text = models.TextField()
 	alumne = models.ForeignKey(Alumne)
-	assignatura = models.ForeignKey(Assignatura)
+	submateria = models.ForeignKey(Submateria)
 	interavaluacio = models.ForeignKey(InterAvaluacio)
 
 	class Meta:

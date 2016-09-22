@@ -64,7 +64,7 @@ def getSubmateriesGrup(grup, inter):
     for s in grup.submateries.all():
         result.append({ 'nom': s.descripcio, 'id': s.id })
 
-    print grup, "Result: ", result
+    # print grup, "Result: ", result
     return result
 
 
@@ -120,13 +120,13 @@ def alumnes(request, gid, anyid):
 #
 @permission_required_403('notes.posar_notes')
 def itemsAlumne(request, interid, alid, assigid, gid):
-	assignatura = Assignatura.objects.get(id=assigid)
+	assignatura = Submateria.objects.get(id=assigid)
 	grup = Grup.objects.get(id=gid)
 	inter = InterAvaluacio.objects.get(id=interid)
 	alumne = Alumne.objects.get(id=alid)
 
 	try:
-		comentari = Comentari.objects.get(alumne=alumne,assignatura=assignatura,interavaluacio=inter).text
+		comentari = Comentari.objects.get(alumne=alumne,submateria=assignatura,interavaluacio=inter).text
 	except Comentari.DoesNotExist:
 		comentari = ''
 
@@ -134,7 +134,7 @@ def itemsAlumne(request, interid, alid, assigid, gid):
 
 	notes = []
 	for t in tipnotes:
-		n = Nota.objects.filter(assignatura=assignatura,alumne=alumne,tipnota=t,interavaluacio=inter)
+		n = Nota.objects.filter(submateria=assignatura,alumne=alumne,tipnota=t,interavaluacio=inter)
 		nota = None
 		if n:
 			nota = model_to_dict(n[0])
@@ -168,16 +168,16 @@ def postNotes(request):
         # TODO: sanitize
         inter = InterAvaluacio.objects.get(id=mypost['inter'])
         alumne = Alumne.objects.get(id=mypost['alumne'])
-        assignatura = Assignatura.objects.get(id=mypost['assignatura'])
+        assignatura = Submateria.objects.get(id=mypost['assignatura'])
 
         # Comentari: Esborrem els existents i posem el nou
         comentari = mypost['comentari']
-        coms = Comentari.objects.filter(alumne=alumne, assignatura=assignatura, interavaluacio=inter)
+        coms = Comentari.objects.filter(alumne=alumne, submateria=assignatura, interavaluacio=inter)
         if coms:
             coms.delete()
 
         if not re.match('^\s*$', comentari):
-            com = Comentari(alumne=alumne, assignatura=assignatura, interavaluacio=inter, text=comentari)
+            com = Comentari(alumne=alumne, submateria=assignatura, interavaluacio=inter, text=comentari)
             com.save()
 
         # Bucle que emmagatzema les notes dins la base de dades
@@ -185,7 +185,7 @@ def postNotes(request):
             tipnota = TipNota.objects.get(id=n['tipnota'])
 
             # Primer, esborrem les notes existents per aquella assignatura de l'alumne i inter
-            nexistents = Nota.objects.filter(tipnota=tipnota, alumne=alumne, assignatura=assignatura, interavaluacio=inter)
+            nexistents = Nota.objects.filter(tipnota=tipnota, alumne=alumne, submateria=assignatura, interavaluacio=inter)
             if nexistents:
                 nexistents.delete()
 
@@ -193,7 +193,7 @@ def postNotes(request):
             if 'nota' in n.keys():
                 if n['nota'] is not None:
                     itemNota = ItemNota.objects.get(id=n['nota'])
-                    nn = Nota(tipnota=tipnota, alumne=alumne, assignatura=assignatura, interavaluacio=inter, nota=itemNota)
+                    nn = Nota(tipnota=tipnota, alumne=alumne, submateria=assignatura, interavaluacio=inter, nota=itemNota)
                     nn.save()
 
     return HttpResponse()
