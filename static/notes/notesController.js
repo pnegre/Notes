@@ -2,7 +2,7 @@
 
 app.controller("notesController", function($scope, $http) {
     $scope.mostraLlista = true;
-    $http.get('/notes/interCursos').then(function(response) {
+    $http.get('/notes/interActivaCursos').then(function(response) {
         $scope.av = response.data;
     });
 

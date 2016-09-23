@@ -68,25 +68,30 @@ def getSubmateriesGrup(grup, inter):
     return result
 
 
+def GrupsFromInter(inter):
+    grups = inter.grups.all()
+    theGrups = []
+    for g in grups:
+        gg = model_to_dict(g)
+        assigs = []
+        for a in getSubmateriesGrup(g, inter):
+        	assigs.append(a)
+        gg['assignatures'] = assigs
+        gg['nomcomplet'] = g.curs.nom + ' ' + g.nom
+        theGrups.append(gg)
+
+    return theGrups
+
+
 #
 # Torna la interavaluacio activa
 # I els cursos corresponents
 #
 @permission_required_403('notes.posar_notes')
-def interCursos(request):
+def interActivaCursos(request):
 	# TODO: marcar interavaluació activa d'alguna manera...
 	iact = Config.objects.all()[0].interactiva
-	grups = iact.grups.all()
-	theGrups = []
-	for g in grups:
-		gg = model_to_dict(g)
-		assigs = []
-		for a in getSubmateriesGrup(g, iact):
-			assigs.append(a)
-		gg['assignatures'] = assigs
-		gg['nomcomplet'] = g.curs.nom + ' ' + g.nom
-		theGrups.append(gg)
-
+	grups = GrupsFromInter(iact)
 
 	return toJson({
 		'id': iact.id,
@@ -95,8 +100,13 @@ def interCursos(request):
 		'data2': str(iact.data2),
 		'any': str(iact.anny),
 		'anyid': iact.anny.id,
-		'grups': theGrups,
+		'grups': grups,
 	})
+
+@permission_required_403('notes.posar_notes')
+def interCursos(request, interid):
+    inter = InterAvaluacio.objects.get(id=interid)
+    return toJson(GrupsFromInter(inter))
 
 
 #

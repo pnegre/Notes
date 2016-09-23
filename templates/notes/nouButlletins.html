@@ -11,8 +11,10 @@ Any: <select ng-options="a.nom for a in anys track by a.id" ng-model="selectedAn
 <br><br>
 Inter: <select ng-options="i.nom for i in selectedAny.inters track by i.id" ng-model="selectedInter" ng-change="showCursos()"></select>
 <br><br>
+Curs: <select ng-options="c.nomcomplet for c in cursos track by c.id" ng-model="selectedCurs" ng-change="prepareLink()"></select>
+<br><br>
 
-<button ng-click="baixa()"> Baixa el PDF </button>
+<a class="btn" ng-href="// link //"> Baixa </a>
 
 
 {% endblock %}
