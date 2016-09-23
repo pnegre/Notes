@@ -16,6 +16,8 @@ from gestib.models import *
 
 import re, datetime
 
+import aux
+
 
 #
 # Torna una resposta de tipus application/json amb les dades que es passen com a paràmetre
@@ -49,13 +51,14 @@ def permission_required_403(perm):
 
 
 
+
 #
 # Torna les submatèries d'un grup
 #
 def getSubmateriesGrup(grup, inter):
     result = []
     for s in grup.submateries.all():
-        result.append({ 'nom': s.descripcio, 'id': s.id })
+        result.append({ 'nom': aux.beautifySubmateriaName(s.descripcio), 'id': s.id })
 
     return result
 

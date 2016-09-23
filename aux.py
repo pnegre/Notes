@@ -9,10 +9,16 @@ from reportlab.lib.styles import getSampleStyleSheet
 from reportlab.platypus import *
 from reportlab.lib import colors
 
-import datetime
+import re,datetime
 
 from reportlab.lib.pagesizes import A4, LETTER, landscape, portrait
 
+def beautifySubmateriaName(name):
+    m = re.match('(.*)-[ABCDE]$', name)
+    if m:
+        return m.group(1)
+
+    return name
 
 def butlletins_per_grup_i_alumne(inter, submateries, grup, alumnes):
 	tipnotes = inter.tipnotes.all().order_by('ordre')
@@ -41,9 +47,9 @@ def butlletins_per_grup_i_alumne(inter, submateries, grup, alumnes):
 			if len(notesFiltrades) == 0: continue
 			nts = []
 			if not a.curta:
-				nts.append(a.nom)
+				nts.append(beautifySubmateriaName(a.nom))
 			else:
-				nts.append(a.curta)
+				nts.append(beautifySubmateriaName(a.curta))
 
 			for t in tipnotes:
 				try:
@@ -95,7 +101,7 @@ def butlletins_per_grup_i_alumne(inter, submateries, grup, alumnes):
 		coms = ""
 		comentaris = Comentari.objects.filter(alumne=al,interavaluacio=inter)
 		for c in comentaris:
-			coms += "<b>" + c.submateria.nom + ":</b> " + c.text + "  "
+			coms += "<b>" + beautifySubmateriaName(c.submateria.nom) + ":</b> " + c.text + "  "
 
 		elements.append(Paragraph("<br/><br/>", styles['Normal']))
 		elements.append(Paragraph(coms, styles['Normal']))
