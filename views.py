@@ -40,4 +40,11 @@ def butlletins2(request):
 
 @permission_required('notes.impr_butlletins')
 def butlletiPDF(request, inter_id, grup_id):
-	return aux.butlletins_per_grup_i_alumne(inter, assignatures, grup, alumnes)
+	inter = InterAvaluacio.objects.get(id=inter_id)
+	grup = Grup.objects.get(id=grup_id)
+	submateries = grup.submateries.all()
+	alumnes = []
+	for m in Matricula.objects.filter(grup=grup,anny=inter.anny):
+		alumnes.append(m.alumne)
+
+	return aux.butlletins_per_grup_i_alumne(inter, submateries, grup, alumnes)

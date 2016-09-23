@@ -14,7 +14,7 @@ import datetime
 from reportlab.lib.pagesizes import A4, LETTER, landscape, portrait
 
 
-def butlletins_per_grup_i_alumne(inter, assignatures, grup, alumnes):
+def butlletins_per_grup_i_alumne(inter, submateries, grup, alumnes):
 	tipnotes = TipNota.objects.all().order_by('ordre')
 
 	response = HttpResponse(mimetype='application/pdf')
@@ -36,14 +36,14 @@ def butlletins_per_grup_i_alumne(inter, assignatures, grup, alumnes):
 
 	for al in alumnes:
 		dadesTaula = []
-		for a in assignatures:
-			notesFiltrades = Nota.objects.filter(assignatura=a,alumne=al,interavaluacio=inter)
+		for a in submateries:
+			notesFiltrades = Nota.objects.filter(submateria=a,alumne=al,interavaluacio=inter)
 			if len(notesFiltrades) == 0: continue
 			nts = []
-			if not a.curt:
+			if not a.curta:
 				nts.append(a.nom)
 			else:
-				nts.append(a.curt)
+				nts.append(a.curta)
 
 			for t in tipnotes:
 				try:
@@ -95,7 +95,7 @@ def butlletins_per_grup_i_alumne(inter, assignatures, grup, alumnes):
 		coms = ""
 		comentaris = Comentari.objects.filter(alumne=al,interavaluacio=inter)
 		for c in comentaris:
-			coms += "<b>" + c.assignatura.nom + ":</b> " + c.text + "  "
+			coms += "<b>" + c.submateria.nom + ":</b> " + c.text + "  "
 
 		elements.append(Paragraph("<br/><br/>", styles['Normal']))
 		elements.append(Paragraph(coms, styles['Normal']))
