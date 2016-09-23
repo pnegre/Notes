@@ -140,7 +140,7 @@ def itemsAlumne(request, interid, alid, assigid, gid):
 	except Comentari.DoesNotExist:
 		comentari = ''
 
-	tipnotes = TipNota.objects.all().order_by('ordre')
+	tipnotes = inter.tipnotes.all().order_by('ordre')
 
 	notes = []
 	for t in tipnotes:

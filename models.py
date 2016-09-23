@@ -3,41 +3,6 @@ from django.db import models
 from gestib.models import *
 
 
-# class Assignatura(models.Model):
-# 	nom = models.CharField(max_length=100)
-# 	curt = models.CharField(max_length=100, blank=True, null=True)
-#
-# 	def __unicode__(self):
-# 		return self.nom
-#
-# 	class Meta:
-# 		ordering = ('nom',)
-
-
-class InterAvaluacio(models.Model):
-	nom = models.CharField(max_length=100)
-	nomButlleti = models.CharField(max_length=100, blank=True, null=True)
-	anny = models.ForeignKey(Any)
-	data1 = models.DateField()
-	data2 = models.DateField()
-
-	grups = models.ManyToManyField(Grup, blank=True, null=True)
-
-	def __unicode__(self):
-		return str(self.anny) + ' ' + self.nom
-
-
-class Config(models.Model):
-	interactiva = models.ForeignKey(InterAvaluacio)
-
-
-#
-# class AssignaturaGrupInter(models.Model):
-# 	interavaluacio = models.ForeignKey(InterAvaluacio)
-# 	grup = models.ForeignKey(Grup)
-# 	assignatura = models.ForeignKey(Assignatura)
-
-
 class GrupNota(models.Model):
 	nom = models.CharField(max_length=100)
 
@@ -55,6 +20,28 @@ class TipNota(models.Model):
 
 	def __unicode__(self):
 		return self.nom
+
+
+class InterAvaluacio(models.Model):
+	nom = models.CharField(max_length=100)
+	nomButlleti = models.CharField(max_length=100, blank=True, null=True)
+	anny = models.ForeignKey(Any)
+	data1 = models.DateField()
+	data2 = models.DateField()
+
+	grups = models.ManyToManyField(Grup, blank=True, null=True)
+	tipnotes = models.ManyToManyField(TipNota, blank=True, null=True)
+
+	def __unicode__(self):
+		return str(self.anny) + ' ' + self.nom
+
+
+class Config(models.Model):
+	interactiva = models.ForeignKey(InterAvaluacio)
+
+
+
+
 
 
 class ItemNota(models.Model):

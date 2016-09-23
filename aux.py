@@ -15,7 +15,7 @@ from reportlab.lib.pagesizes import A4, LETTER, landscape, portrait
 
 
 def butlletins_per_grup_i_alumne(inter, submateries, grup, alumnes):
-	tipnotes = TipNota.objects.all().order_by('ordre')
+	tipnotes = inter.tipnotes.all().order_by('ordre')
 
 	response = HttpResponse(mimetype='application/pdf')
 	response['Content-Disposition'] = 'attachment; filename=butlletins_' + str(grup) + '.pdf'
