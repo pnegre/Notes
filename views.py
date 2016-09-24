@@ -48,3 +48,11 @@ def butlletiPDF(request, inter_id, grup_id):
 		alumnes.append(m.alumne)
 
 	return aux.butlletins_per_grup_i_alumne(inter, submateries, grup, alumnes)
+
+
+@permission_required('is_superuser')
+def editSubsView(request):
+	return render_to_response(
+		'notes/editsubs.html', { },
+		context_instance=RequestContext(request)
+	)

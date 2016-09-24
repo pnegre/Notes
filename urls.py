@@ -10,6 +10,7 @@ urlpatterns = patterns('',
 	(r'^butlletiPDF/(?P<inter_id>\d+)/(?P<grup_id>\d+)', 'notes.views.butlletiPDF'),
 	(r'^butlletins$', 'notes.views.butlletins2'),
 	(r'^adminInter$', 'notes.views.adminInter'),
+	(r'^editSubmats$', 'notes.views.editSubsView'),
 
 
 	# AJAX
@@ -23,5 +24,7 @@ urlpatterns = patterns('',
 	(r'^tipnotesInter/(?P<interid>\d+)$', 'notes.ajax.tipnotesInter'),
 	(r'^saveInter$', 'notes.ajax.saveInter'),
 
+	(r'^submatsInter/(?P<interid>\d+)/(?P<gid>\d+)$', 'notes.ajax.submatsInter'),
+	(r'^submatsPost$', 'notes.ajax.submatsPost'),
 
 )

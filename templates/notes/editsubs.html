@@ -1,0 +1,29 @@
+{% extends "notes/base.html" %}
+
+
+
+{% block content %}
+
+<div ng-controller="editsubsController">
+<h1> Edita Submatèries d'un grup </h1>
+
+<label>Any</label>
+<select ng-options="a.nom for a in anys track by a.id" ng-model="selectedAny" class="form-control" ng-change="changeAny()"></select>
+<br>
+<label>Inter</label>
+<select ng-options="i.nom for i in selectedAny.inters track by i.id" ng-model="selectedInter" ng-change="showCursos()" class="form-control"></select>
+<br>
+<label>Curs</label>
+<select ng-options="c.nomcomplet for c in cursos track by c.id" ng-model="selectedCurs" ng-change="showSubmateries()" class="form-control"></select>
+<br><br>
+<table class="table table-bordered">
+    <tr ng-repeat="s in submats">
+        <td> //s.nom// </td> <td> <input type="checkbox" ng-model="s.actiu"> </input> Actiu </td>
+    </tr>
+</table>
+
+<button ng-click="desaSubmats()"> Desa les dades </button>
+
+
+
+{% endblock %}

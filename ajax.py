@@ -53,11 +53,11 @@ def permission_required_403(perm):
 
 
 #
-# Torna les submatèries d'un grup
+# Torna les submatèries d'un grup (actives)
 #
 def getSubmateriesGrup(grup, inter):
     result = []
-    for s in grup.submateries.all():
+    for s in grup.submateries.filter(actiu=True):
         result.append({ 'nom': aux.beautifySubmateriaName(s.descripcio), 'id': s.id })
 
     return result
@@ -180,7 +180,7 @@ def postNotes(request):
         inter = InterAvaluacio.objects.get(id=mypost['inter'])
         if not dateInter(inter):
             raise Exception("Fora de periode de notes")
-        
+
         alumne = Alumne.objects.get(id=mypost['alumne'])
         assignatura = Submateria.objects.get(id=mypost['assignatura'])
 
@@ -286,3 +286,27 @@ def tipnotesInter(request, interid):
         result.append({'id': t.id, 'nom': str(t), 'selected': sel})
 
     return toJson(result)
+
+
+@permission_required_403('notes.posar_notes')
+def submatsInter(request, interid, gid):
+    inter = InterAvaluacio.objects.get(id=interid)
+    grup = Grup.objects.get(id=gid)
+    result = []
+    for s in grup.submateries.all():
+        result.append({ 'nom': aux.beautifySubmateriaName(s.descripcio), 'id': s.id, 'actiu': s.actiu })
+
+    return toJson(result)
+
+@permission_required('is_superuser')
+def submatsPost(request):
+    if request.method == 'POST':
+        # Necessari perquè json no envia la info correctament codificada per django
+        # TODO: sanitize data
+        mypost = simplejson.loads(request.body)
+        for s in mypost:
+            sm = Submateria.objects.get(id=s['id'])
+            sm.actiu = s['actiu']
+            sm.save()
+
+        return HttpResponse()

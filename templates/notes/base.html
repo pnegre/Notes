@@ -8,6 +8,7 @@
 	<script src="/static/notes/notesController.js"></script>
 	<script src="/static/notes/adminInterController.js"></script>
 	<script src="/static/notes/butlletinsController.js"></script>
+	<script src="/static/notes/editsubsController.js"></script>
 
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	<style type="text/css">
@@ -47,6 +48,9 @@
 				{% endif %}
 				{% if user.is_superuser %}
 					<li><a href="/notes/adminInter"> Administra interavaluacions </a></li>
+				{% endif %}
+				{% if user.is_superuser %}
+					<li><a href="/notes/editSubmats"> Edita submatèries </a></li>
 				{% endif %}
 			</ul>
 		</nav>
