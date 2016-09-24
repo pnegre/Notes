@@ -28,8 +28,7 @@ app.controller("adminInterController", function($scope, $http) {
     }
 
     $scope.desaCursos = function() {
-        console.log($scope.selectedTipNotes)
-        var data = {'inter': $scope.selectedInter.id, 'cursos': $scope.cursos}
+        var data = {'inter': $scope.selectedInter.id, 'cursos': $scope.cursos, 'tipnotes': $scope.selectedTipNotes}
         $http.post('/notes/saveInter', data).then(function() {
             alert("Ok, dades desades");
         });

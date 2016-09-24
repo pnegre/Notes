@@ -251,7 +251,14 @@ def saveInter(request):
         # Necessari perquè json no envia la info correctament codificada per django
         # TODO: sanitize data
         mypost = simplejson.loads(request.body)
+        tnotes = mypost['tipnotes']
         inter = InterAvaluacio.objects.get(id=mypost['inter'])
+
+        inter.tipnotes.clear()
+        for t in tnotes:
+            tt = TipNota.objects.get(id=t['id'])
+            inter.tipnotes.add(tt)
+
         inter.grups.clear()
         for c in mypost['cursos']:
             g = Grup.objects.get(id=c['id'])
@@ -261,7 +268,9 @@ def saveInter(request):
         return HttpResponse()
 
 
-
+#
+# Torna els tipnotes d'una inter
+#
 @permission_required_403('notes.posar_notes')
 def tipnotesInter(request, interid):
     inter = InterAvaluacio.objects.get(id=interid)
