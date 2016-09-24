@@ -8,7 +8,7 @@
 <h1> Butlletins de notes </h1>
 
 <label>Any</label>
-<select ng-options="a.nom for a in anys track by a.id" ng-model="selectedAny" class="form-control"></select>
+<select ng-options="a.nom for a in anys track by a.id" ng-model="selectedAny" class="form-control" ng-change="changeAny()"></select>
 <br>
 <label>Inter</label>
 <select ng-options="i.nom for i in selectedAny.inters track by i.id" ng-model="selectedInter" ng-change="showCursos()" class="form-control"></select>
