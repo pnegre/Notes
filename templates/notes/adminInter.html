@@ -17,6 +17,13 @@ Inter: <select ng-options="i.nom for i in selectedAny.inters track by i.id" ng-m
         <input type="checkbox" ng-model=c.checked> </input> // c.nom // <br>
     </div>
     <br>
+    TipNotes:
+    TipNotes: <select multiple ng-options="t.nom for t in tipnotes track by t.id" ng-model="selectedTipNotes"></select>
+        <!-- <select multiple ng-model="selectedTipNotes">
+            <option ng-repeat="t in tipnotes" ng-selected="t.selected">// t.nom //</option>
+        </select> -->
+    <br>
+    <br>
     <button ng-click="desaCursos()"> Desa </button>
 
 </div>

@@ -259,3 +259,17 @@ def saveInter(request):
                 inter.grups.add(g)
 
         return HttpResponse()
+
+
+
+@permission_required_403('notes.posar_notes')
+def tipnotesInter(request, interid):
+    inter = InterAvaluacio.objects.get(id=interid)
+    tipnotesInter = TipNota.objects.all()
+    tipnotes = inter.tipnotes.all()
+    result = []
+    for t in tipnotesInter:
+        sel = t in tipnotes
+        result.append({'id': t.id, 'nom': str(t), 'selected': sel})
+
+    return toJson(result)

@@ -12,15 +12,26 @@ app.controller("adminInterController", function($scope, $http) {
             $http.get('/notes/grupsInter/' + $scope.selectedInter.id).then(function(response) {
                 $scope.cursos = response.data;
             });
+
+            $http.get('/notes/tipnotesInter/' + $scope.selectedInter.id).then(function(response) {
+                $scope.tipnotes = response.data;
+                $scope.selectedTipNotes = [];
+                for(var i=0; i<$scope.tipnotes.length; i++) {
+                    if ($scope.tipnotes[i].selected == true) {
+                        $scope.selectedTipNotes.push($scope.tipnotes[i]);
+                    }
+                }
+            });
         } else {
             $scope.cursos = null;
         }
     }
 
     $scope.desaCursos = function() {
+        console.log($scope.selectedTipNotes)
         var data = {'inter': $scope.selectedInter.id, 'cursos': $scope.cursos}
         $http.post('/notes/saveInter', data).then(function() {
-
+            alert("Ok, dades desades");
         });
     }
 
