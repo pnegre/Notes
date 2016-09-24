@@ -7,14 +7,17 @@
 <div ng-controller="butlletinsController">
 <h1> Butlletins de notes </h1>
 
-Any: <select ng-options="a.nom for a in anys track by a.id" ng-model="selectedAny"></select>
-<br><br>
-Inter: <select ng-options="i.nom for i in selectedAny.inters track by i.id" ng-model="selectedInter" ng-change="showCursos()"></select>
-<br><br>
-Curs: <select ng-options="c.nomcomplet for c in cursos track by c.id" ng-model="selectedCurs" ng-change="prepareLink()"></select>
+<label>Any</label>
+<select ng-options="a.nom for a in anys track by a.id" ng-model="selectedAny" class="form-control"></select>
+<br>
+<label>Inter</label>
+<select ng-options="i.nom for i in selectedAny.inters track by i.id" ng-model="selectedInter" ng-change="showCursos()" class="form-control"></select>
+<br>
+<label>Curs</label>
+<select ng-options="c.nomcomplet for c in cursos track by c.id" ng-model="selectedCurs" ng-change="prepareLink()" class="form-control"></select>
 <br><br>
 
-<a class="btn" ng-href="// link //"> Baixa </a>
+<a class="btn btn-default" ng-href="// link //" ng-show="link != null"> Baixa </a>
 
 
 {% endblock %}
