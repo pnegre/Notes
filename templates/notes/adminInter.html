@@ -7,24 +7,22 @@
 <div ng-controller="adminInterController">
 <h1> Administra Interavaluacions </h1>
 
-Any: <select ng-options="a.nom for a in anys track by a.id" ng-model="selectedAny"></select>
-<br><br>
-Inter: <select ng-options="i.nom for i in selectedAny.inters track by i.id" ng-model="selectedInter" ng-change="showCursos()"></select>
-<br><br>
-
+<label>Any</label> <select ng-options="a.nom for a in anys track by a.id" ng-model="selectedAny" class="form-control"></select>
+<br>
+<label>Inter</label> <select class="form-control" ng-options="i.nom for i in selectedAny.inters track by i.id" ng-model="selectedInter" ng-change="showCursos()"></select>
+<br>
 <div ng-show="cursos != null">
-    <div ng-repeat="c in cursos">
-        <input type="checkbox" ng-model=c.checked> </input> // c.nom // <br>
+    <div class="divcols">
+        <div ng-repeat="c in cursos">
+            <input type="checkbox" ng-model=c.checked> </input> // c.nom // <br>
+        </div>
     </div>
     <br>
-    TipNotes:
-    TipNotes: <select multiple ng-options="t.nom for t in tipnotes track by t.id" ng-model="selectedTipNotes"></select>
-        <!-- <select multiple ng-model="selectedTipNotes">
-            <option ng-repeat="t in tipnotes" ng-selected="t.selected">// t.nom //</option>
-        </select> -->
+    <label>TipNotes</label>
+    <select class="form-control" multiple ng-options="t.nom for t in tipnotes track by t.id" ng-model="selectedTipNotes"></select>
     <br>
     <br>
-    <button ng-click="desaCursos()"> Desa </button>
+    <button ng-click="desaCursos()" class="btn btn-default"> Desa </button>
 
 </div>
 
