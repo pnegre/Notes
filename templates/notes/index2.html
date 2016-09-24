@@ -42,14 +42,15 @@
 		<div class="col-xs-12" style="height:20px;"></div>
 		<div ng-show="dadesAlumne" class="form-group">
 			<label for="comment">Comentari:</label>
-			<textarea ng-model="dadesAlumne.comentari" class="form-control" ng-change="chg()"> </textarea>
+			<textarea ng-model="dadesAlumne.comentari" class="form-control"
+				ng-change="chg()" ng-disabled="!av.espodenposarnotes"> </textarea>
 			<div class="col-xs-12" style="height:20px;"></div>
 
 				<table class="table table-bordered">
 					<tr ng-repeat="n in dadesAlumne.notes">
 						<th> // n.tipnota.nom // </th>
 						<td> <select ng-model="n.notaSelected"
-							ng-options="i.it for i in n.its track by i.id"
+							ng-options="i.it for i in n.its track by i.id" ng-disabled="!av.espodenposarnotes"
 							ng-init="n.notaSelected.id=n.nota.nota" class="form-control" ng-change="chg()">
 						</select>
 						</td>
@@ -57,10 +58,10 @@
 				</table>
 
 
-			<button ng-click="desa()" class="btn btn-default"> // desaMsg // </button>
+			<button ng-click="desa()" class="btn btn-default" ng-disabled="!av.espodenposarnotes"> // desaMsg // </button>
 				<span><img ng-show="showWait" src="/static/notes/waiting.gif" alt="" width="20px"></span>
 			<br><br>
-			<button ng-click="clear()" class="btn btn-default"> Esborra el formulari </button>
+			<button ng-click="clear()" class="btn btn-default" ng-disabled="!av.espodenposarnotes"> Esborra el formulari </button>
 		</div>
 
 	</div>

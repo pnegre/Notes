@@ -98,6 +98,7 @@ def interActivaCursos(request):
 		'any': str(iact.anny),
 		'anyid': iact.anny.id,
 		'grups': grups,
+        'espodenposarnotes': dateInter(iact),
 	})
 
 #
@@ -177,6 +178,9 @@ def postNotes(request):
 
         # TODO: sanitize
         inter = InterAvaluacio.objects.get(id=mypost['inter'])
+        if not dateInter(inter):
+            raise Exception("Fora de periode de notes")
+        
         alumne = Alumne.objects.get(id=mypost['alumne'])
         assignatura = Submateria.objects.get(id=mypost['assignatura'])
 
