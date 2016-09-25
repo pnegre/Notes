@@ -294,7 +294,12 @@ def submatsInter(request, interid, gid):
     grup = Grup.objects.get(id=gid)
     result = []
     for s in grup.submateries.all():
-        result.append({ 'nom': aux.beautifySubmateriaName(s.descripcio), 'id': s.id, 'actiu': s.actiu })
+        result.append({
+            'nom': aux.beautifySubmateriaName(s.descripcio),
+            'curta': aux.beautifySubmateriaName(s.curta),
+            'id': s.id,
+            'actiu': s.actiu
+        })
 
     return toJson(result)
 

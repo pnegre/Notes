@@ -14,7 +14,7 @@ import re,datetime
 from reportlab.lib.pagesizes import A4, LETTER, landscape, portrait
 
 def beautifySubmateriaName(name):
-    m = re.match('(.*)-[ABCDE]$', name)
+    m = re.match('(.*)-[ABCDEabcde]$', name)
     if m:
         return m.group(1)
 

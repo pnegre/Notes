@@ -17,9 +17,10 @@
 <select ng-options="c.nomcomplet for c in cursos track by c.id" ng-model="selectedCurs" ng-change="showSubmateries()" class="form-control"></select>
 <br><br>
 <table class="table table-bordered">
-    <tr> <th> Nom assignatura </th> <th> Actiu </th> </tr>
-    <tr ng-repeat="s in submats" ng-class="{'danger': s.changed}">
-        <td> //s.nom// </td> <td> <input type="checkbox" ng-model="s.actiu" ng-click="s.changed=true"> </input> Actiu </td>
+    <tr> <th> Nom assignatura </th> <th> Nom curt </th> <th> Actiu </th> </tr>
+    <tr ng-repeat="s in submats" ng-class="{'danger': !s.actiu}">
+        <td> //s.nom// </td> <td> // s.curta // </td>
+        <td> <input type="checkbox" ng-model="s.actiu" ng-click="s.changed=true"> </input> Actiu </td>
     </tr>
 </table>
 
