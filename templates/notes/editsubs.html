@@ -18,8 +18,8 @@
 <br><br>
 <table class="table table-bordered">
     <tr> <th> Nom assignatura </th> <th> Actiu </th> </tr>
-    <tr ng-repeat="s in submats">
-        <td> //s.nom// </td> <td> <input type="checkbox" ng-model="s.actiu"> </input> Actiu </td>
+    <tr ng-repeat="s in submats" ng-class="{'danger': s.changed}">
+        <td> //s.nom// </td> <td> <input type="checkbox" ng-model="s.actiu" ng-click="s.changed=true"> </input> Actiu </td>
     </tr>
 </table>
 

@@ -26,7 +26,10 @@ app.controller("editsubsController", function($scope, $http) {
 
     $scope.desaSubmats = function() {
         $http.post('/notes/submatsPost', $scope.submats).then(function(response) {
-
+            var i=0;
+            for(i=0; i<$scope.submats.length; i++) {
+                $scope.submats[i].changed = false;
+            }
         });
     }
 });
