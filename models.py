@@ -64,7 +64,7 @@ class Nota(models.Model):
 	interavaluacio = models.ForeignKey(InterAvaluacio)
 
 	def __unicode__(self):
-		return self.nota.it + " | " + self.tipnota.nom + " | " + self.alumne.nom + " | " + self.assignatura.nom + " | " + str(self.interavaluacio)
+		return self.nota.it + " | " + self.tipnota.nom + " | " + self.alumne.nom + " | " + self.submateria.nom + " | " + str(self.interavaluacio)
 
 	class Meta:
 		permissions = (
