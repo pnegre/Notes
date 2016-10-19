@@ -39,7 +39,7 @@ class InterAvaluacio(models.Model):
 	comentarisGenerics = models.ManyToManyField(ComentariGeneric, blank=True, null=True)
 
 	def __unicode__(self):
-		return str(self.anny) + ' ' + unicode(self.nom)
+		return str(self.anny) + ' ' + self.nom
 
 
 class Config(models.Model):
@@ -70,7 +70,7 @@ class Nota(models.Model):
 	interavaluacio = models.ForeignKey(InterAvaluacio)
 
 	def __unicode__(self):
-		return self.nota.it + " | " + self.tipnota.nom + " | " + self.alumne.nom + " | " + self.submateria.nom + " | " + str(self.interavaluacio)
+		return self.nota.it + " | " + self.tipnota.nom + " | " + self.alumne.nom + " | " + self.submateria.nom + " | " + unicode(self.interavaluacio)
 
 	class Meta:
 		permissions = (
