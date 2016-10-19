@@ -24,7 +24,7 @@ class TipNota(models.Model):
 		ordering = ('-nom',)
 
 	def __unicode__(self):
-		return self.nom
+		return self.nom + ' | ' + str(self.grupNota)
 
 
 class InterAvaluacio(models.Model):
