@@ -23,6 +23,7 @@ app.controller("notesController", function($scope, $http) {
         $http.get('/notes/itemsAlumne/' + av.id +'/' + al.id + '/' + as.id + '/' + gr.id).then(function(response) {
             $scope.dadesAlumne = response.data;
             $scope.desaMsg = "Desa les dades";
+            $scope.comentariGeneric = '';
         });
     }
 
@@ -66,6 +67,7 @@ app.controller("notesController", function($scope, $http) {
     }
 
     $scope.clear = function() {
+        $scope.comentariGeneric = '';
         $scope.dadesAlumne.comentari = "";
         var index = 0;
         for(index=0; index < $scope.dadesAlumne.notes.length; index++) {
