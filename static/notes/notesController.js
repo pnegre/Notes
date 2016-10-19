@@ -78,4 +78,8 @@ app.controller("notesController", function($scope, $http) {
         // console.log("Dins chg");
         $scope.desaMsg = "Desa les dades";
     }
+
+    $scope.insereixComentari = function() {
+        $scope.dadesAlumne.comentari += $scope.comentariGeneric + ". ";
+    }
 });

@@ -98,6 +98,7 @@ def interActivaCursos(request):
 		'any': str(iact.anny),
 		'anyid': iact.anny.id,
 		'grups': grups,
+        'coms': [ t.text for t in iact.comentarisGenerics.all()],
         'espodenposarnotes': dateInter(iact),
 	})
 
