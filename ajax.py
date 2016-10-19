@@ -270,6 +270,11 @@ def saveInter(request):
             if c['checked']:
                 inter.grups.add(g)
 
+        inter.comentarisGenerics.clear()
+        for co in mypost['comentaris']:
+            cg = ComentariGeneric.objects.get(id=co['id'])
+            inter.comentarisGenerics.add(cg)
+
         return HttpResponse()
 
 
@@ -287,6 +292,24 @@ def tipnotesInter(request, interid):
         result.append({'id': t.id, 'nom': str(t), 'selected': sel})
 
     return toJson(result)
+
+
+#
+# Torna els comentaris genèrics d'una inter
+#
+@permission_required_403('notes.posar_notes')
+def comentarisInter(request, interid):
+    inter = InterAvaluacio.objects.get(id=interid)
+    coms = ComentariGeneric.objects.all()
+    comsInter = inter.comentarisGenerics.all()
+    result = []
+    for c in coms:
+        sel = c in comsInter
+        result.append({'id': c.id, 'text': str(c), 'selected': sel})
+
+    return toJson(result)
+
+
 
 
 @permission_required_403('notes.posar_notes')

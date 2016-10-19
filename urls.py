@@ -22,6 +22,7 @@ urlpatterns = patterns('',
 	(r'^inters$', 'notes.ajax.inters'),
 	(r'^grupsInter/(?P<inter_id>\d+)$', 'notes.ajax.grupsInter'),
 	(r'^tipnotesInter/(?P<interid>\d+)$', 'notes.ajax.tipnotesInter'),
+	(r'^comentarisInter/(?P<interid>\d+)$', 'notes.ajax.comentarisInter'),
 	(r'^saveInter$', 'notes.ajax.saveInter'),
 
 	(r'^submatsInter/(?P<interid>\d+)/(?P<gid>\d+)$', 'notes.ajax.submatsInter'),

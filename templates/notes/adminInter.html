@@ -18,8 +18,12 @@
         </div>
     </div>
     <br>
-    <label>TipNotes</label>
+    <label>Ítems de les qualificacions</label>
     <select class="form-control" multiple ng-options="t.nom for t in tipnotes track by t.id" ng-model="selectedTipNotes"></select>
+    <br>
+    <br>
+    <label>Comentaris genèrics</label>
+    <select class="form-control" multiple ng-options="c.text for c in comgenerics" ng-model="selectedComs"></select>
     <br>
     <br>
     <button ng-click="desaCursos()" class="btn btn-default"> Desa </button>
