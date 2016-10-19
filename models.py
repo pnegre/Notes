@@ -39,7 +39,7 @@ class InterAvaluacio(models.Model):
 	comentarisGenerics = models.ManyToManyField(ComentariGeneric, blank=True, null=True)
 
 	def __unicode__(self):
-		return str(self.anny) + ' ' + self.nom
+		return str(self.anny) + ' ' + unicode(self.nom)
 
 
 class Config(models.Model):
