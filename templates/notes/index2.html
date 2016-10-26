@@ -15,11 +15,12 @@
 
 		<label>Interavaluació:</label>
 		<select ng-options="a.nom for a in inters track by a.id"
-			ng-change="changedInter()" ng-model="selectedInter" class="form-control"></select>
+			ng-change="changedInter()" ng-model="selectedInter" class="form-control">
+		</select>
 
 		<br>
 
-		<p>
+		<p ng-show="av != null">
 			Es poden posar notes des del // av.data1 // fins a // av.data2 //
 		</p>
 
