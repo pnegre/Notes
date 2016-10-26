@@ -51,14 +51,14 @@ def butlletins_per_grup_i_alumne(inter, submateries, grup, alumnes):
 			if len(notesFiltrades) == 0: continue
 			nts = []
 			if not a.curta:
-				nts.append(beautifySubmateriaName(a.nom))
+				nts.append(Paragraph(beautifySubmateriaName(a.nom), styles["BodyText"]))
 			else:
-				nts.append(beautifySubmateriaName(a.curta))
+				nts.append(Paragraph(beautifySubmateriaName(a.curta), styles["BodyText"]))
 
 			for t in tipnotes:
 				try:
 					n = notesFiltrades.get(tipnota=t)
-					nts.append(n.nota.it)
+					nts.append(Paragraph(n.nota.it, styles["BodyText"]))
 				except:
 					nts.append("")
 			dadesTaula.append(nts)
