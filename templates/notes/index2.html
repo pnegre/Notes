@@ -11,8 +11,6 @@
 <div ng-controller="notesController">
 	<h1> Introducció notes </h1>
 
-	<div ng-show="mostraLlista">
-
 		<label>Interavaluació:</label>
 		<select ng-options="a.nom for a in inters track by a.id"
 			ng-change="changedInter()" ng-model="selectedInter" class="form-control">
@@ -20,6 +18,7 @@
 
 		<br>
 
+	<div ng-show="mostraLlista">
 		<p ng-show="av != null">
 			Es poden posar notes des del // av.data1 // fins a // av.data2 //
 		</p>
@@ -37,7 +36,10 @@
 	</div>
 
 	<div ng-hide="mostraLlista">
-		<h2> // grup.nomcomplet //. Assignatura: // assignatura.nom // </h2>
+		<div>
+		<a href="" ng-click="back()"> Torna a la llista de cursos </a>
+		<div>
+		<h4> // grup.nomcomplet //. Assignatura: // assignatura.nom // </h4>
 
 		<label>Alumne:</label>
 		<select ng-options="a.llinatge1 + ' ' + a.llinatge2 + ', ' + a.nom for a in alumnes"

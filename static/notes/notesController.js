@@ -11,6 +11,8 @@ app.controller("notesController", function($scope, $http) {
     $scope.changedInter = function() {
         $http.get('/notes/cursosInterActiva/' + $scope.selectedInter.id ).then(function(response) {
             $scope.av = response.data;
+            $scope.clear();
+            $scope.mostraLlista = true;
         });
     }
 
@@ -23,7 +25,14 @@ app.controller("notesController", function($scope, $http) {
         });
     }
 
+    $scope.back = function() {
+        $scope.clear();
+        $scope.mostraLlista = true;
+    }
+
     $scope.changedAlumne = function() {
+        if ($scope.selectedAlumne == null) return;
+
         var al = $scope.selectedAlumne;
         var as = $scope.assignatura;
         var av = $scope.av;
@@ -76,10 +85,12 @@ app.controller("notesController", function($scope, $http) {
 
     $scope.clear = function() {
         $scope.comentariGeneric = '';
-        $scope.dadesAlumne.comentari = "";
-        var index = 0;
-        for(index=0; index < $scope.dadesAlumne.notes.length; index++) {
-            $scope.dadesAlumne.notes[index].notaSelected = null;
+        if ($scope.dadesAlumne != null) {
+            $scope.dadesAlumne.comentari = "";
+            var index = 0;
+            for(index=0; index < $scope.dadesAlumne.notes.length; index++) {
+                $scope.dadesAlumne.notes[index].notaSelected = null;
+            }
         }
         $scope.desaMsg = "Desa les dades";
     }
