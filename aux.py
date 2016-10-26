@@ -40,7 +40,7 @@ def butlletins_per_grup_i_alumne(inter, submateries, grup, alumnes):
 	doc = SimpleDocTemplate(response, leftMargin=25, rightMargin=25, topMargin=25, bottomMargin=25)
 	doc.pagesize = landscape(A4)
 
-	styles['Normal'].fontsize=8
+	styles['Normal'].fontsize=6
 	today = datetime.date.today()
 	strdate = str(today.day) + "/" + str(today.month) + "/" + str(today.year)
 
@@ -51,14 +51,17 @@ def butlletins_per_grup_i_alumne(inter, submateries, grup, alumnes):
 			if len(notesFiltrades) == 0: continue
 			nts = []
 			if not a.curta:
-				nts.append(Paragraph(beautifySubmateriaName(a.nom), styles["BodyText"]))
+				# nts.append(Paragraph(beautifySubmateriaName(a.nom), styles["Normal"]))
+				nts.append(beautifySubmateriaName(a.nom))
 			else:
-				nts.append(Paragraph(beautifySubmateriaName(a.curta), styles["BodyText"]))
+				# nts.append(Paragraph(beautifySubmateriaName(a.curta), styles["Normal"]))
+				nts.append(beautifySubmateriaName(a.curta))
 
 			for t in tipnotes:
 				try:
 					n = notesFiltrades.get(tipnota=t)
-					nts.append(Paragraph(n.nota.it, styles["BodyText"]))
+					# nts.append(Paragraph(n.nota.it, styles["Normal"]))
+					nts.append(n.nota.it)
 				except:
 					nts.append("")
 			dadesTaula.append(nts)
@@ -95,6 +98,7 @@ def butlletins_per_grup_i_alumne(inter, submateries, grup, alumnes):
 		ts = [
 			#('ALIGN', (1,1), (-1,-1), 'CENTER'),
 			('GRID', (0,0), (-1,-1), 1, colors.black),
+			('FONTSIZE', (0, 0), (-1, -1), 8),
 		]
 
 		# Create the table with the necessary style, and add it to the
