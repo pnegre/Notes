@@ -42,7 +42,7 @@ def butlletins2(request):
 def butlletiPDF(request, inter_id, grup_id):
 	inter = InterAvaluacio.objects.get(id=inter_id)
 	grup = Grup.objects.get(id=grup_id)
-	submateries = grup.submateries.all()
+	submateries = grup.submateries.filter(actiu=True)
 	alumnes = []
 	for m in Matricula.objects.filter(grup=grup,anny=inter.anny):
 		alumnes.append(m.alumne)
