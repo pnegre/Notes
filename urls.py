@@ -14,7 +14,8 @@ urlpatterns = patterns('',
 
 
 	# AJAX
-	(r'^interActivaCursos$', 'notes.ajax.interActivaCursos'),
+	(r'^cursosInterActiva/(?P<interid>\d+)$', 'notes.ajax.cursosInterActiva'),
+	(r'^intersActives$', 'notes.ajax.intersActives'),
 	(r'^interCursos/(?P<interid>\d+)$', 'notes.ajax.interCursos'),
 	(r'^alumnes/(?P<gid>\d+)/(?P<anyid>\d+)$', 'notes.ajax.alumnes'),
 	(r'^itemsAlumne/(?P<interid>\d+)/(?P<alid>\d+)/(?P<assigid>\d+)/(?P<gid>\d+)$', 'notes.ajax.itemsAlumne'),

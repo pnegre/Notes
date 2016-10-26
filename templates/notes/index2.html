@@ -12,9 +12,13 @@
 	<h1> Introducció notes </h1>
 
 	<div ng-show="mostraLlista">
-		<p>
-			Interavaluació activa: <b> // av.nom // // av.any //</b>.
-		</p>
+
+		<label>Interavaluació:</label>
+		<select ng-options="a.nom for a in inters track by a.id"
+			ng-change="changedInter()" ng-model="selectedInter" class="form-control"></select>
+
+		<br>
+
 		<p>
 			Es poden posar notes des del // av.data1 // fins a // av.data2 //
 		</p>

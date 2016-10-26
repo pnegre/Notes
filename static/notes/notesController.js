@@ -2,9 +2,17 @@
 
 app.controller("notesController", function($scope, $http) {
     $scope.mostraLlista = true;
-    $http.get('/notes/interActivaCursos').then(function(response) {
-        $scope.av = response.data;
+
+    $http.get('/notes/intersActives').then(function(response) {
+        console.log(response);
+        $scope.inters = response.data;
     });
+
+    $scope.changedInter = function() {
+        $http.get('/notes/cursosInterActiva/' + $scope.selectedInter.id ).then(function(response) {
+            $scope.av = response.data;
+        });
+    }
 
     $scope.showCurs = function(inter, grup, assig) {
         $http.get('/notes/alumnes/' + grup.id + '/' + inter.anyid).then(function(response) {

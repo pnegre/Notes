@@ -80,14 +80,24 @@ def GrupsFromInter(inter):
     return theGrups
 
 
+@permission_required_403('notes.posar_notes')
+def intersActives(request):
+    inters = InterAvaluacio.objects.all()
+    result = []
+    for i in inters:
+        if dateInter(i):
+            result.append({'id': i.id, 'nom': str(i)})
+
+    return toJson(result)
+
+
 #
-# Torna la interavaluacio activa
+# Torna la info d'una interavaluació (activa)
 # I els cursos corresponents
 #
 @permission_required_403('notes.posar_notes')
-def interActivaCursos(request):
-	# TODO: marcar interavaluació activa d'alguna manera...
-	iact = Config.objects.all()[0].interactiva
+def cursosInterActiva(request, interid):
+	iact = InterAvaluacio.objects.get(id=interid)
 	grups = GrupsFromInter(iact)
 
 	return toJson({
