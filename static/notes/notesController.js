@@ -13,6 +13,7 @@ app.controller("notesController", function($scope, $http) {
             $scope.av = response.data;
             $scope.clear();
             $scope.mostraLlista = true;
+			$scope.dadesAlumne = null;
         });
     }
 
